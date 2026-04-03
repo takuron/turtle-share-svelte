@@ -54,7 +54,17 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 ### 1.6. UI & Styling Standards
 * **Rule:** Prioritize **DaisyUI v5** semantic component classes. Use Tailwind utility classes only when DaisyUI components cannot fulfill the requirement. Avoid custom CSS unless absolutely necessary.
 
-### 1.7. Task Tracking
+### 1.7. Icon Standards
+* **Rule:** All icons **must** use **Lucide Svelte** (`lucide-svelte`). Do not introduce other icon libraries (e.g., Heroicons, Font Awesome).
+* **Usage:** Import individual icon components: `import { Search } from 'lucide-svelte';`, then use as `<Search size={20} />`.
+* **Goal:** Tree-shakable, consistent line-icon style across the entire application.
+
+### 1.8. Font Standards
+* **Rule:** The project uses **Inter** (English/Latin) and **Noto Sans SC** (Chinese) as the default sans-serif font stack, self-hosted via `@fontsource-variable`.
+* **Configuration:** Fonts are imported in `src/routes/layout.css` and applied globally via `--font-sans` theme variable.
+* **Constraint:** Do **not** use Google Fonts CDN or add other font families without updating this document.
+
+### 1.9. Task Tracking
 * **Rule:** Mark tasks as completed in `docs/TODO.md` by changing `- [ ]` to `- [x]` immediately after implementation.
 
 
@@ -72,6 +82,8 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 | Build | Vite | 7.3+ |
 | Testing | Vitest + Playwright | 4.1+ |
 | Adapter | @sveltejs/adapter-static | 3.0+ |
+| Icons | Lucide Svelte (lucide-svelte) | 1.0+ |
+| Fonts | Inter + Noto Sans SC (@fontsource-variable) | 5.x |
 | Package Manager | pnpm | — |
 
 ### Key Configuration Details / 关键配置
@@ -79,6 +91,8 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 - **Svelte Runes**: Enabled globally for all project source files (not `node_modules`). See `svelte.config.js`.
 - **Static Adapter**: The project builds as a static site. Backend API calls happen at runtime via fetch.
 - **CSS Entry Point**: `src/routes/layout.css` imports Tailwind CSS, @tailwindcss/typography, and DaisyUI v5.
+- **Fonts**: Inter (Latin) + Noto Sans SC (Chinese), self-hosted via `@fontsource-variable`, configured as `--font-sans` in `layout.css`.
+- **Icons**: Lucide Svelte — import individual components, tree-shakable.
 - **i18n Locales**: `en` (base), `zh-cn`. URL pattern: `/` (en), `/zh-cn/` (zh-cn).
 - **MDsvex Extensions**: `.svx`, `.md` files are treated as Svelte components.
 

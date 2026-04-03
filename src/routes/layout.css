@@ -1,3 +1,9 @@
 @import 'tailwindcss';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/noto-sans-sc';
 @plugin '@tailwindcss/typography';
 @plugin 'daisyui';
+
+@theme {
+	--font-sans: 'Inter Variable', 'Noto Sans SC Variable', ui-sans-serif, system-ui, sans-serif;
+}
