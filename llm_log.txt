@@ -1,0 +1,2 @@
+[2026-04-03T16:21:35+08:00] Project initialization: installed DaisyUI v5, configured in layout.css. Created docs/routing.md, docs/state-management.md, docs/TODO.md. Updated llm_readme.md with full project structure and tech stack. Updated docs/architecture.md with frontend architecture section.
+[2026-04-03T16:31:53+08:00] Rewrote docs/architecture.md as frontend-only architecture document. Updated llm_readme.md: added docs/backend/ as read-only backend reference, updated Rule 1.5 to reference docs/backend/api.md.
