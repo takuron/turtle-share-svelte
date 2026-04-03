@@ -32,6 +32,9 @@ importers:
       daisyui:
         specifier: ^5.5.19
         version: 5.5.19
+      degit:
+        specifier: ^2.8.4
+        version: 2.8.4
       mdsvex:
         specifier: ^0.12.6
         version: 0.12.7(svelte@5.55.1)
@@ -701,6 +704,11 @@ packages:
   deepmerge@4.3.1:
     resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
     engines: {node: '>=0.10.0'}
+
+  degit@2.8.4:
+    resolution: {integrity: sha512-vqYuzmSA5I50J882jd+AbAhQtgK6bdKUJIex1JNfEUPENCgYsxugzKVZlFyMwV4i06MmnV47/Iqi5Io86zf3Ng==}
+    engines: {node: '>=8.0.0'}
+    hasBin: true
 
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
@@ -1700,6 +1708,8 @@ snapshots:
   dedent@1.5.1: {}
 
   deepmerge@4.3.1: {}
+
+  degit@2.8.4: {}
 
   detect-libc@2.1.2: {}
 

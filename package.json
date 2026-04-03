@@ -13,7 +13,8 @@
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
 		"lint": "prettier --check .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"sync:docs": "degit takuron/TurtleShare/docs docs/backend --force"
 	},
 	"devDependencies": {
 		"@inlang/paraglide-js": "^2.10.0",
@@ -24,6 +25,7 @@
 		"@tailwindcss/vite": "^4.1.18",
 		"@vitest/browser-playwright": "^4.1.0",
 		"daisyui": "^5.5.19",
+		"degit": "^2.8.4",
 		"mdsvex": "^0.12.6",
 		"playwright": "^1.58.2",
 		"prettier": "^3.8.1",
