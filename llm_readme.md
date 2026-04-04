@@ -106,7 +106,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button.
   - `AuthorProfile.svelte` — Author profile header (magazine cover style).
   - `PostCard.svelte` — Post card with `variant: 'readable' | 'locked'` states.
-  - `BottomNavBar.svelte` — Mobile-only bottom nav (hidden on md+).
+  - `Pagination.svelte` — Page navigation with Previous/Next + page numbers, ellipsis for large ranges.
   - `SiteFooter.svelte` — Centered plain-text footer.
 - **Route Structure**:
   - `+layout.svelte` — Global layout: TopNavBar + main content + SiteFooter + BottomNavBar.
