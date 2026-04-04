@@ -1,0 +1,56 @@
+import { API_URL } from '$lib/config';
+
+/**
+ * Generic API response wrapper matching backend format.
+ * 通用 API 响应包装，匹配后端格式。
+ */
+// // 通用 API 响应包装，匹配后端格式。
+export interface ApiSuccess<T> {
+	success: true;
+	data: T;
+}
+
+export interface ApiError {
+	success: false;
+	error: {
+		code: string;
+		message: string;
+	};
+}
+
+export type ApiResponse<T> = ApiSuccess<T> | ApiError;
+
+/**
+ * Sends a JSON request to the backend API.
+ * @param path - API path relative to API_URL (e.g., '/admin/login').
+ * @param options - Fetch options (method, body, headers).
+ * @returns Parsed JSON response.
+ */
+// // 向后端 API 发送 JSON 请求。
+// // @param path - 相对于 API_URL 的路径（例如 '/admin/login'）。
+// // @param options - Fetch 选项（method、body、headers）。
+// // @returns 解析后的 JSON 响应。
+export async function apiRequest<T>(
+	path: string,
+	options: RequestInit = {}
+): Promise<ApiResponse<T>> {
+	// 1. 合并默认 headers，如果有 body 则添加 Content-Type。
+	const headers: Record<string, string> = {
+		...(options.body ? { 'Content-Type': 'application/json' } : {}),
+		...(options.headers as Record<string, string>)
+	};
+
+	// 2. 从 localStorage 读取 token，如果存在则附加 Authorization 头。
+	const token =
+		typeof localStorage !== 'undefined' ? localStorage.getItem('auth_token') : null;
+	if (token) {
+		headers['Authorization'] = `Bearer ${token}`;
+	}
+
+	const res = await fetch(`${API_URL}${path}`, {
+		...options,
+		headers
+	});
+
+	return (await res.json()) as ApiResponse<T>;
+}

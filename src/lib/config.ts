@@ -1,8 +1,7 @@
 import type { SocialLink } from '$lib/config/socialIcons.svelte';
 
-// 1. 预设的 API 地址，默认与前端同路径（同源）。
-//export const API_URL = '/api';
-export const API_URL = 'http://localhost:3000/api';
+// 1. API 地址：使用相对路径，开发环境通过 Vite proxy 转发到后端。
+export const API_URL = '/api';
 
 // 2. 无法获取 API 提供的 site_info 时的本地缺省设置。
 export const DEFAULT_SITE_INFO: {

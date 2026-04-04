@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { login } from '$lib/stores/auth.svelte';
+	import { CircleAlert } from 'lucide-svelte';
+
 	/**
 	 * A login form component following the Editorial design system.
 	 * Supports user and admin login modes with different titles and toggle links.
@@ -21,9 +25,34 @@
 	);
 	let switchHref = $derived(mode === 'admin' ? '/user' : '/admin');
 
-	// 2. 表单状态（暂不对接后端）
+	// 2. 表单状态
 	let username = $state('');
 	let password = $state('');
+	let errorMsg = $state('');
+	let loading = $state(false);
+
+	// 3. 提交登录请求
+	async function handleSubmit() {
+		errorMsg = '';
+
+		// 前端基本校验
+		if (!username.trim() || !password) {
+			errorMsg = '请输入用户名和密码';
+			return;
+		}
+
+		loading = true;
+		const err = await login(mode, username.trim(), password);
+		loading = false;
+
+		if (err) {
+			errorMsg = err;
+			return;
+		}
+
+		// 登录成功，跳转到首页
+		await goto('/', { replaceState: true });
+	}
 </script>
 
 <!-- 登录卡片容器 — 玻璃拟态 + 环境阴影 -->
@@ -41,8 +70,16 @@
 		</p>
 	</div>
 
+	<!-- 错误提示 -->
+	{#if errorMsg}
+		<div class="flex items-center gap-2 rounded-xl bg-error/10 text-error px-4 py-3 mb-6 text-sm font-medium">
+			<CircleAlert size={16} />
+			{errorMsg}
+		</div>
+	{/if}
+
 	<!-- 登录表单 -->
-	<form class="space-y-6" onsubmit={(e) => e.preventDefault()}>
+	<form class="space-y-6" onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
 		<!-- 用户名输入 -->
 		<div>
 			<label
@@ -56,6 +93,7 @@
 				id="username"
 				type="text"
 				placeholder="请输入用户名"
+				disabled={loading}
 				bind:value={username}
 			/>
 		</div>
@@ -73,6 +111,7 @@
 				id="password"
 				type="password"
 				placeholder="请输入密码"
+				disabled={loading}
 				bind:value={password}
 			/>
 		</div>
@@ -81,8 +120,14 @@
 		<div class="pt-2">
 			<button
 				class="btn btn-primary w-full py-4 rounded-xl font-bold text-base shadow-lg active:scale-[0.98] transition-all"
+				disabled={loading}
 			>
-				登录
+				{#if loading}
+					<span class="loading loading-spinner loading-sm"></span>
+					登录中…
+				{:else}
+					登录
+				{/if}
 			</button>
 		</div>
 	</form>

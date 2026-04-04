@@ -9,16 +9,16 @@
 - [x] Install and configure DaisyUI v5
 - [x] Create documentation structure (`docs/`)
 - [ ] Set up global layout with DaisyUI theme and responsive navigation
-- [ ] Implement Auth store (`src/lib/stores/auth.svelte.ts`)
+- [x] Implement Auth store (`src/lib/stores/auth.svelte.ts`)
 - [ ] Implement Theme store (`src/lib/stores/theme.svelte.ts`)
-- [ ] Create API client utility (`src/lib/api/client.ts`)
+- [x] Create API client utility (`src/lib/api/client.ts`)
 
 ## Phase 1: Authentication / 认证
 
 - [x] Admin login page (`/admin`) + User login page (`/user`)
-- [ ] JWT token management (store, refresh, clear)
+- [x] JWT token management (store, refresh, clear)
 - [ ] Protected route guard for `/admin/*`
-- [ ] Logout functionality
+- [x] Logout functionality (store function implemented, UI pending)
 
 ## Phase 2: Admin Dashboard / 管理后台
 

@@ -4,12 +4,14 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { fetchSiteInfo } from '$lib/stores/site.svelte';
+	import { initAuth } from '$lib/stores/auth.svelte';
 	import { onMount } from 'svelte';
 
 	let { children } = $props();
 
-	// 1. 每次项目被访问（组件挂载时）在客户端获取最新的站点信息。
+	// 1. 应用启动时恢复认证状态并获取站点信息。
 	onMount(() => {
+		initAuth();
 		fetchSiteInfo();
 	});
 </script>

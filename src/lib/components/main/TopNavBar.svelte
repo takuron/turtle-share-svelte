@@ -14,9 +14,9 @@
 		<span class="font-display text-2xl font-bold tracking-tighter text-primary">
 			{siteStore.info.name}
 		</span>
-		<button class="btn btn-primary btn-sm gap-2">
+		<a href="/user" target="_blank" class="btn btn-primary btn-sm gap-2">
 			<LogIn size={16} />
 			登录
-		</button>
+		</a>
 	</div>
 </nav>

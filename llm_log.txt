@@ -10,3 +10,5 @@
 [2026-04-04T14:56:40+08:00] Refactor all components to read from siteStore: add avatar/bio to SiteInfo type, AuthorProfile shows avatar image + bio, TopNavBar/SiteFooter read site name from store. No more hardcoded values or props for site info.
 [2026-04-04T15:26:09+08:00] Add user (/user) and admin (/admin) login pages with shared LoginForm component
 [2026-04-04T15:38:11+08:00] Refactor routes into (main) and (auth) layout groups; login pages now have no TopNavBar/SiteFooter and no scroll
+[2026-04-04T15:45:54+08:00] Implement auth login flow: API client, auth store (JWT decode, login/logout, initAuth), LoginForm API integration, auth layout redirect guard
+[2026-04-04T16:07:45+08:00] TopNavBar login button now opens /user in a new tab (target=_blank)

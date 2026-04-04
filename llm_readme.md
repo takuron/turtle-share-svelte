@@ -112,12 +112,16 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `Pagination.svelte` — Page navigation with Previous/Next + page numbers, ellipsis for large ranges.
   - `SiteFooter.svelte` — Centered plain-text footer.
 - **Login Components** (`src/lib/components/login/`):
-  - `LoginForm.svelte` — Reusable login form with `mode: 'user' | 'admin'` prop. Glassmorphism card, dot-pattern background expected from parent page.
+  - `LoginForm.svelte` — Reusable login form with `mode: 'user' | 'admin'` prop. Calls login API, shows error/loading states, redirects to `/` on success.
+- **API & Stores**:
+  - `src/lib/api/client.ts` — Generic `apiRequest()` helper with auto-attached JWT Authorization header.
+  - `src/lib/stores/auth.svelte.ts` — Auth store: JWT decode, `login()`, `logout()`, `initAuth()`. Two roles (admin/user) are mutually exclusive.
+  - `src/lib/stores/site.svelte.ts` — Site info store with `fetchSiteInfo()`.
 - **Route Structure**:
-  - `+layout.svelte` — Root layout: CSS imports, favicon, i18n links, `fetchSiteInfo()`.
+  - `+layout.svelte` — Root layout: CSS imports, favicon, i18n links, `initAuth()` + `fetchSiteInfo()`.
   - `(main)/+layout.svelte` — Main layout group: TopNavBar + main content + SiteFooter.
   - `(main)/+page.svelte` — Homepage: AuthorProfile + PostCard feed.
-  - `(auth)/+layout.svelte` — Auth layout group: full-screen, no nav/footer, no scroll.
+  - `(auth)/+layout.svelte` — Auth layout group: full-screen, no nav/footer, no scroll. Redirects to `/` if already logged in.
   - `(auth)/user/+page.svelte` — User login page (dot-pattern background).
   - `(auth)/admin/+page.svelte` — Admin login page (dot-pattern background).
 
