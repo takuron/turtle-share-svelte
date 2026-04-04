@@ -80,7 +80,7 @@
 				<!-- 锁定状态标签 -->
 				<div class="flex items-center gap-2 text-on-surface-variant bg-base-200 px-4 py-2 rounded-full">
 					<Lock size={14} />
-					<span class="font-bold text-xs">{m.locked_content()} (Tier {requiredTier})</span>
+					<span class="font-bold text-xs">{m.requires_tier({ tier: requiredTier })}</span>
 				</div>
 			{:else}
 				<!-- 可读状态 CTA -->

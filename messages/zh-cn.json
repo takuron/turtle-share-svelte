@@ -4,6 +4,7 @@
 	"login": "登录",
 	"my_subscriptions": "我的订阅",
 	"locked_content": "已解锁内容",
+	"requires_tier": "需要等级 {tier} 解锁",
 	"change_password": "修改密码",
 	"logout": "退出登录",
 	"dashboard": "控制台",

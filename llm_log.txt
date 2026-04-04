@@ -18,3 +18,4 @@
 [2026-04-04T16:43:45+08:00] Refactor: extract API request logic from stores into dedicated modules (src/lib/api/auth.ts, src/lib/api/site.ts). Stores now delegate API calls to API layer. Added SiteInfo type export to config.ts.
 [2026-04-04T16:56:31+08:00] Implement article listing with pagination: new API module (src/lib/api/articles.ts), ArticleFeed shared component, updated PostCard with real data props, link-based Pagination, routes / and /page/[page]. Added i18n messages for read_more, previous, next, loading, error, empty states.
 [2026-04-04T17:08:32+08:00] Reorganize API layer by permission (public/user/admin). Add shared types.ts. Implement role-based article listing: ArticleFeed selects API based on authStore role. Admin articles normalized with accessible=true. All API files include original endpoint comments.
+[2026-04-04T17:22:57+08:00] Update locked article label to use requires_tier i18n message with tier parameter: '需要等级X解锁'

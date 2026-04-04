@@ -4,6 +4,7 @@
 	"login": "Login",
 	"my_subscriptions": "My Subscriptions",
 	"locked_content": "Locked Content",
+	"requires_tier": "Requires Tier {tier}",
 	"change_password": "Change Password",
 	"logout": "Logout",
 	"dashboard": "Dashboard",
