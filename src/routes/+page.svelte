@@ -1,7 +1,7 @@
 <script lang="ts">
-	import AuthorProfile from '$lib/components/AuthorProfile.svelte';
-	import PostCard from '$lib/components/PostCard.svelte';
-	import Pagination from '$lib/components/Pagination.svelte';
+	import AuthorProfile from '$lib/components/main/AuthorProfile.svelte';
+	import PostCard from '$lib/components/main/PostCard.svelte';
+	import Pagination from '$lib/components/main/Pagination.svelte';
 </script>
 
 <!-- 作者资料头部 -->

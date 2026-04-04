@@ -15,7 +15,7 @@
 
 ## Phase 1: Authentication / 认证
 
-- [ ] Admin login page (`/login`)
+- [x] Admin login page (`/admin`) + User login page (`/user`)
 - [ ] JWT token management (store, refresh, clear)
 - [ ] Protected route guard for `/admin/*`
 - [ ] Logout functionality

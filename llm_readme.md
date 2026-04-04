@@ -111,9 +111,13 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `PostCard.svelte` — Post card with `variant: 'readable' | 'locked'` states.
   - `Pagination.svelte` — Page navigation with Previous/Next + page numbers, ellipsis for large ranges.
   - `SiteFooter.svelte` — Centered plain-text footer.
+- **Login Components** (`src/lib/components/login/`):
+  - `LoginForm.svelte` — Reusable login form with `mode: 'user' | 'admin'` prop. Glassmorphism card, dot-pattern background expected from parent page.
 - **Route Structure**:
   - `+layout.svelte` — Global layout: TopNavBar + main content + SiteFooter + BottomNavBar.
   - `+page.svelte` — Homepage: AuthorProfile + PostCard feed.
+  - `/user/+page.svelte` — User login page (full-screen centered, dot-pattern background).
+  - `/admin/+page.svelte` — Admin login page (full-screen centered, dot-pattern background).
 
 ### Available Scripts / 可用脚本
 

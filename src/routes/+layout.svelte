@@ -5,8 +5,8 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { fetchSiteInfo } from '$lib/stores/site.svelte';
 	import { onMount } from 'svelte';
-	import TopNavBar from '$lib/components/TopNavBar.svelte';
-	import SiteFooter from '$lib/components/SiteFooter.svelte';
+	import TopNavBar from '$lib/components/main/TopNavBar.svelte';
+	import SiteFooter from '$lib/components/main/SiteFooter.svelte';
 
 	let { children } = $props();
 
