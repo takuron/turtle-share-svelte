@@ -5,6 +5,9 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { fetchSiteInfo } from '$lib/stores/site.svelte';
 	import { onMount } from 'svelte';
+	import TopNavBar from '$lib/components/TopNavBar.svelte';
+	import BottomNavBar from '$lib/components/BottomNavBar.svelte';
+	import SiteFooter from '$lib/components/SiteFooter.svelte';
 
 	let { children } = $props();
 
@@ -15,8 +18,22 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
-{@render children()}
 
+<!-- 顶部导航栏 -->
+<TopNavBar />
+
+<!-- 主内容区域 — 为顶部导航留出空间，为底部导航留出移动端间距 -->
+<main class="pt-24 pb-20 px-4 max-w-2xl mx-auto">
+	{@render children()}
+</main>
+
+<!-- 页脚 -->
+<SiteFooter />
+
+<!-- 移动端底部导航 -->
+<BottomNavBar />
+
+<!-- i18n 隐藏链接 -->
 <div style="display:none">
 	{#each locales as locale}
 		<a href={localizeHref(page.url.pathname, { locale })}>{locale}</a>
