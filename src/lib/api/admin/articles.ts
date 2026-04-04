@@ -40,7 +40,7 @@ export async function fetchAdminArticlesPage(
 				cover_image: item.cover_image,
 				required_tier: item.required_tier,
 				accessible: true,
-				created_at: item.created_at,
+				publish_at: item.publish_at,
 				updated_at: item.updated_at
 			}))
 		};

@@ -53,10 +53,7 @@
 		const { fetchPage, fetchPageInfo } = getApiFunctions();
 
 		try {
-			const [articlesRes, pageInfoRes] = await Promise.all([
-				fetchPage(p),
-				fetchPageInfo()
-			]);
+			const [articlesRes, pageInfoRes] = await Promise.all([fetchPage(p), fetchPageInfo()]);
 
 			if (articlesRes.success) {
 				articles = articlesRes.data;
@@ -87,22 +84,22 @@
 {#if loading}
 	<!-- 加载状态 -->
 	<div class="flex justify-center py-24">
-		<span class="loading loading-spinner loading-lg text-primary"></span>
+		<span class="loading loading-lg loading-spinner text-primary"></span>
 		<span class="ml-3 text-on-surface-variant">{m.loading_articles()}</span>
 	</div>
 {:else if error}
 	<!-- 错误状态 -->
-	<div class="text-center py-24 text-on-surface-variant">
+	<div class="py-24 text-center text-on-surface-variant">
 		<p>{m.load_error()}</p>
 	</div>
 {:else if articles.length === 0}
 	<!-- 空状态 -->
-	<div class="text-center py-24 text-on-surface-variant">
+	<div class="py-24 text-center text-on-surface-variant">
 		<p>{m.no_articles()}</p>
 	</div>
 {:else}
 	<!-- 垂直帖子信息流 — DESIGN.md §5: 卡片间距 2rem -->
-	<div class="space-y-12 mb-12">
+	<div class="mb-12 space-y-12">
 		{#each articles as article (article.hash_id)}
 			<PostCard
 				title={article.title}
@@ -110,7 +107,7 @@
 				coverImage={article.cover_image}
 				requiredTier={article.required_tier}
 				accessible={article.accessible}
-				createdAt={article.created_at}
+				publishAt={article.publish_at}
 			/>
 		{/each}
 	</div>

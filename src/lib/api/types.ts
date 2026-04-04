@@ -17,7 +17,7 @@ export interface ArticleListItem {
 	cover_image: string | null;
 	required_tier: number;
 	accessible: boolean;
-	created_at: number;
+	publish_at: number;
 	updated_at: number;
 }
 
@@ -33,7 +33,7 @@ export interface AdminArticleRawItem {
 	cover_image: string | null;
 	required_tier: number;
 	is_public: boolean;
-	created_at: number;
+	publish_at: number;
 	updated_at: number;
 }
 

@@ -6,7 +6,7 @@
 	 * @prop {string | null} coverImage - Cover image path (relative to API).
 	 * @prop {number} requiredTier - Minimum tier to access full content.
 	 * @prop {boolean} accessible - Whether current user can access full content.
-	 * @prop {number} createdAt - Unix timestamp of article creation.
+	 * @prop {number} publishAt - Unix timestamp of article publish.
 	 */
 	// // 垂直信息流中的帖子卡片。展示文章数据，支持可读和锁定两种状态。
 	// // @prop {string} title - 文章标题。
@@ -14,7 +14,7 @@
 	// // @prop {string | null} coverImage - 封面图片路径（相对于 API）。
 	// // @prop {number} requiredTier - 完整访问所需的最低等级。
 	// // @prop {boolean} accessible - 当前用户是否可以访问完整内容。
-	// // @prop {number} createdAt - 文章创建时间的 Unix 时间戳。
+	// // @prop {number} publishAt - 文章发布时间的 Unix 时间戳。
 	import { Lock } from 'lucide-svelte';
 	import { API_URL } from '$lib/config';
 	import * as m from '$lib/paraglide/messages.js';
@@ -25,22 +25,22 @@
 		coverImage = null,
 		requiredTier = 0,
 		accessible = true,
-		createdAt
+		publishAt
 	}: {
 		title: string;
 		hashId: string;
 		coverImage?: string | null;
 		requiredTier?: number;
 		accessible?: boolean;
-		createdAt: number;
+		publishAt: number;
 	} = $props();
 
 	// 1. 根据 accessible 字段判断是否锁定。
 	const isLocked = $derived(!accessible);
 
-	// 2. 格式化创建日期。
+	// 2. 格式化发布日期。
 	const formattedDate = $derived(
-		new Date(createdAt * 1000).toLocaleDateString(undefined, {
+		new Date(publishAt * 1000).toLocaleDateString(undefined, {
 			year: 'numeric',
 			month: 'short',
 			day: 'numeric'
@@ -53,14 +53,14 @@
 
 <!-- 帖子卡片 — DESIGN.md §5: border-radius xl, 无分割线, hover 提升 -->
 <article
-	class="bg-surface-lowest rounded-xl shadow-editorial-sm overflow-hidden transition-all hover:-translate-y-0.5
-		hover:shadow-ambient duration-300"
+	class="overflow-hidden rounded-xl bg-surface-lowest shadow-editorial-sm transition-all duration-300
+		hover:-translate-y-0.5 hover:shadow-ambient"
 	class:opacity-90={isLocked}
 >
 	<!-- 封面图区域 -->
 	<div class="relative h-96 bg-base-300" class:grayscale-[20%]={isLocked}>
 		{#if coverUrl}
-			<img src={coverUrl} alt={title} class="absolute inset-0 w-full h-full object-cover" />
+			<img src={coverUrl} alt={title} class="absolute inset-0 h-full w-full object-cover" />
 		{/if}
 		<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
 	</div>
@@ -70,21 +70,23 @@
 		<time class="text-xs font-medium text-on-surface-variant">{formattedDate}</time>
 
 		<!-- 标题 -->
-		<h2 class="font-display text-xl font-bold text-on-surface mt-1 mb-4">
+		<h2 class="mt-1 mb-4 font-display text-xl font-bold text-on-surface">
 			{title}
 		</h2>
 
 		<!-- 底部操作栏 — 使用 surface-low 色调分割，非 border -->
-		<div class="flex items-center justify-end pt-6 border-t border-base-200/50">
+		<div class="flex items-center justify-end border-t border-base-200/50 pt-6">
 			{#if isLocked}
 				<!-- 锁定状态标签 -->
-				<div class="flex items-center gap-2 text-on-surface-variant bg-base-200 px-4 py-2 rounded-full">
+				<div
+					class="flex items-center gap-2 rounded-full bg-base-200 px-4 py-2 text-on-surface-variant"
+				>
 					<Lock size={14} />
-					<span class="font-bold text-xs">{m.requires_tier({ tier: requiredTier })}</span>
+					<span class="text-xs font-bold">{m.requires_tier({ tier: requiredTier })}</span>
 				</div>
 			{:else}
 				<!-- 可读状态 CTA -->
-				<a href="/article/{hashId}" class="btn btn-primary btn-sm rounded-full">
+				<a href="/article/{hashId}" class="btn rounded-full btn-sm btn-primary">
 					{m.read_more()}
 				</a>
 			{/if}
