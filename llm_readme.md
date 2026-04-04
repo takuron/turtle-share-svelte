@@ -55,9 +55,11 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 * **Rule:** Prioritize **DaisyUI v5** semantic component classes. Use Tailwind utility classes only when DaisyUI components cannot fulfill the requirement. Avoid custom CSS unless absolutely necessary.
 
 ### 1.7. Icon Standards
-* **Rule:** All icons **must** use **Lucide Svelte** (`lucide-svelte`). Do not introduce other icon libraries (e.g., Heroicons, Font Awesome).
-* **Usage:** Import individual icon components: `import { Search } from 'lucide-svelte';`, then use as `<Search size={20} />`.
-* **Goal:** Tree-shakable, consistent line-icon style across the entire application.
+* **Rule:** UI icons use **Lucide Svelte** (`lucide-svelte`). Brand/platform icons use **Simple Icons** (`@icons-pack/svelte-simple-icons`). Do not introduce other icon libraries.
+* **Lucide Usage:** `import { Search } from 'lucide-svelte';` → `<Search size={20} />`
+* **Simple Icons Usage:** `import { SiGithub } from '@icons-pack/svelte-simple-icons';` → `<SiGithub size={16} />`
+* **Social Icon Registry:** `src/lib/config/socialIcons.svelte.ts` maps platform keys to icon components. Add new platforms there.
+* **Goal:** Tree-shakable, consistent icon style across the entire application.
 
 ### 1.8. Font Standards
 * **Rule:** The project uses **Inter** (Body/Labels), **Plus Jakarta Sans** (Display/Headlines), and **Noto Sans SC** (Chinese) as the font stack, self-hosted via `@fontsource-variable`.
@@ -84,6 +86,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 | Testing | Vitest + Playwright | 4.1+ |
 | Adapter | @sveltejs/adapter-static | 3.0+ |
 | Icons | Lucide Svelte (lucide-svelte) | 1.0+ |
+| Brand Icons | @icons-pack/svelte-simple-icons | 7.x |
 | Fonts | Inter + Plus Jakarta Sans + Noto Sans SC (@fontsource-variable) | 5.x |
 | Package Manager | pnpm | — |
 

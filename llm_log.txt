@@ -6,3 +6,5 @@
 [2026-04-04T13:03:34+08:00] Add editorial theme system: custom DaisyUI themes (editorial light/dark), surface hierarchy tokens, glass/gradient-cta/ghost-border utilities, Plus Jakarta Sans display font, shadow tokens. All based on DESIGN.md spec.
 [2026-04-04T13:14:35+08:00] Add homepage layout skeleton: TopNavBar, AuthorProfile, PostCard (readable/locked), BottomNavBar, SiteFooter components. All content is placeholder, ready for API wiring.
 [2026-04-04T13:30:36+08:00] Add Pagination component (editorial style). Remove BottomNavBar, use unified footer across all screen sizes.
+[2026-04-04T13:55:09+08:00] Add social icon system: 22 preset platforms (Simple Icons + Lucide) in socialIcons registry. AuthorProfile reads social_links from siteStore. DEFAULT_SITE_INFO includes example social_links. Remove BottomNavBar.
+[2026-04-04T14:56:40+08:00] Refactor all components to read from siteStore: add avatar/bio to SiteInfo type, AuthorProfile shows avatar image + bio, TopNavBar/SiteFooter read site name from store. No more hardcoded values or props for site info.

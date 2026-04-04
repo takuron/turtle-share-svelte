@@ -17,6 +17,9 @@ importers:
       '@fontsource-variable/plus-jakarta-sans':
         specifier: ^5.2.8
         version: 5.2.8
+      '@icons-pack/svelte-simple-icons':
+        specifier: ^7.2.0
+        version: 7.2.0(@sveltejs/kit@2.55.0(@sveltejs/vite-plugin-svelte@6.2.4(svelte@5.55.1)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.32.0)))(svelte@5.55.1)(typescript@5.9.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.32.0)))(svelte@5.55.1)
       lucide-svelte:
         specifier: ^1.0.1
         version: 1.0.1(svelte@5.55.1)
@@ -254,6 +257,13 @@ packages:
 
   '@fontsource-variable/plus-jakarta-sans@5.2.8':
     resolution: {integrity: sha512-iQecBizIdZxezODNHzOn4SvvRMrZL/S8k4MEXGDynCmUrImVW0VmX+tIAMqnADwH4haXlHSXqMgU6+kcfBQJdw==}
+
+  '@icons-pack/svelte-simple-icons@7.2.0':
+    resolution: {integrity: sha512-zH4YByltlMBipdijJ1ZN4YGmxn2LKLCt+wCDC1rF0+3yor95Df090lZ5wfsN/UN4JsLjr7e6nxp6MOsEfYv/cQ==}
+    engines: {node: '>=24', pnpm: '>=10'}
+    peerDependencies:
+      '@sveltejs/kit': ^2.5.0
+      svelte: ^5.0.0
 
   '@inlang/paraglide-js@2.15.1':
     resolution: {integrity: sha512-7wWKbLWwLx1dkkYz55TnVp+39atKXf7rnlHnL8adSmM73UaAdB9fXDzo24GHSY/6FPGFKSkgHdT2qyJv2whWsA==}
@@ -1342,6 +1352,11 @@ snapshots:
   '@fontsource-variable/noto-sans-sc@5.2.10': {}
 
   '@fontsource-variable/plus-jakarta-sans@5.2.8': {}
+
+  '@icons-pack/svelte-simple-icons@7.2.0(@sveltejs/kit@2.55.0(@sveltejs/vite-plugin-svelte@6.2.4(svelte@5.55.1)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.32.0)))(svelte@5.55.1)(typescript@5.9.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.32.0)))(svelte@5.55.1)':
+    dependencies:
+      '@sveltejs/kit': 2.55.0(@sveltejs/vite-plugin-svelte@6.2.4(svelte@5.55.1)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.32.0)))(svelte@5.55.1)(typescript@5.9.3)(vite@7.3.1(jiti@2.6.1)(lightningcss@1.32.0))
+      svelte: 5.55.1
 
   '@inlang/paraglide-js@2.15.1':
     dependencies:
