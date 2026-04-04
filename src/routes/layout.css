@@ -1,9 +1,226 @@
 @import 'tailwindcss';
 @import '@fontsource-variable/inter';
 @import '@fontsource-variable/noto-sans-sc';
+@import '@fontsource-variable/plus-jakarta-sans';
 @plugin '@tailwindcss/typography';
 @plugin 'daisyui';
 
+/* ═══════════════════════════════════════════════
+   亮色主题: "editorial"
+   基于 DESIGN.md "The Fluid Editorial" 设计规范
+   ═══════════════════════════════════════════════ */
+@plugin "daisyui/theme" {
+	name: "editorial";
+	default: true;
+	prefersdark: false;
+	color-scheme: light;
+
+	/* 背景层级 — 映射 DESIGN.md §2 Surface Hierarchy */
+	--color-base-100: oklch(97.42% 0.012 276.10); /* surface #f4f6ff — 无限画布 */
+	--color-base-200: oklch(95.70% 0.020 264.47); /* surface_container_low #eaf1ff */
+	--color-base-300: oklch(93.10% 0.033 261.03); /* surface_container #dce9ff */
+	--color-base-content: oklch(30.22% 0.029 256.84); /* on_surface #252f3d */
+
+	/* 主色 — 高色度的"外科手术式"能量打击 */
+	--color-primary: oklch(49.61% 0.242 275.31); /* #473ee7 */
+	--color-primary-content: oklch(100% 0 0);
+	--color-secondary: oklch(50.15% 0.216 342.46); /* #ad0084 */
+	--color-secondary-content: oklch(100% 0 0);
+	--color-accent: oklch(71.61% 0.152 282.28); /* primary_container #9695ff */
+	--color-accent-content: oklch(30.22% 0.029 256.84);
+	--color-neutral: oklch(30.22% 0.029 256.84); /* on_surface */
+	--color-neutral-content: oklch(97.42% 0.012 276.10);
+
+	/* 语义色 */
+	--color-info: oklch(74% 0.16 232.661);
+	--color-info-content: oklch(29% 0.066 243.157);
+	--color-success: oklch(76% 0.177 163.223);
+	--color-success-content: oklch(37% 0.077 168.94);
+	--color-warning: oklch(82% 0.189 84.429);
+	--color-warning-content: oklch(41% 0.112 45.904);
+	--color-error: oklch(71% 0.194 13.428);
+	--color-error-content: oklch(27% 0.105 12.094);
+
+	/* 圆角 — DESIGN.md §5: 按钮/标签使用 full，卡片使用 xl */
+	--radius-selector: 9999px;
+	--radius-field: 0.75rem;
+	--radius-box: 1rem;
+
+	/* 基础尺寸 */
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+
+	/* "No-Line" 规则 — DESIGN.md §2: 禁止使用 1px 边框分割内容 */
+	--border: 0px;
+
+	/* 效果 */
+	--depth: 1;
+	--noise: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   暗色主题: "editorial-dark"
+   系统暗色模式自动切换
+   ═══════════════════════════════════════════════ */
+@plugin "daisyui/theme" {
+	name: "editorial-dark";
+	default: false;
+	prefersdark: true;
+	color-scheme: dark;
+
+	--color-base-100: oklch(25% 0.020 260);
+	--color-base-200: oklch(22% 0.018 260);
+	--color-base-300: oklch(19% 0.015 260);
+	--color-base-content: oklch(95% 0.010 260);
+
+	--color-primary: oklch(58% 0.233 277);
+	--color-primary-content: oklch(96% 0.018 272);
+	--color-secondary: oklch(60% 0.200 342);
+	--color-secondary-content: oklch(96% 0.018 342);
+	--color-accent: oklch(71.61% 0.152 282.28);
+	--color-accent-content: oklch(95% 0.010 260);
+	--color-neutral: oklch(90% 0.010 260);
+	--color-neutral-content: oklch(25% 0.020 260);
+
+	--color-info: oklch(74% 0.16 232.661);
+	--color-info-content: oklch(29% 0.066 243.157);
+	--color-success: oklch(76% 0.177 163.223);
+	--color-success-content: oklch(37% 0.077 168.94);
+	--color-warning: oklch(82% 0.189 84.429);
+	--color-warning-content: oklch(41% 0.112 45.904);
+	--color-error: oklch(71% 0.194 13.428);
+	--color-error-content: oklch(27% 0.105 12.094);
+
+	--radius-selector: 9999px;
+	--radius-field: 0.75rem;
+	--radius-box: 1rem;
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+	--border: 0px;
+	--depth: 1;
+	--noise: 0;
+}
+
+/* ═══════════════════════════════════════════════
+   Tailwind 主题扩展 — 注册自定义工具类
+   ═══════════════════════════════════════════════ */
 @theme {
+	/* 字体栈 */
 	--font-sans: 'Inter Variable', 'Noto Sans SC Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-display: 'Plus Jakarta Sans Variable', 'Inter Variable', 'Noto Sans SC Variable', ui-sans-serif, system-ui, sans-serif;
+
+	/* 编辑性表面层级色 → bg-surface-*, text-surface-* */
+	--color-surface-lowest: var(--surface-lowest);
+	--color-surface-low: var(--surface-low);
+	--color-surface: var(--surface);
+	--color-surface-container: var(--surface-container);
+	--color-surface-dim: var(--surface-dim);
+	--color-on-surface: var(--on-surface);
+	--color-on-surface-variant: var(--on-surface-variant);
+	--color-outline-variant: var(--outline-variant);
+
+	/* 阴影 → shadow-ambient, shadow-editorial-sm */
+	--shadow-ambient: var(--shadow-ambient);
+	--shadow-editorial-sm: var(--shadow-editorial-sm);
+}
+
+/* ═══════════════════════════════════════════════
+   Editorial Design Tokens — 扩展 DaisyUI 之外的语义变量
+   DESIGN.md §2 Surface Hierarchy / Glass / Gradient / Shadow
+   ═══════════════════════════════════════════════ */
+@layer base {
+	/* —— 亮色主题编辑性 token —— */
+	:root,
+	[data-theme='editorial'] {
+		/* 表面层级 (DESIGN.md §2) */
+		--surface-lowest: oklch(100% 0 0); /* #ffffff — 聚焦输入框、主要帖子 */
+		--surface-low: oklch(95.7% 0.02 264.47); /* #eaf1ff — 侧边栏区域 */
+		--surface: oklch(97.42% 0.012 276.1); /* #f4f6ff — 无限画布 */
+		--surface-container: oklch(93.1% 0.033 261.03); /* #dce9ff — 标准卡片 */
+		--surface-dim: oklch(89% 0.025 258);
+
+		/* 文本色 */
+		--on-surface: oklch(30.22% 0.029 256.84); /* #252f3d */
+		--on-surface-variant: oklch(50.37% 0.03 259.03); /* #5a6576 */
+
+		/* 描边 */
+		--outline-variant: oklch(83.5% 0.02 252.9); /* #c0cad6 */
+
+		/* 玻璃拟态 (DESIGN.md §2) */
+		--glass-bg: oklch(100% 0 0 / 80%);
+		--glass-blur: 24px;
+
+		/* 渐变 CTA (DESIGN.md §2) — primary → primary_container 135° */
+		--gradient-cta: linear-gradient(
+			135deg,
+			oklch(49.61% 0.242 275.31),
+			oklch(71.61% 0.152 282.28)
+		);
+
+		/* 环境阴影 (DESIGN.md §4) — 使用 on_surface 色调，非纯黑 */
+		--shadow-ambient: 0 20px 40px -10px oklch(30.22% 0.029 256.84 / 8%);
+		--shadow-editorial-sm: 0 4px 12px -4px oklch(30.22% 0.029 256.84 / 6%);
+	}
+
+	/* —— 暗色主题编辑性 token —— */
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme]) {
+			--surface-lowest: oklch(28% 0.022 260);
+			--surface-low: oklch(22% 0.018 260);
+			--surface: oklch(25% 0.02 260);
+			--surface-container: oklch(19% 0.015 260);
+			--surface-dim: oklch(16% 0.012 260);
+			--on-surface: oklch(95% 0.01 260);
+			--on-surface-variant: oklch(70% 0.02 259);
+			--outline-variant: oklch(40% 0.02 252);
+			--glass-bg: oklch(25% 0.02 260 / 80%);
+			--gradient-cta: linear-gradient(
+				135deg,
+				oklch(58% 0.233 277),
+				oklch(71.61% 0.152 282.28)
+			);
+			--shadow-ambient: 0 20px 40px -10px oklch(0% 0 0 / 20%);
+			--shadow-editorial-sm: 0 4px 12px -4px oklch(0% 0 0 / 15%);
+		}
+	}
+
+	[data-theme='editorial-dark'] {
+		--surface-lowest: oklch(28% 0.022 260);
+		--surface-low: oklch(22% 0.018 260);
+		--surface: oklch(25% 0.02 260);
+		--surface-container: oklch(19% 0.015 260);
+		--surface-dim: oklch(16% 0.012 260);
+		--on-surface: oklch(95% 0.01 260);
+		--on-surface-variant: oklch(70% 0.02 259);
+		--outline-variant: oklch(40% 0.02 252);
+		--glass-bg: oklch(25% 0.02 260 / 80%);
+		--gradient-cta: linear-gradient(
+			135deg,
+			oklch(58% 0.233 277),
+			oklch(71.61% 0.152 282.28)
+		);
+		--shadow-ambient: 0 20px 40px -10px oklch(0% 0 0 / 20%);
+		--shadow-editorial-sm: 0 4px 12px -4px oklch(0% 0 0 / 15%);
+	}
+}
+
+/* ═══════════════════════════════════════════════
+   Editorial Utility Classes — DESIGN.md 常用模式
+   ═══════════════════════════════════════════════ */
+
+/* 玻璃拟态 — 用于浮动元素（头部、导航栏）*/
+@utility glass {
+	background: var(--glass-bg);
+	backdrop-filter: blur(var(--glass-blur));
+	-webkit-backdrop-filter: blur(var(--glass-blur));
+}
+
+/* 渐变 CTA — 主要操作按钮 */
+@utility gradient-cta {
+	background: var(--gradient-cta);
+}
+
+/* 幽灵边框 — 无障碍模式下的边缘定义 (DESIGN.md §4) */
+@utility ghost-border {
+	outline: 1px solid oklch(from var(--outline-variant) l c h / 15%);
 }
