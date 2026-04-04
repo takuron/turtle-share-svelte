@@ -1,4 +1,24 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from zh-cn!"
+	"hello_world": "Hello, {name} from zh-cn!",
+	"login": "登录",
+	"my_subscriptions": "我的订阅",
+	"locked_content": "已解锁内容",
+	"change_password": "修改密码",
+	"logout": "退出登录",
+	"dashboard": "控制台",
+	"user_login_page_title": "用户登录 — TurtleShare",
+	"admin_login_page_title": "管理员登录 — TurtleShare",
+	"admin_login_heading": "管理员登录",
+	"welcome_back": "欢迎回来",
+	"admin_login_subtitle": "请使用管理员账户登录",
+	"user_login_subtitle": "请登录您的账户以继续",
+	"switch_to_user_login": "切换为用户登录",
+	"switch_to_admin_login": "切换为管理员登录",
+	"enter_username_password": "请输入用户名和密码",
+	"username": "用户名",
+	"password": "密码",
+	"enter_username": "请输入用户名",
+	"enter_password": "请输入密码",
+	"logging_in": "登录中…"
 }

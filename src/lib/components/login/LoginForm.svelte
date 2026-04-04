@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { login } from '$lib/stores/auth.svelte';
 	import { CircleAlert } from 'lucide-svelte';
+	import * as m from '$lib/paraglide/messages.js';
 
 	/**
 	 * A login form component following the Editorial design system.
@@ -16,12 +17,10 @@
 	let { mode = 'user' }: { mode: 'user' | 'admin' } = $props();
 
 	// 1. 根据模式派生界面文案
-	let title = $derived(mode === 'admin' ? '管理员登录' : '欢迎回来');
-	let subtitle = $derived(
-		mode === 'admin' ? '请使用管理员账户登录' : '请登录您的账户以继续'
-	);
+	let title = $derived(mode === 'admin' ? m.admin_login_heading() : m.welcome_back());
+	let subtitle = $derived(mode === 'admin' ? m.admin_login_subtitle() : m.user_login_subtitle());
 	let switchText = $derived(
-		mode === 'admin' ? '切换为用户登录' : '切换为管理员登录'
+		mode === 'admin' ? m.switch_to_user_login() : m.switch_to_admin_login()
 	);
 	let switchHref = $derived(mode === 'admin' ? '/user' : '/admin');
 
@@ -37,7 +36,7 @@
 
 		// 前端基本校验
 		if (!username.trim() || !password) {
-			errorMsg = '请输入用户名和密码';
+			errorMsg = m.enter_username_password();
 			return;
 		}
 
@@ -57,42 +56,50 @@
 
 <!-- 登录卡片容器 — 玻璃拟态 + 环境阴影 -->
 <div
-	class="bg-surface-lowest/95 backdrop-blur-md p-8 rounded-2xl border border-white"
+	class="rounded-2xl border border-white bg-surface-lowest/95 p-8 backdrop-blur-md"
 	style="box-shadow: var(--shadow-ambient);"
 >
 	<!-- 标题区域 -->
-	<div class="text-center mb-10">
-		<h2 class="text-2xl font-extrabold text-on-surface mb-2 font-display">
+	<div class="mb-10 text-center">
+		<h2 class="mb-2 font-display text-2xl font-extrabold text-on-surface">
 			{title}
 		</h2>
-		<p class="text-on-surface-variant text-sm font-medium">
+		<p class="text-sm font-medium text-on-surface-variant">
 			{subtitle}
 		</p>
 	</div>
 
 	<!-- 错误提示 -->
 	{#if errorMsg}
-		<div class="flex items-center gap-2 rounded-xl bg-error/10 text-error px-4 py-3 mb-6 text-sm font-medium">
+		<div
+			class="mb-6 flex items-center gap-2 rounded-xl bg-error/10 px-4 py-3 text-sm font-medium text-error"
+		>
 			<CircleAlert size={16} />
 			{errorMsg}
 		</div>
 	{/if}
 
 	<!-- 登录表单 -->
-	<form class="space-y-6" onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+	<form
+		class="space-y-6"
+		onsubmit={(e) => {
+			e.preventDefault();
+			handleSubmit();
+		}}
+	>
 		<!-- 用户名输入 -->
 		<div>
 			<label
-				class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-2"
+				class="mb-2 block text-xs font-bold tracking-wider text-on-surface-variant uppercase"
 				for="username"
 			>
-				用户名
+				{m.username()}
 			</label>
 			<input
-				class="w-full bg-surface-low border border-outline-variant/20 rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+				class="w-full rounded-xl border border-outline-variant/20 bg-surface-low px-4 py-3 text-on-surface transition-all outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
 				id="username"
 				type="text"
-				placeholder="请输入用户名"
+				placeholder={m.enter_username()}
 				disabled={loading}
 				bind:value={username}
 			/>
@@ -101,16 +108,16 @@
 		<!-- 密码输入 -->
 		<div>
 			<label
-				class="block text-xs font-bold uppercase tracking-wider text-on-surface-variant mb-2"
+				class="mb-2 block text-xs font-bold tracking-wider text-on-surface-variant uppercase"
 				for="password"
 			>
-				密码
+				{m.password()}
 			</label>
 			<input
-				class="w-full bg-surface-low border border-outline-variant/20 rounded-xl px-4 py-3 text-on-surface focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none"
+				class="w-full rounded-xl border border-outline-variant/20 bg-surface-low px-4 py-3 text-on-surface transition-all outline-none focus:border-transparent focus:ring-2 focus:ring-primary"
 				id="password"
 				type="password"
-				placeholder="请输入密码"
+				placeholder={m.enter_password()}
 				disabled={loading}
 				bind:value={password}
 			/>
@@ -119,23 +126,23 @@
 		<!-- 登录按钮 -->
 		<div class="pt-2">
 			<button
-				class="btn btn-primary w-full py-4 rounded-xl font-bold text-base shadow-lg active:scale-[0.98] transition-all"
+				class="btn w-full rounded-xl py-4 text-base font-bold shadow-lg transition-all btn-primary active:scale-[0.98]"
 				disabled={loading}
 			>
 				{#if loading}
-					<span class="loading loading-spinner loading-sm"></span>
-					登录中…
+					<span class="loading loading-sm loading-spinner"></span>
+					{m.logging_in()}
 				{:else}
-					登录
+					{m.login()}
 				{/if}
 			</button>
 		</div>
 	</form>
 
 	<!-- 切换登录模式链接 -->
-	<div class="mt-10 pt-6 border-t border-outline-variant/10 text-center">
+	<div class="mt-10 border-t border-outline-variant/10 pt-6 text-center">
 		<p class="text-sm text-on-surface-variant">
-			<a class="text-primary font-bold hover:underline" href={switchHref}>
+			<a class="font-bold text-primary hover:underline" href={switchHref}>
 				{switchText}
 			</a>
 		</p>

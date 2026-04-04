@@ -12,3 +12,6 @@
 [2026-04-04T15:38:11+08:00] Refactor routes into (main) and (auth) layout groups; login pages now have no TopNavBar/SiteFooter and no scroll
 [2026-04-04T15:45:54+08:00] Implement auth login flow: API client, auth store (JWT decode, login/logout, initAuth), LoginForm API integration, auth layout redirect guard
 [2026-04-04T16:07:45+08:00] TopNavBar login button now opens /user in a new tab (target=_blank)
+[2026-04-04T16:20:50+08:00] Implement user dropdown in TopNavBar reading from JWT authStore, support both user and admin roles, and update i18n messages
+[2026-04-04T16:27:02+08:00] Add i18n support to user and admin login pages
+[2026-04-04T16:34:22+08:00] Update user dropdown lock icon link from locked content to change password

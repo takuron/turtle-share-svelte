@@ -1,4 +1,24 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-	"hello_world": "Hello, {name} from en!"
+	"hello_world": "Hello, {name} from en!",
+	"login": "Login",
+	"my_subscriptions": "My Subscriptions",
+	"locked_content": "Locked Content",
+	"change_password": "Change Password",
+	"logout": "Logout",
+	"dashboard": "Dashboard",
+	"user_login_page_title": "User Login — TurtleShare",
+	"admin_login_page_title": "Admin Login — TurtleShare",
+	"admin_login_heading": "Admin Login",
+	"welcome_back": "Welcome Back",
+	"admin_login_subtitle": "Please login with your admin account",
+	"user_login_subtitle": "Please login to your account to continue",
+	"switch_to_user_login": "Switch to user login",
+	"switch_to_admin_login": "Switch to admin login",
+	"enter_username_password": "Please enter username and password",
+	"username": "Username",
+	"password": "Password",
+	"enter_username": "Enter username",
+	"enter_password": "Enter password",
+	"logging_in": "Logging in..."
 }
