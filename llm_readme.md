@@ -114,13 +114,16 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `SiteFooter.svelte` — Centered plain-text footer.
 - **Login Components** (`src/lib/components/login/`):
   - `LoginForm.svelte` — Reusable login form with `mode: 'user' | 'admin'` prop. Calls login API, shows error/loading states, redirects to `/` on success.
-- **API & Stores**:
+- **API & Stores** (API modules organized by permission level under `src/lib/api/`):
   - `src/lib/api/client.ts` — Generic `apiRequest()` helper with auto-attached JWT Authorization header.
-  - `src/lib/api/auth.ts` — Auth API: `loginRequest()` for admin/user login.
-  - `src/lib/api/site.ts` — Site API: `fetchSiteInfoRequest()` for public site info.
-  - `src/lib/api/articles.ts` — Articles API: `fetchArticlesPage()`, `fetchArticlesPageInfo()` for public article listing with pagination. Types: `ArticleListItem`, `PageInfo`.
-  - `src/lib/stores/auth.svelte.ts` — Auth store: JWT decode, `login()`, `logout()`, `initAuth()`. Two roles (admin/user) are mutually exclusive. Delegates API calls to `src/lib/api/auth.ts`.
-  - `src/lib/stores/site.svelte.ts` — Site info store with `fetchSiteInfo()`. Delegates API calls to `src/lib/api/site.ts`.
+  - `src/lib/api/types.ts` — Shared types: `ArticleListItem`, `AdminArticleRawItem`, `PageInfo`, `DEFAULT_PAGE_SIZE`.
+  - `src/lib/api/public/auth.ts` — Login API: `loginRequest()` for admin/user login. Endpoints: `POST /api/admin/login`, `POST /api/users/login`.
+  - `src/lib/api/public/site.ts` — Site API: `fetchSiteInfoRequest()`. Endpoint: `GET /api/public/site-info`.
+  - `src/lib/api/public/articles.ts` — Public articles API: `fetchPublicArticlesPage()`, `fetchPublicArticlesPageInfo()`. Endpoints: `GET /api/public/articles/page/:page`, `GET /api/public/articles/page`.
+  - `src/lib/api/user/articles.ts` — User articles API: `fetchUserArticlesPage()`, `fetchUserArticlesPageInfo()`. Endpoints: `GET /api/users/articles/page/:page`, `GET /api/users/articles/page`. Requires user JWT.
+  - `src/lib/api/admin/articles.ts` — Admin articles API: `fetchAdminArticlesPage()`, `fetchAdminArticlesPageInfo()`. Endpoints: `GET /api/admin/articles/page/:page`, `GET /api/admin/articles/page`. Requires admin JWT. Normalizes `is_public` → `accessible=true`.
+  - `src/lib/stores/auth.svelte.ts` — Auth store: JWT decode, `login()`, `logout()`, `initAuth()`. Two roles (admin/user) are mutually exclusive. Delegates API calls to `src/lib/api/public/auth.ts`.
+  - `src/lib/stores/site.svelte.ts` — Site info store with `fetchSiteInfo()`. Delegates API calls to `src/lib/api/public/site.ts`.
 - **Route Structure**:
   - `+layout.svelte` — Root layout: CSS imports, favicon, i18n links, `initAuth()` + `fetchSiteInfo()`.
   - `(main)/+layout.svelte` — Main layout group: TopNavBar + main content + SiteFooter.

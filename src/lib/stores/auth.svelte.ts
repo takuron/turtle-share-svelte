@@ -1,4 +1,4 @@
-import { loginRequest } from '$lib/api/auth';
+import { loginRequest } from '$lib/api/public/auth';
 
 /**
  * JWT payload structure decoded from the token.

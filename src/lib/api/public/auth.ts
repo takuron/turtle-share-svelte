@@ -14,6 +14,10 @@ import { apiRequest } from '$lib/api/client';
 // // @param role - 'admin' 或 'user'
 // // @param username - 用户名
 // // @param password - 密码
+
+// 原始端点:
+// POST /api/admin/login — 管理员登录（无需鉴权）
+// POST /api/users/login — 用户登录（无需鉴权）
 export function loginRequest(role: 'admin' | 'user', username: string, password: string) {
 	// 根据角色选择不同的 API 端点。
 	const endpoint = role === 'admin' ? '/admin/login' : '/users/login';

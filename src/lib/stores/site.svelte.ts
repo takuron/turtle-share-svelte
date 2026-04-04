@@ -1,5 +1,5 @@
 import { DEFAULT_SITE_INFO, type SiteInfo } from '$lib/config';
-import { fetchSiteInfoRequest } from '$lib/api/site';
+import { fetchSiteInfoRequest } from '$lib/api/public/site';
 
 // 1. 使用 Svelte 5 Runes 定义全局站点信息状态对象，初始值为缺省设置。
 export const siteStore = $state<{ info: SiteInfo }>({
