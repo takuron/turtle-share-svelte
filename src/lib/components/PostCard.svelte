@@ -42,7 +42,7 @@
 				</div>
 			{:else}
 				<!-- 可读状态 CTA -->
-				<button class="btn btn-primary btn-sm">阅读详情</button>
+				<button class="btn btn-primary btn-sm rounded-full">阅读详情</button>
 			{/if}
 		</div>
 	</div>
