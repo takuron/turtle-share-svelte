@@ -34,6 +34,14 @@ Manages DaisyUI theme selection.
 |-------|------|-------------|
 | `current` | `string` | Active DaisyUI theme name |
 
+### Site Store (`src/lib/stores/site.svelte.ts`)
+
+Manages public site information fetched from the API on runtime.
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `info` | `any \| null` | Raw site information object |
+
 ## Pattern Example / 模式示例
 
 ```typescript

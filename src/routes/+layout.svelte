@@ -3,8 +3,15 @@
 	import { locales, localizeHref } from '$lib/paraglide/runtime';
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
+	import { fetchSiteInfo } from '$lib/stores/site.svelte';
+	import { onMount } from 'svelte';
 
 	let { children } = $props();
+
+	// 1. 每次项目被访问（组件挂载时）在客户端获取最新的站点信息。
+	onMount(() => {
+		fetchSiteInfo();
+	});
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>

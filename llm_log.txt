@@ -1,3 +1,5 @@
 [2026-04-03T16:21:35+08:00] Project initialization: installed DaisyUI v5, configured in layout.css. Created docs/routing.md, docs/state-management.md, docs/TODO.md. Updated llm_readme.md with full project structure and tech stack. Updated docs/architecture.md with frontend architecture section.
 [2026-04-03T16:31:53+08:00] Rewrote docs/architecture.md as frontend-only architecture document. Updated llm_readme.md: added docs/backend/ as read-only backend reference, updated Rule 1.5 to reference docs/backend/api.md.
 [2026-04-03T19:25:47+08:00] Add lucide-svelte (icons), Inter + Noto Sans SC fonts (@fontsource-variable). Configure --font-sans in layout.css. Document icon/font standards in llm_readme.md (sections 1.7, 1.8).
+[2026-04-04T08:34:46+08:00] Setup runtime client-side fetch for site-info in layout onMount using Svelte 5 Runes state.
+[2026-04-04T12:09:38+08:00] Update API_URL to default to relative path and implement DEFAULT_SITE_INFO fallback mechanism.
