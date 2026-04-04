@@ -114,10 +114,12 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 - **Login Components** (`src/lib/components/login/`):
   - `LoginForm.svelte` — Reusable login form with `mode: 'user' | 'admin'` prop. Glassmorphism card, dot-pattern background expected from parent page.
 - **Route Structure**:
-  - `+layout.svelte` — Global layout: TopNavBar + main content + SiteFooter + BottomNavBar.
-  - `+page.svelte` — Homepage: AuthorProfile + PostCard feed.
-  - `/user/+page.svelte` — User login page (full-screen centered, dot-pattern background).
-  - `/admin/+page.svelte` — Admin login page (full-screen centered, dot-pattern background).
+  - `+layout.svelte` — Root layout: CSS imports, favicon, i18n links, `fetchSiteInfo()`.
+  - `(main)/+layout.svelte` — Main layout group: TopNavBar + main content + SiteFooter.
+  - `(main)/+page.svelte` — Homepage: AuthorProfile + PostCard feed.
+  - `(auth)/+layout.svelte` — Auth layout group: full-screen, no nav/footer, no scroll.
+  - `(auth)/user/+page.svelte` — User login page (dot-pattern background).
+  - `(auth)/admin/+page.svelte` — Admin login page (dot-pattern background).
 
 ### Available Scripts / 可用脚本
 

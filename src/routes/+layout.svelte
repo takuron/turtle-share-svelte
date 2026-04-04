@@ -5,8 +5,6 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { fetchSiteInfo } from '$lib/stores/site.svelte';
 	import { onMount } from 'svelte';
-	import TopNavBar from '$lib/components/main/TopNavBar.svelte';
-	import SiteFooter from '$lib/components/main/SiteFooter.svelte';
 
 	let { children } = $props();
 
@@ -18,16 +16,7 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
-<!-- 顶部导航栏 -->
-<TopNavBar />
-
-<!-- 主内容区域 — 为顶部导航留出空间 -->
-<main class="pt-24 pb-12 px-4 max-w-2xl mx-auto">
-	{@render children()}
-</main>
-
-<!-- 页脚 -->
-<SiteFooter />
+{@render children()}
 
 <!-- i18n 隐藏链接 -->
 <div style="display:none">
