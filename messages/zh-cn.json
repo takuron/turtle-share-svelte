@@ -20,5 +20,11 @@
 	"password": "密码",
 	"enter_username": "请输入用户名",
 	"enter_password": "请输入密码",
-	"logging_in": "登录中…"
+	"logging_in": "登录中…",
+	"read_more": "阅读详情",
+	"no_articles": "暂无文章。",
+	"loading_articles": "加载中…",
+	"load_error": "文章加载失败。",
+	"previous": "上一页",
+	"next": "下一页"
 }

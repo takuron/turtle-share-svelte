@@ -20,5 +20,11 @@
 	"password": "Password",
 	"enter_username": "Enter username",
 	"enter_password": "Enter password",
-	"logging_in": "Logging in..."
+	"logging_in": "Logging in...",
+	"read_more": "Read More",
+	"no_articles": "No articles yet.",
+	"loading_articles": "Loading...",
+	"load_error": "Failed to load articles.",
+	"previous": "Previous",
+	"next": "Next"
 }

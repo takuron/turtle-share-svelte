@@ -108,19 +108,24 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 - **Layout Components** (`src/lib/components/`):
   - `TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button.
   - `AuthorProfile.svelte` — Author profile header (magazine cover style).
-  - `PostCard.svelte` — Post card with `variant: 'readable' | 'locked'` states.
-  - `Pagination.svelte` — Page navigation with Previous/Next + page numbers, ellipsis for large ranges.
+  - `PostCard.svelte` — Post card displaying article data. Props: `title`, `hashId`, `coverImage`, `requiredTier`, `accessible`, `createdAt`. Shows readable/locked state based on `accessible`.
+  - `ArticleFeed.svelte` — Shared article feed component. Accepts `page` prop, fetches articles + page info from API, renders PostCards + Pagination.
+  - `Pagination.svelte` — Link-based page navigation. Props: `currentPage`, `totalPages`, `getHref`. Uses `<a>` tags for SEO-friendly navigation.
   - `SiteFooter.svelte` — Centered plain-text footer.
 - **Login Components** (`src/lib/components/login/`):
   - `LoginForm.svelte` — Reusable login form with `mode: 'user' | 'admin'` prop. Calls login API, shows error/loading states, redirects to `/` on success.
 - **API & Stores**:
   - `src/lib/api/client.ts` — Generic `apiRequest()` helper with auto-attached JWT Authorization header.
-  - `src/lib/stores/auth.svelte.ts` — Auth store: JWT decode, `login()`, `logout()`, `initAuth()`. Two roles (admin/user) are mutually exclusive.
-  - `src/lib/stores/site.svelte.ts` — Site info store with `fetchSiteInfo()`.
+  - `src/lib/api/auth.ts` — Auth API: `loginRequest()` for admin/user login.
+  - `src/lib/api/site.ts` — Site API: `fetchSiteInfoRequest()` for public site info.
+  - `src/lib/api/articles.ts` — Articles API: `fetchArticlesPage()`, `fetchArticlesPageInfo()` for public article listing with pagination. Types: `ArticleListItem`, `PageInfo`.
+  - `src/lib/stores/auth.svelte.ts` — Auth store: JWT decode, `login()`, `logout()`, `initAuth()`. Two roles (admin/user) are mutually exclusive. Delegates API calls to `src/lib/api/auth.ts`.
+  - `src/lib/stores/site.svelte.ts` — Site info store with `fetchSiteInfo()`. Delegates API calls to `src/lib/api/site.ts`.
 - **Route Structure**:
   - `+layout.svelte` — Root layout: CSS imports, favicon, i18n links, `initAuth()` + `fetchSiteInfo()`.
   - `(main)/+layout.svelte` — Main layout group: TopNavBar + main content + SiteFooter.
-  - `(main)/+page.svelte` — Homepage: AuthorProfile + PostCard feed.
+  - `(main)/+page.svelte` — Homepage: AuthorProfile + ArticleFeed (page 1).
+  - `(main)/page/[page]/+page.svelte` — Paginated article list: AuthorProfile + ArticleFeed (page N). Redirects `/page/1` to `/`.
   - `(auth)/+layout.svelte` — Auth layout group: full-screen, no nav/footer, no scroll. Redirects to `/` if already logged in.
   - `(auth)/user/+page.svelte` — User login page (dot-pattern background).
   - `(auth)/admin/+page.svelte` — Admin login page (dot-pattern background).

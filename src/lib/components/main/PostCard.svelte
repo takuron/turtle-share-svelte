@@ -1,16 +1,54 @@
 <script lang="ts">
 	/**
-	 * Post card for the vertical feed. Supports readable and locked states.
-	 * @prop {'readable' | 'locked'} variant - Card access state.
+	 * Post card for the vertical feed. Displays article data with readable/locked states.
+	 * @prop {string} title - Article title.
+	 * @prop {string} hashId - Article hash ID for linking.
+	 * @prop {string | null} coverImage - Cover image path (relative to API).
+	 * @prop {number} requiredTier - Minimum tier to access full content.
+	 * @prop {boolean} accessible - Whether current user can access full content.
+	 * @prop {number} createdAt - Unix timestamp of article creation.
 	 */
-	// // 垂直信息流中的帖子卡片。支持可读和锁定两种状态。
-	// // @prop {'readable' | 'locked'} variant - 卡片的访问状态。
+	// // 垂直信息流中的帖子卡片。展示文章数据，支持可读和锁定两种状态。
+	// // @prop {string} title - 文章标题。
+	// // @prop {string} hashId - 文章哈希 ID，用于链接。
+	// // @prop {string | null} coverImage - 封面图片路径（相对于 API）。
+	// // @prop {number} requiredTier - 完整访问所需的最低等级。
+	// // @prop {boolean} accessible - 当前用户是否可以访问完整内容。
+	// // @prop {number} createdAt - 文章创建时间的 Unix 时间戳。
 	import { Lock } from 'lucide-svelte';
+	import { API_URL } from '$lib/config';
+	import * as m from '$lib/paraglide/messages.js';
 
-	let { variant = 'readable' }: { variant?: 'readable' | 'locked' } = $props();
+	let {
+		title,
+		hashId,
+		coverImage = null,
+		requiredTier = 0,
+		accessible = true,
+		createdAt
+	}: {
+		title: string;
+		hashId: string;
+		coverImage?: string | null;
+		requiredTier?: number;
+		accessible?: boolean;
+		createdAt: number;
+	} = $props();
 
-	// 1. 锁定状态下降低整体不透明度和图片灰度。
-	const isLocked = $derived(variant === 'locked');
+	// 1. 根据 accessible 字段判断是否锁定。
+	const isLocked = $derived(!accessible);
+
+	// 2. 格式化创建日期。
+	const formattedDate = $derived(
+		new Date(createdAt * 1000).toLocaleDateString(undefined, {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric'
+		})
+	);
+
+	// 3. 拼接封面图片完整 URL。
+	const coverUrl = $derived(coverImage ? `${API_URL}${coverImage}` : null);
 </script>
 
 <!-- 帖子卡片 — DESIGN.md §5: border-radius xl, 无分割线, hover 提升 -->
@@ -19,17 +57,21 @@
 		hover:shadow-ambient duration-300"
 	class:opacity-90={isLocked}
 >
-	<!-- 封面图占位 -->
+	<!-- 封面图区域 -->
 	<div class="relative h-96 bg-base-300" class:grayscale-[20%]={isLocked}>
-		<!-- TODO: 接入 cover_image -->
+		{#if coverUrl}
+			<img src={coverUrl} alt={title} class="absolute inset-0 w-full h-full object-cover" />
+		{/if}
 		<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
 	</div>
 
 	<div class="p-6">
-		<!-- 标题占位 -->
-		<h2 class="font-display text-xl font-bold text-on-surface mb-4">
-			<!-- TODO: 接入 article.title -->
-			{isLocked ? 'Locked Post Title Placeholder' : 'Readable Post Title Placeholder'}
+		<!-- 日期 -->
+		<time class="text-xs font-medium text-on-surface-variant">{formattedDate}</time>
+
+		<!-- 标题 -->
+		<h2 class="font-display text-xl font-bold text-on-surface mt-1 mb-4">
+			{title}
 		</h2>
 
 		<!-- 底部操作栏 — 使用 surface-low 色调分割，非 border -->
@@ -38,11 +80,13 @@
 				<!-- 锁定状态标签 -->
 				<div class="flex items-center gap-2 text-on-surface-variant bg-base-200 px-4 py-2 rounded-full">
 					<Lock size={14} />
-					<span class="font-bold text-xs">需要等级 5 才能解锁</span>
+					<span class="font-bold text-xs">{m.locked_content()} (Tier {requiredTier})</span>
 				</div>
 			{:else}
 				<!-- 可读状态 CTA -->
-				<button class="btn btn-primary btn-sm rounded-full">阅读详情</button>
+				<a href="/article/{hashId}" class="btn btn-primary btn-sm rounded-full">
+					{m.read_more()}
+				</a>
 			{/if}
 		</div>
 	</div>

@@ -15,3 +15,5 @@
 [2026-04-04T16:20:50+08:00] Implement user dropdown in TopNavBar reading from JWT authStore, support both user and admin roles, and update i18n messages
 [2026-04-04T16:27:02+08:00] Add i18n support to user and admin login pages
 [2026-04-04T16:34:22+08:00] Update user dropdown lock icon link from locked content to change password
+[2026-04-04T16:43:45+08:00] Refactor: extract API request logic from stores into dedicated modules (src/lib/api/auth.ts, src/lib/api/site.ts). Stores now delegate API calls to API layer. Added SiteInfo type export to config.ts.
+[2026-04-04T16:56:31+08:00] Implement article listing with pagination: new API module (src/lib/api/articles.ts), ArticleFeed shared component, updated PostCard with real data props, link-based Pagination, routes / and /page/[page]. Added i18n messages for read_more, previous, next, loading, error, empty states.

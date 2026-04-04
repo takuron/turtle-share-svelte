@@ -1,4 +1,4 @@
-import { apiRequest } from '$lib/api/client';
+import { loginRequest } from '$lib/api/auth';
 
 /**
  * JWT payload structure decoded from the token.
@@ -101,14 +101,9 @@ export async function login(
 		return '请先退出当前账户再登录其他身份';
 	}
 
-	// 2. 根据角色选择不同的 API 端点。
-	const endpoint = role === 'admin' ? '/admin/login' : '/users/login';
-
 	try {
-		const res = await apiRequest<{ token: string }>(endpoint, {
-			method: 'POST',
-			body: JSON.stringify({ username, password })
-		});
+		// 2. 调用登录 API。
+		const res = await loginRequest(role, username, password);
 
 		if (!res.success) {
 			// 3. 将后端错误码映射为用户友好的中文提示。
