@@ -50,6 +50,22 @@ export interface PageInfo {
 /** 默认每页文章数 */
 export const DEFAULT_PAGE_SIZE = 10;
 
+/** 管理员用户管理每页用户数 */
+export const ADMIN_USERS_PAGE_SIZE = 5;
+
+/**
+ * Admin user list item as returned by the backend.
+ * 后端返回的管理员用户列表项。
+ */
+// // 后端返回的管理员用户列表项。
+export interface AdminUserItem {
+	hash_id: string;
+	username: string;
+	email: string;
+	note: string;
+	created_at: number;
+}
+
 /**
  * File link object in article detail.
  * 文章详情中的文件链接对象。

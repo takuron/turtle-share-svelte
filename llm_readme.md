@@ -114,14 +114,20 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `SiteFooter.svelte` — Centered plain-text footer.
 - **Login Components** (`src/lib/components/login/`):
   - `LoginForm.svelte` — Reusable login form with `mode: 'user' | 'admin'` prop. Calls login API, shows error/loading states, redirects to `/` on success.
+- **Admin Components** (`src/lib/components/admin/`):
+  - `AdminSidebar.svelte` — Dashboard sidebar with nav links, home link, logout. Props: `open`, `onclose`. Responsive: off-screen on mobile, toggled via floating button.
+  - `UserListCard.svelte` — Single user row in admin user list. Props: `user`, `expanded`, `ontoggle`. Expandable to show UserSubscriptionPanel.
+  - `UserSubscriptionPanel.svelte` — Subscription management panel for a user. Props: `user`. Shows table headers (data loading TBD).
+  - `AdminPagination.svelte` — Reusable pagination. Props: `currentPage`, `totalPages`, `onpagechange`, `showingText?`. Displays page numbers with prev/next buttons.
 - **API & Stores** (API modules organized by permission level under `src/lib/api/`):
   - `src/lib/api/client.ts` — Generic `apiRequest()` helper with auto-attached JWT Authorization header.
-  - `src/lib/api/types.ts` — Shared types: `ArticleListItem`, `AdminArticleRawItem`, `PageInfo`, `DEFAULT_PAGE_SIZE`.
+  - `src/lib/api/types.ts` — Shared types: `ArticleListItem`, `AdminArticleRawItem`, `AdminUserItem`, `PageInfo`, `DEFAULT_PAGE_SIZE`, `ADMIN_USERS_PAGE_SIZE`.
   - `src/lib/api/public/auth.ts` — Login API: `loginRequest()` for admin/user login. Endpoints: `POST /api/admin/login`, `POST /api/users/login`.
   - `src/lib/api/public/site.ts` — Site API: `fetchSiteInfoRequest()`. Endpoint: `GET /api/public/site-info`.
   - `src/lib/api/public/articles.ts` — Public articles API: `fetchPublicArticlesPage()`, `fetchPublicArticlesPageInfo()`. Endpoints: `GET /api/public/articles/page/:page`, `GET /api/public/articles/page`.
   - `src/lib/api/user/articles.ts` — User articles API: `fetchUserArticlesPage()`, `fetchUserArticlesPageInfo()`. Endpoints: `GET /api/users/articles/page/:page`, `GET /api/users/articles/page`. Requires user JWT.
   - `src/lib/api/admin/articles.ts` — Admin articles API: `fetchAdminArticlesPage()`, `fetchAdminArticlesPageInfo()`. Endpoints: `GET /api/admin/articles/page/:page`, `GET /api/admin/articles/page`. Requires admin JWT. Normalizes `is_public` → `accessible=true`.
+  - `src/lib/api/admin/users.ts` — Admin users API: `fetchAdminUsersPage()`, `fetchAdminUsersPageInfo()`. Endpoints: `GET /api/admin/users/page/:page`, `GET /api/admin/users/page`. Requires admin JWT. Default page_size=5.
   - `src/lib/stores/auth.svelte.ts` — Auth store: JWT decode, `login()`, `logout()`, `initAuth()`. Two roles (admin/user) are mutually exclusive. Delegates API calls to `src/lib/api/public/auth.ts`.
   - `src/lib/stores/site.svelte.ts` — Site info store with `fetchSiteInfo()`. Delegates API calls to `src/lib/api/public/site.ts`.
 - **Route Structure**:
@@ -134,7 +140,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `(auth)/user/+page.svelte` — User login page (dot-pattern background).
   - `(auth)/admin/+page.svelte` — Admin login page (dot-pattern background).
   - `(dashboard)/dashboard/+layout.svelte` — Dashboard layout group: fixed sidebar (72w) + main content area. Admin-only guard redirects non-admin to `/admin`. Sidebar has nav links (User/Article/File), home link, and logout button.
-  - `(dashboard)/dashboard/user/+page.svelte` — User Management page (skeleton).
+  - `(dashboard)/dashboard/user/+page.svelte` — User Management page. Fetches real user data from API (page_size=5), paginated list with expandable subscription panel (subscription loading TBD).
   - `(dashboard)/dashboard/article/+page.svelte` — Content Management page (skeleton).
   - `(dashboard)/dashboard/file/+page.svelte` — File Management page (skeleton).
 

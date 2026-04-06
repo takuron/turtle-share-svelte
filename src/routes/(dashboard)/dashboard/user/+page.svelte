@@ -1,39 +1,74 @@
 <script lang="ts">
 	/**
-	 * Admin User Management page with user list, expandable subscription details.
-	 * 管理员用户管理页面，包含用户列表和可展开的订阅详情。
+	 * Admin User Management page with paginated user list and expandable subscription details.
+	 * 管理员用户管理页面，包含分页用户列表和可展开的订阅详情。
 	 */
-	// // 管理员用户管理页面骨架，结构参考 stitch/code.html。
-	import {
-		ChevronRight,
-		ChevronDown,
-		ChevronLeft,
-		Edit,
-		Trash2,
-		Plus,
-		CirclePlus
-	} from 'lucide-svelte';
+	// // 管理员用户管理页面，从后端 API 获取真实用户数据。
+	import { CirclePlus, Loader2 } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
+	import { fetchAdminUsersPage, fetchAdminUsersPageInfo } from '$lib/api/admin/users';
+	import { ADMIN_USERS_PAGE_SIZE, type AdminUserItem, type PageInfo } from '$lib/api/types';
+	import { onMount } from 'svelte';
+	import UserListCard from '$lib/components/admin/UserListCard.svelte';
+	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
 
-	// 1. 模拟用户数据（骨架用，后续替换为真实 API 数据）。
-	const mockUsers = [
-		{ id: 1, name: 'Alex Lawson', initials: 'AL', note: '', bgClass: 'bg-primary/10 text-primary' },
-		{ id: 2, name: 'Sarah Miller', initials: 'SM', note: 'This is note for admin', bgClass: 'bg-base-300 text-on-surface-variant' },
-		{ id: 3, name: 'James Chen', initials: 'JC', note: '001 002', bgClass: 'bg-primary/10 text-primary' }
-	];
+	// 1. 页面状态。
+	let users = $state<AdminUserItem[]>([]);
+	let pageInfo = $state<PageInfo | null>(null);
+	let currentPage = $state(1);
+	let loading = $state(true);
+	let error = $state<string | null>(null);
 
-	// 2. 模拟订阅数据。
-	const mockSubscriptions = [
-		{ start: 'Jan 01, 2024', end: 'Dec 31, 2024', level: 5, note: 'Annual renewal', active: true },
-		{ start: 'Jan 01, 2023', end: 'Dec 31, 2023', level: 2, note: 'Discount applied', active: false }
-	];
+	// 2. 展开状态追踪。
+	let expandedUserId = $state<string | null>(null);
 
-	// 3. 展开状态追踪（第一个用户默认展开）。
-	let expandedUserId = $state<number | null>(1);
-
-	function toggleExpand(id: number) {
-		expandedUserId = expandedUserId === id ? null : id;
+	function toggleExpand(hashId: string) {
+		expandedUserId = expandedUserId === hashId ? null : hashId;
 	}
+
+	// 3. 加载指定页数据。
+	async function loadPage(page: number) {
+		loading = true;
+		error = null;
+		expandedUserId = null;
+
+		try {
+			// 并行请求用户列表和分页信息。
+			const [usersRes, pageInfoRes] = await Promise.all([
+				fetchAdminUsersPage(page),
+				fetchAdminUsersPageInfo()
+			]);
+
+			if (usersRes.success) {
+				users = usersRes.data;
+			} else {
+				error = usersRes.error.message;
+				return;
+			}
+
+			if (pageInfoRes.success) {
+				pageInfo = pageInfoRes.data;
+			}
+
+			currentPage = page;
+		} catch (e) {
+			error = String(e);
+		} finally {
+			loading = false;
+		}
+	}
+
+	// 4. 计算当前页的展示范围文本。
+	function getShowingText(): string {
+		if (!pageInfo) return '';
+		const from = (currentPage - 1) * ADMIN_USERS_PAGE_SIZE + 1;
+		const to = Math.min(currentPage * ADMIN_USERS_PAGE_SIZE, pageInfo.total_items);
+		return m.showing_users({ from: String(from), to: String(to), total: String(pageInfo.total_items) });
+	}
+
+	onMount(() => {
+		loadPage(1);
+	});
 </script>
 
 <!-- 用户管理页面 -->
@@ -58,147 +93,42 @@
 		<div class="col-span-1 text-right">{m.col_actions()}</div>
 	</div>
 
-	<!-- 用户列表卡片 -->
-	<div class="bg-surface-lowest rounded-xl shadow-editorial-sm overflow-hidden">
-		{#each mockUsers as user, i}
-			<!-- 用户行 -->
-			<div
-				class="border-b border-outline-variant/20 last:border-b-0
-					{expandedUserId === user.id ? 'bg-surface-lowest' : 'hover:bg-surface-low/30 transition-colors'}"
-			>
-				<div class="grid grid-cols-12 items-center px-4 lg:px-6 py-5">
-					<!-- 展开按钮 -->
-					<div class="col-span-2 lg:col-span-1 flex items-center pl-0 lg:pl-4">
-						<button
-							onclick={() => toggleExpand(user.id)}
-							class="transition-colors cursor-pointer
-								{expandedUserId === user.id ? 'text-primary' : 'text-on-surface-variant hover:text-primary'}"
-						>
-							{#if expandedUserId === user.id}
-								<ChevronDown size={20} />
-							{:else}
-								<ChevronRight size={20} />
-							{/if}
-						</button>
-					</div>
-
-					<!-- 用户名 + 头像 -->
-					<div class="col-span-6 lg:col-span-4 flex items-center gap-3">
-						<div class="w-10 h-10 rounded-full {user.bgClass} flex items-center justify-center font-bold text-sm shrink-0">
-							{user.initials}
-						</div>
-						<p class="font-bold text-on-surface text-base truncate">{user.name}</p>
-					</div>
-
-					<!-- 备注（仅桌面端） -->
-					<div class="hidden lg:block col-span-6 text-on-surface-variant text-sm truncate">
-						{user.note}
-					</div>
-
-					<!-- 操作按钮 -->
-					<div class="col-span-4 lg:col-span-1 flex justify-end gap-3">
-						<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
-							<Edit size={18} />
-						</button>
-						<button class="text-on-surface-variant hover:text-error transition-colors cursor-pointer">
-							<Trash2 size={18} />
-						</button>
-					</div>
-				</div>
-
-				<!-- 展开的订阅详情面板 -->
-				{#if expandedUserId === user.id}
-					<div class="bg-surface-low/30 p-4 lg:p-6">
-						<!-- 备注（仅移动端展开时显示） -->
-						{#if user.note}
-							<p class="lg:hidden text-on-surface-variant text-sm mb-4">{user.note}</p>
-						{/if}
-
-						<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
-							<h3 class="text-sm font-bold uppercase tracking-wider text-on-surface-variant">
-								{m.subscription_cycles()}
-							</h3>
-							<button
-								class="flex items-center gap-1.5 text-xs font-bold bg-surface-lowest border border-outline-variant/50 text-primary px-3 py-1.5 rounded-full hover:bg-primary hover:text-white transition-all shadow-editorial-sm cursor-pointer"
-							>
-								<Plus size={14} />
-								{m.add_subscription()}
-							</button>
-						</div>
-
-						<!-- 订阅表格 -->
-						<div class="overflow-x-auto rounded-lg border border-outline-variant/30 bg-surface-lowest">
-							<table class="w-full text-left border-collapse">
-								<thead>
-									<tr class="bg-surface-container/50 text-[11px] font-black uppercase tracking-widest text-on-surface-variant">
-										<th class="px-4 py-3 w-32">{m.col_start_date()}</th>
-										<th class="px-4 py-3 w-32">{m.col_end_date()}</th>
-										<th class="px-4 py-3 w-20">{m.col_level()}</th>
-										<th class="px-4 py-3">{m.col_note()}</th>
-										<th class="px-4 py-3 text-right w-24">{m.col_actions()}</th>
-									</tr>
-								</thead>
-								<tbody class="divide-y divide-outline-variant/20 text-sm">
-									{#each mockSubscriptions as sub}
-										<tr>
-											<td class="px-4 py-3 font-medium w-32">{sub.start}</td>
-											<td class="px-4 py-3 font-medium w-32 {sub.active ? 'text-primary' : ''}">
-												{sub.end}
-											</td>
-											<td class="px-4 py-3 w-20">{sub.level}</td>
-											<td class="px-4 py-3 italic text-on-surface-variant">{sub.note}</td>
-											<td class="px-4 py-3 text-right w-24">
-												<div class="flex justify-end gap-2">
-													<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
-														<Edit size={16} />
-													</button>
-													<button class="text-on-surface-variant hover:text-error transition-colors cursor-pointer">
-														<Trash2 size={16} />
-													</button>
-												</div>
-											</td>
-										</tr>
-									{/each}
-								</tbody>
-							</table>
-						</div>
-					</div>
-				{/if}
-			</div>
-		{/each}
-	</div>
-
-	<!-- 分页 -->
-	<div class="flex flex-col sm:flex-row justify-between items-center mt-12 px-2 lg:px-6 gap-4">
-		<p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">
-			{m.showing_users({ from: '1', to: '3', total: '842' })}
-		</p>
-		<div class="flex items-center gap-2">
-			<button
-				class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-dim transition-all cursor-pointer"
-			>
-				<ChevronLeft size={18} />
-			</button>
-			<button
-				class="w-10 h-10 flex items-center justify-center rounded-full bg-primary text-white font-bold shadow-md cursor-pointer"
-			>
-				1
-			</button>
-			<button
-				class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-dim transition-all cursor-pointer"
-			>
-				2
-			</button>
-			<button
-				class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-dim transition-all cursor-pointer"
-			>
-				3
-			</button>
-			<button
-				class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-dim transition-all cursor-pointer"
-			>
-				<ChevronRight size={18} />
-			</button>
+	<!-- 加载状态 -->
+	{#if loading}
+		<div class="flex items-center justify-center py-20">
+			<Loader2 size={24} class="animate-spin text-primary" />
+			<span class="ml-3 text-on-surface-variant text-sm">{m.loading_articles()}</span>
 		</div>
-	</div>
+	{:else if error}
+		<!-- 错误状态 -->
+		<div class="flex items-center justify-center py-20">
+			<p class="text-error text-sm">{error}</p>
+		</div>
+	{:else if users.length === 0}
+		<!-- 空状态 -->
+		<div class="flex items-center justify-center py-20">
+			<p class="text-on-surface-variant text-sm">{m.no_articles()}</p>
+		</div>
+	{:else}
+		<!-- 用户列表卡片 -->
+		<div class="bg-surface-lowest rounded-xl shadow-editorial-sm overflow-hidden">
+			{#each users as user (user.hash_id)}
+				<UserListCard
+					{user}
+					expanded={expandedUserId === user.hash_id}
+					ontoggle={() => toggleExpand(user.hash_id)}
+				/>
+			{/each}
+		</div>
+
+		<!-- 分页 -->
+		{#if pageInfo}
+			<AdminPagination
+				{currentPage}
+				totalPages={pageInfo.total_pages}
+				onpagechange={loadPage}
+				showingText={getShowingText()}
+			/>
+		{/if}
+	{/if}
 </div>
