@@ -19,9 +19,12 @@
 <!-- 顶部导航栏 — 固定定位 + 玻璃拟态 (DESIGN.md §2 Glass Rule) -->
 <nav class="fixed top-0 z-50 w-full glass shadow-ambient">
 	<div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-		<span class="font-display text-2xl font-bold tracking-tighter text-primary">
+		<a
+			href="/"
+			class="font-display text-2xl font-bold tracking-tighter text-primary transition-opacity hover:opacity-80"
+		>
 			{siteStore.info.name}
-		</span>
+		</a>
 
 		{#if authStore.session}
 			<!-- 用户下拉菜单 (DaisyUI Dropdown) -->
@@ -87,7 +90,7 @@
 			</div>
 		{:else}
 			<!-- 未登录状态 -->
-			<a href="/user" target="_blank" class="btn gap-2 btn-sm btn-primary">
+			<a href="/user" class="btn gap-2 btn-sm btn-primary">
 				<LogIn size={16} />
 				{m.login()}
 			</a>
