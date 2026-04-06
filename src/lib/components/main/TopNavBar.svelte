@@ -68,7 +68,7 @@
 						</li>
 					{:else if authStore.session.role === 'admin'}
 						<li>
-							<a href="/admin/dashboard" class="text-sm text-base-content hover:bg-base-200">
+							<a href="/dashboard/user" class="text-sm text-base-content hover:bg-base-200">
 								<LayoutDashboard size={18} class="mr-2" />
 								{m.dashboard()}
 							</a>

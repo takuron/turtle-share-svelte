@@ -28,9 +28,10 @@ export interface AuthSession {
 	exp: number;
 }
 
-// 1. 使用 Svelte 5 Runes 定义全局认证状态。
-export const authStore = $state<{ session: AuthSession | null }>({
-	session: null
+// 1. 使用 Svelte 5 Runes 定义全局认证状态。initialized 标志用于区分"未初始化"和"未登录"。
+export const authStore = $state<{ session: AuthSession | null; initialized: boolean }>({
+	session: null,
+	initialized: false
 });
 
 // 2. 解码 JWT 的 payload 部分（不验证签名，签名由后端验证）。
@@ -67,7 +68,10 @@ function tokenToSession(token: string): AuthSession | null {
  */
 // // 应用启动时从 localStorage 恢复认证状态。
 export function initAuth() {
-	if (typeof localStorage === 'undefined') return;
+	if (typeof localStorage === 'undefined') {
+		authStore.initialized = true;
+		return;
+	}
 	const token = localStorage.getItem('auth_token');
 	if (token) {
 		const session = tokenToSession(token);
@@ -78,6 +82,7 @@ export function initAuth() {
 			localStorage.removeItem('auth_token');
 		}
 	}
+	authStore.initialized = true;
 }
 
 /**

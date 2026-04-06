@@ -35,5 +35,13 @@
 	"err_internal": "发生内部服务器错误。",
 	"err_too_many_requests": "请求过多，请稍后再试。",
 	"err_unknown": "发生未知错误（{message}）。",
-	"download": "下载"
+	"download": "下载",
+	"admin_dashboard": "管理控制台",
+	"nav_user_management": "用户管理",
+	"nav_content_management": "内容管理",
+	"nav_file_management": "文件管理",
+	"nav_return_home": "返回首页",
+	"page_user_management_placeholder": "用户管理内容将在此实现。",
+	"page_content_management_placeholder": "文章管理内容将在此实现。",
+	"page_file_management_placeholder": "文件管理内容将在此实现。"
 }

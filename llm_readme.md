@@ -133,6 +133,10 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `(auth)/+layout.svelte` — Auth layout group: full-screen, no nav/footer, no scroll. Redirects to `/` if already logged in.
   - `(auth)/user/+page.svelte` — User login page (dot-pattern background).
   - `(auth)/admin/+page.svelte` — Admin login page (dot-pattern background).
+  - `(dashboard)/dashboard/+layout.svelte` — Dashboard layout group: fixed sidebar (72w) + main content area. Admin-only guard redirects non-admin to `/admin`. Sidebar has nav links (User/Article/File), home link, and logout button.
+  - `(dashboard)/dashboard/user/+page.svelte` — User Management page (skeleton).
+  - `(dashboard)/dashboard/article/+page.svelte` — Content Management page (skeleton).
+  - `(dashboard)/dashboard/file/+page.svelte` — File Management page (skeleton).
 
 ### Available Scripts / 可用脚本
 

@@ -35,5 +35,13 @@
 	"err_internal": "An internal server error occurred.",
 	"err_too_many_requests": "Too many requests. Please try again later.",
 	"err_unknown": "An unknown error occurred ({message}).",
-	"download": "Download"
+	"download": "Download",
+	"admin_dashboard": "Admin Dashboard",
+	"nav_user_management": "User Management",
+	"nav_content_management": "Content Management",
+	"nav_file_management": "File Management",
+	"nav_return_home": "Return to Home",
+	"page_user_management_placeholder": "User management content will be implemented here.",
+	"page_content_management_placeholder": "Article management content will be implemented here.",
+	"page_file_management_placeholder": "File management content will be implemented here."
 }
