@@ -45,7 +45,7 @@
 
 <!-- 管理员仪表盘布局 — 等待认证初始化后再渲染 -->
 {#if authStore.initialized && authStore.session?.role === 'admin'}
-	<div class="flex min-h-screen bg-surface-low">
+	<div class="flex min-h-screen bg-surface">
 		<!-- 移动端遮罩层 -->
 		{#if sidebarOpen}
 			<!-- svelte-ignore a11y_no_static_element_interactions -->

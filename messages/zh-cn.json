@@ -43,5 +43,15 @@
 	"nav_return_home": "返回首页",
 	"page_user_management_placeholder": "用户管理内容将在此实现。",
 	"page_content_management_placeholder": "文章管理内容将在此实现。",
-	"page_file_management_placeholder": "文件管理内容将在此实现。"
+	"page_file_management_placeholder": "文件管理内容将在此实现。",
+	"create_new_user": "创建新用户",
+	"col_username": "用户名",
+	"col_note": "备注",
+	"col_actions": "操作",
+	"subscription_cycles": "订阅周期",
+	"add_subscription": "添加订阅",
+	"col_start_date": "开始日期",
+	"col_end_date": "结束日期",
+	"col_level": "等级",
+	"showing_users": "显示第 {from} 至 {to} 条，共 {total} 条"
 }

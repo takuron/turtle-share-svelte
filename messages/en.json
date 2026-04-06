@@ -43,5 +43,15 @@
 	"nav_return_home": "Return to Home",
 	"page_user_management_placeholder": "User management content will be implemented here.",
 	"page_content_management_placeholder": "Article management content will be implemented here.",
-	"page_file_management_placeholder": "File management content will be implemented here."
+	"page_file_management_placeholder": "File management content will be implemented here.",
+	"create_new_user": "Create New User",
+	"col_username": "User Name",
+	"col_note": "Note",
+	"col_actions": "Actions",
+	"subscription_cycles": "Subscription Cycles",
+	"add_subscription": "Add Subscription",
+	"col_start_date": "Start Date",
+	"col_end_date": "End Date",
+	"col_level": "Level",
+	"showing_users": "Showing {from} to {to} of {total} users"
 }
