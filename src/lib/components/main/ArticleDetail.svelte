@@ -14,24 +14,28 @@
 	let { article }: { article: ArticleDetail | null } = $props();
 
 	// 根据文章数据动态拼接封面 URL
-	const coverUrl = $derived(article?.cover_image ? `${API_URL}${article.cover_image}` : null);
+	const coverUrl = $derived(
+		article?.cover_image && article.cover_image.trim() !== ''
+			? `${API_URL}${article.cover_image}`
+			: null
+	);
 
 	// 解析 Markdown 内容为安全的 HTML
 	const htmlContent = $derived(parseMarkdown(article?.content));
 </script>
 
-<article class="bg-surface-container-lowest mb-12 overflow-hidden rounded-3xl shadow-lg">
+<article class="mb-12 overflow-hidden rounded-3xl bg-surface-lowest shadow-lg">
 	<!-- 封面图区域，保持 5:3 比例锁定 -->
-	<div class="bg-surface-container-high/50 relative aspect-[5/3] w-full">
-		{#if coverUrl}
+	{#if coverUrl}
+		<div class="bg-surface-container-high/50 relative aspect-[5/3] w-full">
 			<img
 				src={coverUrl}
 				alt={article?.title}
 				class="absolute inset-0 h-full w-full object-cover"
 			/>
-		{/if}
-		<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
-	</div>
+			<div class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
+		</div>
+	{/if}
 
 	<div class="space-y-8 p-8 md:p-12">
 		<!-- 标题 -->

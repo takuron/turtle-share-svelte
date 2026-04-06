@@ -48,7 +48,9 @@
 	);
 
 	// 3. 拼接封面图片完整 URL。
-	const coverUrl = $derived(coverImage ? `${API_URL}${coverImage}` : null);
+	const coverUrl = $derived(
+		coverImage && coverImage.trim() !== '' ? `${API_URL}${coverImage}` : null
+	);
 </script>
 
 <!-- 帖子卡片 — DESIGN.md §5: border-radius xl, 无分割线, hover 提升 -->
@@ -58,12 +60,12 @@
 	class:opacity-90={isLocked}
 >
 	<!-- 封面图区域 -->
-	<div class="relative aspect-[5/3] w-full bg-base-300" class:grayscale-[20%]={isLocked}>
-		{#if coverUrl}
+	{#if coverUrl}
+		<div class="relative aspect-[5/3] w-full bg-base-300" class:grayscale-[20%]={isLocked}>
 			<img src={coverUrl} alt={title} class="absolute inset-0 h-full w-full object-cover" />
-		{/if}
-		<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-	</div>
+			<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+		</div>
+	{/if}
 
 	<div class="p-6">
 		<!-- 日期 -->
