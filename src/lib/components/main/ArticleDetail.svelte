@@ -3,6 +3,7 @@
 	import { Download } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import type { ArticleDetail } from '$lib/api/types';
+	import { parseMarkdown } from '$lib/utils/markdown';
 
 	/**
 	 * Article detail component to display the content of a post.
@@ -14,6 +15,9 @@
 
 	// 根据文章数据动态拼接封面 URL
 	const coverUrl = $derived(article?.cover_image ? `${API_URL}${article.cover_image}` : null);
+
+	// 解析 Markdown 内容为安全的 HTML
+	const htmlContent = $derived(parseMarkdown(article?.content));
 </script>
 
 <article class="bg-surface-container-lowest mb-12 overflow-hidden rounded-3xl shadow-lg">
@@ -36,10 +40,8 @@
 		</h1>
 
 		<!-- 文章内容 -->
-		<div class="prose max-w-none text-lg leading-loose whitespace-pre-wrap text-on-surface">
-			<!-- Note: In a real app, markdown parsing like marked/snarkdown should be used here. -->
-			<!-- Using basic text rendering for the prototype. -->
-			{article?.content}
+		<div class="prose max-w-none text-lg leading-loose text-on-surface">
+			{@html htmlContent}
 		</div>
 
 		<!-- 附件下载区 -->
