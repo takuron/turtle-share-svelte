@@ -53,6 +53,9 @@ export const DEFAULT_PAGE_SIZE = 10;
 /** 管理员用户管理每页用户数 */
 export const ADMIN_USERS_PAGE_SIZE = 5;
 
+/** 管理员订阅管理每页订阅数 */
+export const ADMIN_SUBSCRIPTIONS_PAGE_SIZE = 5;
+
 /**
  * Admin user list item as returned by the backend.
  * 后端返回的管理员用户列表项。
@@ -63,6 +66,21 @@ export interface AdminUserItem {
 	username: string;
 	email: string;
 	note: string;
+	created_at: number;
+}
+
+/**
+ * Admin subscription item as returned by the backend.
+ * 后端返回的管理员订阅列表项。
+ */
+// // 后端返回的管理员订阅列表项。
+export interface AdminSubscriptionItem {
+	hash_id: string;
+	user_hash_id: string;
+	tier: number;
+	start_date: number;
+	end_date: number;
+	note: string | null;
 	created_at: number;
 }
 

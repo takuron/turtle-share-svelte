@@ -1,5 +1,10 @@
 import { apiRequest, type ApiResponse } from '$lib/api/client';
-import { ADMIN_USERS_PAGE_SIZE, type AdminUserItem, type PageInfo } from '$lib/api/types';
+import {
+	ADMIN_USERS_PAGE_SIZE,
+	type AdminUserItem,
+	type AdminSubscriptionItem,
+	type PageInfo
+} from '$lib/api/types';
 
 /**
  * Fetch a page of users (admin view).
@@ -30,4 +35,20 @@ export function fetchAdminUsersPageInfo(
 	pageSize: number = ADMIN_USERS_PAGE_SIZE
 ): Promise<ApiResponse<PageInfo>> {
 	return apiRequest<PageInfo>(`/admin/users/page?page_size=${pageSize}`);
+}
+
+/**
+ * Fetch all subscriptions for a specific user (admin view).
+ * Returns all subscriptions ordered by start_date descending.
+ * @param userHashId - The user's hash ID.
+ */
+// // 获取特定用户的所有订阅（管理员视角）。
+// // 返回按 start_date 降序排列的所有订阅。
+// // @param userHashId - 用户哈希 ID。
+
+// 原始端点: GET /api/admin/users/:hash_id/subscriptions — 列出用户所有订阅（需要管理员 JWT）
+export function fetchAdminUserSubscriptions(
+	userHashId: string
+): Promise<ApiResponse<AdminSubscriptionItem[]>> {
+	return apiRequest<AdminSubscriptionItem[]>(`/admin/users/${userHashId}/subscriptions`);
 }
