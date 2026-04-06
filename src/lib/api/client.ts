@@ -20,19 +20,23 @@ export interface ApiError {
 
 export type ApiResponse<T> = ApiSuccess<T> | ApiError;
 
+export interface ApiOptions extends RequestInit {
+	fetch?: typeof fetch;
+}
+
 /**
  * Sends a JSON request to the backend API.
  * @param path - API path relative to API_URL (e.g., '/admin/login').
- * @param options - Fetch options (method, body, headers).
+ * @param options - Fetch options (method, body, headers, custom fetch).
  * @returns Parsed JSON response.
  */
 // // 向后端 API 发送 JSON 请求。
 // // @param path - 相对于 API_URL 的路径（例如 '/admin/login'）。
-// // @param options - Fetch 选项（method、body、headers）。
+// // @param options - Fetch 选项（method、body、headers、自定义 fetch）。
 // // @returns 解析后的 JSON 响应。
 export async function apiRequest<T>(
 	path: string,
-	options: RequestInit = {}
+	options: ApiOptions = {}
 ): Promise<ApiResponse<T>> {
 	// 1. 合并默认 headers，如果有 body 则添加 Content-Type。
 	const headers: Record<string, string> = {
@@ -42,12 +46,16 @@ export async function apiRequest<T>(
 
 	// 2. 从 localStorage 读取 token，如果存在则附加 Authorization 头。
 	const token =
-		typeof localStorage !== 'undefined' ? localStorage.getItem('auth_token') : null;
+		typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
+			? window.localStorage.getItem('auth_token')
+			: null;
 	if (token) {
 		headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	const res = await fetch(`${API_URL}${path}`, {
+	const fetchFn = options.fetch || globalThis.fetch;
+
+	const res = await fetchFn(`${API_URL}${path}`, {
 		...options,
 		headers
 	});

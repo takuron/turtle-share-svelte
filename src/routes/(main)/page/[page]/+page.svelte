@@ -22,10 +22,12 @@
 	});
 </script>
 
-<!-- 作者资料头部 -->
-<AuthorProfile />
+<main class="mx-auto max-w-2xl px-4 pt-24 pb-12">
+	<!-- 作者资料头部 -->
+	<AuthorProfile />
 
-<!-- 指定页码的文章信息流 -->
-{#if pageNum > 1}
-	<ArticleFeed page={pageNum} />
-{/if}
+	<!-- 指定页码的文章信息流 -->
+	{#if pageNum > 1}
+		<ArticleFeed page={pageNum} />
+	{/if}
+</main>

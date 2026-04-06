@@ -41,5 +41,5 @@ Paraglide handles URL-based locale routing automatically:
 | `/admin/articles` | Article management |
 | `/admin/users` | User management |
 | `/admin/tiers` | Subscription tier management |
-| `/articles/[slug]` | Public article view |
+| `/post/[post_hashid]` | Public article view (detail page) |
 | `/subscribe` | Subscription page |

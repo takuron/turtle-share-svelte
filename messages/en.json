@@ -27,5 +27,13 @@
 	"loading_articles": "Loading...",
 	"load_error": "Failed to load articles.",
 	"previous": "Previous",
-	"next": "Next"
+	"next": "Next",
+	"err_unauthorized": "Invalid credentials or session expired.",
+	"err_forbidden": "Insufficient permissions to access this resource.",
+	"err_not_found": "The requested resource was not found.",
+	"err_validation": "Invalid input format or data.",
+	"err_internal": "An internal server error occurred.",
+	"err_too_many_requests": "Too many requests. Please try again later.",
+	"err_unknown": "An unknown error occurred ({message}).",
+	"download": "Download"
 }

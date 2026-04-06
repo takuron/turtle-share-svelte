@@ -1,4 +1,6 @@
 import { loginRequest } from '$lib/api/public/auth';
+import { mapApiError } from '$lib/api/error';
+import * as m from '$lib/paraglide/messages.js';
 
 /**
  * JWT payload structure decoded from the token.
@@ -98,7 +100,7 @@ export async function login(
 ): Promise<string | null> {
 	// 1. 如果已有其他身份登录，拒绝操作。
 	if (authStore.session) {
-		return '请先退出当前账户再登录其他身份';
+		return m.err_forbidden();
 	}
 
 	try {
@@ -106,27 +108,22 @@ export async function login(
 		const res = await loginRequest(role, username, password);
 
 		if (!res.success) {
-			// 3. 将后端错误码映射为用户友好的中文提示。
-			const errorMap: Record<string, string> = {
-				UNAUTHORIZED: '用户名或密码错误',
-				TOO_MANY_REQUESTS: '登录尝试过于频繁，请稍后再试',
-				VALIDATION_ERROR: '请求格式错误'
-			};
-			return errorMap[res.error.code] ?? res.error.message;
+			// 3. 使用通用的错误映射函数。
+			return mapApiError(res);
 		}
 
 		// 4. 解码 token 并验证角色是否匹配。
 		const session = tokenToSession(res.data.token);
 		if (!session || session.role !== role) {
-			return '登录响应异常，请重试';
+			return m.err_unknown({ message: 'Invalid token role' });
 		}
 
 		// 5. 持久化 token 并更新全局状态。
 		localStorage.setItem('auth_token', res.data.token);
 		authStore.session = session;
 		return null;
-	} catch {
-		return '网络连接失败，请检查网络状态';
+	} catch (e) {
+		return mapApiError(e);
 	}
 }
 

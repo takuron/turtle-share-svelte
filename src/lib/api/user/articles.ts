@@ -19,9 +19,7 @@ export function fetchUserArticlesPage(
 	page: number,
 	pageSize: number = DEFAULT_PAGE_SIZE
 ): Promise<ApiResponse<ArticleListItem[]>> {
-	return apiRequest<ArticleListItem[]>(
-		`/users/articles/page/${page}?page_size=${pageSize}`
-	);
+	return apiRequest<ArticleListItem[]>(`/users/articles/page/${page}?page_size=${pageSize}`);
 }
 
 /**
@@ -36,4 +34,18 @@ export function fetchUserArticlesPageInfo(
 	pageSize: number = DEFAULT_PAGE_SIZE
 ): Promise<ApiResponse<PageInfo>> {
 	return apiRequest<PageInfo>(`/users/articles/page?page_size=${pageSize}`);
+}
+
+/**
+ * Fetch detail for a specific article visible to the authenticated user.
+ * @param hashId - The article hash ID.
+ * @param customFetch - Optional custom fetch instance (e.g. SvelteKit's fetch).
+ */
+// // 获取对用户可见的特定文章的详情。
+// // @param hashId - 文章哈希 ID。
+// // @param customFetch - 可选的自定义 fetch 实例（例如 SvelteKit 的 fetch）。
+export function fetchUserArticleDetail(hashId: string, customFetch?: typeof fetch) {
+	return apiRequest<import('$lib/api/types').ArticleDetail>(`/users/articles/${hashId}`, {
+		fetch: customFetch
+	});
 }

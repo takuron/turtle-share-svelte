@@ -9,9 +9,7 @@
 <TopNavBar />
 
 <!-- 主内容区域 — 为顶部导航留出空间 -->
-<main class="pt-24 pb-12 px-4 max-w-2xl mx-auto">
-	{@render children()}
-</main>
+{@render children()}
 
 <!-- 页脚 -->
 <SiteFooter />

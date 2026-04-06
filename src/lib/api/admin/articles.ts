@@ -62,3 +62,19 @@ export function fetchAdminArticlesPageInfo(
 ): Promise<ApiResponse<PageInfo>> {
 	return apiRequest<PageInfo>(`/admin/articles/page?page_size=${pageSize}`);
 }
+
+/**
+ * Fetch detail for a specific article (admin view).
+ * Admin has full access to all article details.
+ * @param hashId - The article hash ID.
+ * @param customFetch - Optional custom fetch instance (e.g. SvelteKit's fetch).
+ */
+// // 获取特定文章的详情（管理员视角）。
+// // 管理员拥有所有文章详情的完整访问权限。
+// // @param hashId - 文章哈希 ID。
+// // @param customFetch - 可选的自定义 fetch 实例（例如 SvelteKit 的 fetch）。
+export function fetchAdminArticleDetail(hashId: string, customFetch?: typeof fetch) {
+	return apiRequest<import('$lib/api/types').ArticleDetail>(`/admin/articles/${hashId}`, {
+		fetch: customFetch
+	});
+}

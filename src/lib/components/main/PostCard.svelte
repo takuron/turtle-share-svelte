@@ -58,7 +58,7 @@
 	class:opacity-90={isLocked}
 >
 	<!-- 封面图区域 -->
-	<div class="relative h-96 bg-base-300" class:grayscale-[20%]={isLocked}>
+	<div class="relative aspect-[5/3] w-full bg-base-300" class:grayscale-[20%]={isLocked}>
 		{#if coverUrl}
 			<img src={coverUrl} alt={title} class="absolute inset-0 h-full w-full object-cover" />
 		{/if}

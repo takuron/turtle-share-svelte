@@ -20,3 +20,8 @@
 [2026-04-04T17:08:32+08:00] Reorganize API layer by permission (public/user/admin). Add shared types.ts. Implement role-based article listing: ArticleFeed selects API based on authStore role. Admin articles normalized with accessible=true. All API files include original endpoint comments.
 [2026-04-04T17:22:57+08:00] Update locked article label to use requires_tier i18n message with tier parameter: '需要等级X解锁'
 [2026-04-04T18:36:21+08:00] Updated article API payload parsing and UI components to adapt to the backend API change from created_at to publish_at.
+[2026-04-06T11:23:27+08:00] Implemented article detail page skeleton at /post/:post_hashid
+[2026-04-06T11:32:19+08:00] Locked cover image aspect ratio to 5:3, added article detail API fetching and i18n error mapping
+[2026-04-06T11:36:45+08:00] Fixed SSR bug with localStorage in apiRequest and updated main layout width to match design (max-w-5xl)
+[2026-04-06T11:39:32+08:00] Fixed 500 error in SSR by using event.fetch for apiRequest in article detail load function and skipping fetch during SSG build
+[2026-04-06T11:42:59+08:00] Refactored layout to separate homepage and article widths, extracted ArticleDetail component

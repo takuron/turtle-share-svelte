@@ -49,3 +49,32 @@ export interface PageInfo {
 
 /** 默认每页文章数 */
 export const DEFAULT_PAGE_SIZE = 10;
+
+/**
+ * File link object in article detail.
+ * 文章详情中的文件链接对象。
+ */
+// // 文章详情中的文件链接对象。
+export interface FileLink {
+	name: string;
+	url: string;
+}
+
+/**
+ * Normalized article detail item. Used by all roles in the UI layer.
+ * The `accessible` field is added dynamically by the client (for public/user based on required_tier, or true for admin).
+ */
+// // 标准化的文章详情项。UI 层统一使用此类型。
+// // 客户端会动态添加 `accessible` 字段。
+export interface ArticleDetail {
+	hash_id: string;
+	title: string;
+	cover_image: string | null;
+	content: string;
+	required_tier: number;
+	is_public: boolean;
+	file_links: FileLink[];
+	publish_at: number;
+	created_at: number;
+	updated_at: number;
+}
