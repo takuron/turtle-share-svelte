@@ -7,7 +7,7 @@ import { building } from '$app/environment';
 
 /** @type {import('./$types').PageLoad} */
 export async function load({ params, fetch }) {
-	const hashId = params.post_hashid;
+	const hashId = params.hashid;
 
 	// SSG 阶段跳过数据获取，避免 build 失败
 	if (building) {
