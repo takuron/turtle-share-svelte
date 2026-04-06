@@ -73,10 +73,14 @@
 
 	// 4. 当 page 或 auth 状态变化时重新加载。
 	$effect(() => {
-		// 读取 page 和 authStore.session 以建立依赖追踪
+		// 读取 page 和 authStore 以建立依赖追踪
 		const _page = page;
 		const _session = authStore.session;
-		loadArticles(_page);
+		const _initialized = authStore.initialized;
+
+		if (_initialized) {
+			loadArticles(_page);
+		}
 	});
 </script>
 

@@ -83,6 +83,13 @@ export function initAuth() {
 		}
 	}
 	authStore.initialized = true;
+
+	if (typeof window !== 'undefined') {
+		if (!(window as any).__auth_listener_added) {
+			window.addEventListener('auth:unauthorized', logout);
+			(window as any).__auth_listener_added = true;
+		}
+	}
 }
 
 /**

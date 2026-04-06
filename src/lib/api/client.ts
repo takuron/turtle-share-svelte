@@ -60,5 +60,20 @@ export async function apiRequest<T>(
 		headers
 	});
 
-	return (await res.json()) as ApiResponse<T>;
+	const data = (await res.json()) as ApiResponse<T>;
+
+	// 3. 如果遇到 401 错误或认证错误，触发未授权事件
+	if (
+		!data.success &&
+		(res.status === 401 ||
+			data.error?.code === 'UNAUTHORIZED' ||
+			data.error?.code === 'INVALID_TOKEN' ||
+			data.error?.code === 'TOKEN_EXPIRED')
+	) {
+		if (typeof window !== 'undefined') {
+			window.dispatchEvent(new CustomEvent('auth:unauthorized'));
+		}
+	}
+
+	return data;
 }
