@@ -13,9 +13,15 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import type { AdminUserItem, AdminSubscriptionItem } from '$lib/api/types';
 	import { ADMIN_SUBSCRIPTIONS_PAGE_SIZE } from '$lib/api/types';
-	import { fetchAdminUserSubscriptions } from '$lib/api/admin/users';
+	import {
+		fetchAdminUserSubscriptions,
+		createAdminUserSubscription,
+		updateAdminSubscription,
+		deleteAdminSubscription
+	} from '$lib/api/admin/users';
 	import { onMount } from 'svelte';
 	import SubscriptionEditModal from './SubscriptionEditModal.svelte';
+	import ConfirmModal from './ConfirmModal.svelte';
 
 	let { user }: { user: AdminUserItem } = $props();
 
@@ -28,6 +34,11 @@
 	// 模态框状态
 	let editModalOpen = $state(false);
 	let currentEditSubscription = $state<AdminSubscriptionItem | null>(null);
+
+	// 删除确认模态框状态
+	let deleteModalOpen = $state(false);
+	let subscriptionToDelete = $state<AdminSubscriptionItem | null>(null);
+	let deleting = $state(false);
 
 	// 2. 派生当前页的订阅切片。
 
@@ -91,31 +102,59 @@
 		editModalOpen = true;
 	}
 
+	function openDeleteModal(sub: AdminSubscriptionItem) {
+		subscriptionToDelete = sub;
+		deleteModalOpen = true;
+	}
+
 	async function handleSubscriptionSubmit(data: {
 		start_date: number;
 		end_date: number;
 		tier: number;
 		note?: string;
 	}) {
-		// 无真实后端 API，仅在前端本地更新状态
 		if (currentEditSubscription) {
+			// Update existing subscription
+			const res = await updateAdminSubscription(currentEditSubscription.hash_id, data);
+			if (!res.success) {
+				return res.error.message || m.err_unknown({ message: 'Failed to update' });
+			}
 			const idx = allSubscriptions.findIndex((s) => s.hash_id === currentEditSubscription!.hash_id);
 			if (idx !== -1) {
-				allSubscriptions[idx] = { ...allSubscriptions[idx], ...data };
+				allSubscriptions[idx] = res.data;
 			}
 		} else {
-			const newSub: AdminSubscriptionItem = {
-				hash_id: Math.random().toString(36).substring(7),
-				user_hash_id: user.hash_id,
-				start_date: data.start_date,
-				end_date: data.end_date,
-				tier: data.tier,
-				note: data.note || null,
-				created_at: Math.floor(Date.now() / 1000)
-			};
-			allSubscriptions = [newSub, ...allSubscriptions];
+			// Add new subscription
+			const res = await createAdminUserSubscription(user.hash_id, data);
+			if (!res.success) {
+				return res.error.message || m.err_unknown({ message: 'Failed to create' });
+			}
+			allSubscriptions = [res.data, ...allSubscriptions];
 		}
 		editModalOpen = false;
+	}
+
+	async function handleConfirmDelete() {
+		if (!subscriptionToDelete) return;
+		deleting = true;
+		const res = await deleteAdminSubscription(subscriptionToDelete.hash_id);
+		deleting = false;
+
+		if (res.success) {
+			allSubscriptions = allSubscriptions.filter(
+				(s) => s.hash_id !== subscriptionToDelete!.hash_id
+			);
+			deleteModalOpen = false;
+			subscriptionToDelete = null;
+			// 如果当前页为空且不是第一页，自动退回上一页
+			if (pageSubscriptions().length === 0 && currentPage > 1) {
+				currentPage -= 1;
+			}
+		} else {
+			// The modal doesn't have a built-in error alert state in the generic component
+			// So we can just alert or log it
+			alert(res.error.message || m.err_unknown({ message: 'Failed to delete' }));
+		}
 	}
 
 	onMount(() => {
@@ -192,6 +231,7 @@
 										<Edit size={16} />
 									</button>
 									<button
+										onclick={() => openDeleteModal(sub)}
 										class="cursor-pointer text-on-surface-variant transition-colors hover:text-error"
 									>
 										<Trash2 size={16} />
@@ -244,4 +284,15 @@
 	subscription={currentEditSubscription}
 	onclose={() => (editModalOpen = false)}
 	onsubmit={handleSubscriptionSubmit}
+/>
+
+<ConfirmModal
+	open={deleteModalOpen}
+	title={m.confirm_delete_subscription()}
+	description={m.confirm_delete_subscription_desc()}
+	confirmText={m.delete()}
+	danger={true}
+	loading={deleting}
+	onclose={() => (deleteModalOpen = false)}
+	onconfirm={handleConfirmDelete}
 />

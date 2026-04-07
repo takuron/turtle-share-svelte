@@ -44,3 +44,4 @@
 [2026-04-07T17:49:33+08:00] Refined UserEditModal with inline error message box, disabled username field on edit mode, and integrated real API methods for adding and updating users.
 [2026-04-07T17:57:29+08:00] Removed close button from UserEditModal. Created generic ConfirmModal component. Implemented user deletion flow with confirm dialog and integrated DELETE user API.
 [2026-04-07T18:12:48+08:00] Implemented SubscriptionEditModal following stitch/code.html design, with quick duration logic, and integrated it into UserSubscriptionPanel without real backend API.
+[2026-04-07T18:26:22+08:00] Implemented API endpoints for create/update/delete subscriptions in users.ts. Integrated them into UserSubscriptionPanel.svelte and added a confirmation modal for deletion.

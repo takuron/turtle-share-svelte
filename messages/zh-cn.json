@@ -80,5 +80,7 @@
 	"days_7": "7 天",
 	"month_1": "1 个月",
 	"months_3": "3 个月",
-	"year_1": "1 年"
+	"year_1": "1 年",
+	"confirm_delete_subscription": "删除订阅",
+	"confirm_delete_subscription_desc": "您确定要删除此订阅吗？此操作无法撤销。"
 }

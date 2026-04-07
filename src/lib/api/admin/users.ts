@@ -54,6 +54,75 @@ export function fetchAdminUserSubscriptions(
 }
 
 /**
+ * Create a new subscription for a user (admin view).
+ * @param userHashId - The user's hash ID.
+ * @param data - Subscription data.
+ */
+// // 为用户创建新订阅（管理员视角）。
+// // @param userHashId - 用户哈希 ID。
+// // @param data - 订阅数据。
+
+// 原始端点: POST /api/admin/users/:hash_id/subscriptions — 为用户添加新的订阅时段（需要管理员 JWT）
+export function createAdminUserSubscription(
+	userHashId: string,
+	data: {
+		tier: number;
+		start_date: number;
+		end_date: number;
+		note?: string;
+	}
+): Promise<ApiResponse<AdminSubscriptionItem>> {
+	return apiRequest<AdminSubscriptionItem>(`/admin/users/${userHashId}/subscriptions`, {
+		method: 'POST',
+		body: JSON.stringify(data)
+	});
+}
+
+/**
+ * Update an existing subscription (admin view).
+ * @param hashId - The subscription's hash ID.
+ * @param data - Subscription data to update.
+ */
+// // 更新现有订阅（管理员视角）。
+// // @param hashId - 订阅的哈希 ID。
+// // @param data - 要更新的订阅数据。
+
+// 原始端点: PUT /api/admin/subscriptions/:hash_id — 更新现有订阅（需要管理员 JWT）
+export function updateAdminSubscription(
+	hashId: string,
+	data: {
+		tier?: number;
+		start_date?: number;
+		end_date?: number;
+		note?: string;
+	}
+): Promise<ApiResponse<AdminSubscriptionItem>> {
+	return apiRequest<AdminSubscriptionItem>(`/admin/subscriptions/${hashId}`, {
+		method: 'PUT',
+		body: JSON.stringify(data)
+	});
+}
+
+/**
+ * Delete a subscription (admin view).
+ * @param hashId - The subscription's hash ID.
+ */
+// // 删除订阅（管理员视角）。
+// // @param hashId - 订阅的哈希 ID。
+
+// 原始端点: DELETE /api/admin/subscriptions/:hash_id — 删除订阅（需要管理员 JWT）
+export function deleteAdminSubscription(
+	hashId: string
+): Promise<ApiResponse<{ deleted: boolean; hash_id: string; user_hash_id: string }>> {
+	return apiRequest<{ deleted: boolean; hash_id: string; user_hash_id: string }>(
+		`/admin/subscriptions/${hashId}`,
+		{
+			method: 'DELETE'
+		}
+	);
+}
+
+/**
  * Create a new user (admin view).
  * @param data - User data to create.
  */

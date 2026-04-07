@@ -80,5 +80,7 @@
 	"days_7": "7 Days",
 	"month_1": "1 Month",
 	"months_3": "3 Months",
-	"year_1": "1 Year"
+	"year_1": "1 Year",
+	"confirm_delete_subscription": "Delete Subscription",
+	"confirm_delete_subscription_desc": "Are you sure you want to delete this subscription? This action cannot be undone."
 }
