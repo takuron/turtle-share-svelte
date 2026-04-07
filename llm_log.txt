@@ -48,3 +48,7 @@
 [2026-04-07T18:56:17+08:00] Implemented admin file management upload interface prototype based on stitch/code.html with 1024MB file limit and removed type restrictions.
 [2026-04-07T18:58:05+08:00] Refactored file management interface into reusable components
 [2026-04-07T19:10:28+08:00] Removed sorting arrows from admin file list header, lightened row divider color, and removed bottom border from the last item.
+[2026-04-07T19:16:26+08:00] Implemented admin file management backend integration (upload, list, delete, copy absolute URL) referencing docs/backend/api.md, setting page size to 5, and using ConfirmModal for deletion.
+[2026-04-07T19:19:44+08:00] Modified admin file list item action button to use DaisyUI tooltip for copy success/failure feedback.
+[2026-04-07T19:49:33+08:00] Implemented upload progress tracking using XMLHttpRequest and DaisyUI radial-progress. Fixed file URL encoding to escape spaces correctly for copy link actions.
+[2026-04-07T19:52:34+08:00] Replaced native JS alert with inline DaisyUI alert for file upload errors.
