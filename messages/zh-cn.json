@@ -53,5 +53,16 @@
 	"col_start_date": "开始日期",
 	"col_end_date": "结束日期",
 	"col_level": "等级",
-	"showing_users": "显示第 {from} 至 {to} 条，共 {total} 条"
+	"showing_users": "显示第 {from} 至 {to} 条，共 {total} 条",
+	"edit_user": "编辑用户",
+	"create_user": "创建用户",
+	"confirm_password": "确认密码",
+	"email": "邮箱",
+	"optional": "可选",
+	"admin_only_visible": "仅管理员可见",
+	"cancel": "取消",
+	"save_changes": "保存更改",
+	"add_admin_note": "添加管理员可见的备注…",
+	"email_placeholder": "email@example.com",
+	"close": "关闭"
 }

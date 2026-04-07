@@ -8,10 +8,12 @@
 </script>
 
 <!-- 文件管理页面 -->
-<div class="flex items-end justify-between mb-8">
-	<h2 class="text-3xl font-extrabold text-on-surface tracking-tight font-display">{m.nav_file_management()}</h2>
+<div class="mb-8 flex items-end justify-between">
+	<h2 class="font-display text-3xl font-extrabold tracking-tight text-on-surface">
+		{m.nav_file_management()}
+	</h2>
 </div>
 
-<div class="text-on-surface-variant text-sm">
+<div class="text-sm text-on-surface-variant">
 	<p>{m.page_file_management_placeholder()}</p>
 </div>

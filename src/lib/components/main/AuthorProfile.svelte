@@ -17,20 +17,20 @@
 </script>
 
 <!-- 作者资料卡 — surface_container_lowest 背景，最高层级 -->
-<section class="mb-12 bg-surface-lowest p-6 rounded-2xl shadow-editorial-sm">
+<section class="mb-12 rounded-2xl bg-surface-lowest p-6 shadow-editorial-sm">
 	<div class="flex items-center gap-6">
 		<!-- 头像 — 有 URL 时显示图片，否则显示占位色块 -->
 		{#if avatar}
 			<img
 				src={avatar}
 				alt={author}
-				class="w-20 h-20 rounded-2xl object-cover shadow-inner shrink-0"
+				class="h-20 w-20 shrink-0 rounded-2xl object-cover shadow-inner"
 			/>
 		{:else}
-			<div class="w-20 h-20 rounded-2xl bg-base-300 shrink-0"></div>
+			<div class="h-20 w-20 shrink-0 rounded-2xl bg-base-300"></div>
 		{/if}
 
-		<div class="flex-1 min-w-0">
+		<div class="min-w-0 flex-1">
 			<!-- 作者名 -->
 			<h1 class="font-display text-2xl font-extrabold tracking-tight text-on-surface">
 				{author}
@@ -38,12 +38,12 @@
 
 			<!-- 简介 -->
 			{#if bio}
-				<p class="text-on-surface-variant text-sm leading-relaxed mb-3">{bio}</p>
+				<p class="mb-3 text-sm leading-relaxed text-on-surface-variant">{bio}</p>
 			{/if}
 
 			<!-- 社交链接 — 由 siteinfo 配置驱动 -->
 			{#if socialLinks.length > 0}
-				<div class="flex flex-wrap gap-3 mt-2">
+				<div class="mt-2 flex flex-wrap gap-3">
 					{#each socialLinks as link}
 						{@const platform = socialPlatforms[link.platform]}
 						<a
@@ -51,8 +51,8 @@
 							target="_blank"
 							rel="noopener noreferrer"
 							title={platform?.label ?? link.platform}
-							class="w-8 h-8 flex items-center justify-center rounded-full bg-base-200 text-on-surface-variant
-								hover:bg-primary/10 hover:text-primary transition-colors"
+							class="flex h-8 w-8 items-center justify-center rounded-full bg-base-200 text-on-surface-variant
+								transition-colors hover:bg-primary/10 hover:text-primary"
 						>
 							{#if platform}
 								<platform.icon size={16} />

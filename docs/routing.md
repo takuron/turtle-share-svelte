@@ -18,6 +18,7 @@ src/routes/
 ## Layout Chain / 布局链
 
 ### Root Layout (`+layout.svelte`)
+
 - Imports global CSS (`layout.css`)
 - Sets favicon
 - Provides locale switcher (hidden, for Paraglide crawlability)
@@ -26,6 +27,7 @@ src/routes/
 ## i18n URL Pattern / 国际化 URL 模式
 
 Paraglide handles URL-based locale routing automatically:
+
 - `/` → English (default locale)
 - `/zh-cn/` → Simplified Chinese
 
@@ -33,13 +35,13 @@ Paraglide handles URL-based locale routing automatically:
 
 > To be defined based on backend API endpoints. See `docs/architecture.md` for backend feature reference.
 
-| Route | Description |
-|-------|-------------|
-| `/` | Landing / Home page |
-| `/login` | Admin login |
-| `/admin/` | Admin dashboard |
-| `/admin/articles` | Article management |
-| `/admin/users` | User management |
-| `/admin/tiers` | Subscription tier management |
+| Route                 | Description                       |
+| --------------------- | --------------------------------- |
+| `/`                   | Landing / Home page               |
+| `/login`              | Admin login                       |
+| `/admin/`             | Admin dashboard                   |
+| `/admin/articles`     | Article management                |
+| `/admin/users`        | User management                   |
+| `/admin/tiers`        | Subscription tier management      |
 | `/post/[post_hashid]` | Public article view (detail page) |
-| `/subscribe` | Subscription page |
+| `/subscribe`          | Subscription page                 |

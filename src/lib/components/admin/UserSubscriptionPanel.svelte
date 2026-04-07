@@ -82,15 +82,15 @@
 <div class="bg-surface-low/30 p-4 lg:p-6">
 	<!-- 备注（仅移动端展开时显示） -->
 	{#if user.note}
-		<p class="lg:hidden text-on-surface-variant text-sm mb-4">{user.note}</p>
+		<p class="mb-4 text-sm text-on-surface-variant lg:hidden">{user.note}</p>
 	{/if}
 
-	<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 gap-2">
-		<h3 class="text-sm font-bold uppercase tracking-wider text-on-surface-variant">
+	<div class="mb-4 flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
+		<h3 class="text-sm font-bold tracking-wider text-on-surface-variant uppercase">
 			{m.subscription_cycles()}
 		</h3>
 		<button
-			class="flex items-center gap-1.5 text-xs font-bold bg-surface-lowest border border-outline-variant/50 text-primary px-3 py-1.5 rounded-full hover:bg-primary hover:text-white transition-all shadow-editorial-sm cursor-pointer"
+			class="flex cursor-pointer items-center gap-1.5 rounded-full border border-outline-variant/50 bg-surface-lowest px-3 py-1.5 text-xs font-bold text-primary shadow-editorial-sm transition-all hover:bg-primary hover:text-white"
 		>
 			<Plus size={14} />
 			{m.add_subscription()}
@@ -99,14 +99,16 @@
 
 	<!-- 订阅表格 -->
 	<div class="overflow-x-auto rounded-lg border border-outline-variant/30 bg-surface-lowest">
-		<table class="w-full text-left border-collapse">
+		<table class="w-full border-collapse text-left">
 			<thead>
-				<tr class="bg-surface-container/50 text-[11px] font-black uppercase tracking-widest text-on-surface-variant">
-					<th class="px-4 py-3 w-32">{m.col_start_date()}</th>
-					<th class="px-4 py-3 w-32">{m.col_end_date()}</th>
-					<th class="px-4 py-3 w-20">{m.col_level()}</th>
+				<tr
+					class="bg-surface-container/50 text-[11px] font-black tracking-widest text-on-surface-variant uppercase"
+				>
+					<th class="w-32 px-4 py-3">{m.col_start_date()}</th>
+					<th class="w-32 px-4 py-3">{m.col_end_date()}</th>
+					<th class="w-20 px-4 py-3">{m.col_level()}</th>
 					<th class="px-4 py-3">{m.col_note()}</th>
-					<th class="px-4 py-3 text-right w-24">{m.col_actions()}</th>
+					<th class="w-24 px-4 py-3 text-right">{m.col_actions()}</th>
 				</tr>
 			</thead>
 			<tbody class="divide-y divide-outline-variant/20 text-sm">
@@ -115,35 +117,37 @@
 						<td colspan="5" class="px-4 py-6 text-center">
 							<div class="flex items-center justify-center gap-2">
 								<Loader2 size={16} class="animate-spin text-primary" />
-								<span class="text-on-surface-variant text-sm">{m.loading_articles()}</span>
+								<span class="text-sm text-on-surface-variant">{m.loading_articles()}</span>
 							</div>
 						</td>
 					</tr>
 				{:else if error}
 					<tr>
 						<td colspan="5" class="px-4 py-6 text-center">
-							<span class="text-error text-sm">{error}</span>
+							<span class="text-sm text-error">{error}</span>
 						</td>
 					</tr>
 				{:else if allSubscriptions.length === 0}
 					<tr>
-						<td colspan="5" class="px-4 py-6 text-center text-on-surface-variant text-sm">
-							—
-						</td>
+						<td colspan="5" class="px-4 py-6 text-center text-sm text-on-surface-variant"> — </td>
 					</tr>
 				{:else}
 					{#each pageSubscriptions() as sub (sub.hash_id)}
 						<tr>
-							<td class="px-4 py-3 font-medium w-32">{formatDate(sub.start_date)}</td>
-							<td class="px-4 py-3 font-medium w-32">{formatDate(sub.end_date)}</td>
-							<td class="px-4 py-3 w-20">{sub.tier}</td>
-							<td class="px-4 py-3 italic text-on-surface-variant">{sub.note || ''}</td>
-							<td class="px-4 py-3 text-right w-24">
+							<td class="w-32 px-4 py-3 font-medium">{formatDate(sub.start_date)}</td>
+							<td class="w-32 px-4 py-3 font-medium">{formatDate(sub.end_date)}</td>
+							<td class="w-20 px-4 py-3">{sub.tier}</td>
+							<td class="px-4 py-3 text-on-surface-variant italic">{sub.note || ''}</td>
+							<td class="w-24 px-4 py-3 text-right">
 								<div class="flex justify-end gap-2">
-									<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+									<button
+										class="cursor-pointer text-on-surface-variant transition-colors hover:text-primary"
+									>
 										<Edit size={16} />
 									</button>
-									<button class="text-on-surface-variant hover:text-error transition-colors cursor-pointer">
+									<button
+										class="cursor-pointer text-on-surface-variant transition-colors hover:text-error"
+									>
 										<Trash2 size={16} />
 									</button>
 								</div>
@@ -157,22 +161,22 @@
 
 	<!-- 订阅分页（小尺寸，右对齐） -->
 	{#if totalPages > 1}
-		<div class="flex justify-end items-center mt-4 px-2">
+		<div class="mt-4 flex items-center justify-end px-2">
 			<div class="flex items-center gap-1.5">
 				<button
 					onclick={() => goToPage(currentPage - 1)}
 					disabled={currentPage <= 1}
-					class="w-7 h-7 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-dim transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+					class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-surface-container text-on-surface transition-all hover:bg-surface-dim disabled:cursor-not-allowed disabled:opacity-30"
 				>
 					<ChevronLeft size={14} />
 				</button>
 				{#each pageNumbers() as pageNum}
 					<button
 						onclick={() => goToPage(pageNum)}
-						class="w-7 h-7 flex items-center justify-center rounded-full transition-all text-[11px] cursor-pointer
+						class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full text-[11px] transition-all
 							{pageNum === currentPage
-								? 'bg-primary text-white font-bold'
-								: 'bg-surface-container text-on-surface hover:bg-surface-dim'}"
+							? 'bg-primary font-bold text-white'
+							: 'bg-surface-container text-on-surface hover:bg-surface-dim'}"
 					>
 						{pageNum}
 					</button>
@@ -180,7 +184,7 @@
 				<button
 					onclick={() => goToPage(currentPage + 1)}
 					disabled={currentPage >= totalPages}
-					class="w-7 h-7 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-dim transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+					class="flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-surface-container text-on-surface transition-all hover:bg-surface-dim disabled:cursor-not-allowed disabled:opacity-30"
 				>
 					<ChevronRight size={14} />
 				</button>

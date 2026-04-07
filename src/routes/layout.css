@@ -9,16 +9,16 @@
    亮色主题: "editorial"
    基于 DESIGN.md "The Fluid Editorial" 设计规范
    ═══════════════════════════════════════════════ */
-@plugin "daisyui/theme" {
-	name: "editorial";
+@plugin 'daisyui/theme' {
+	name: 'editorial';
 	default: true;
 	prefersdark: false;
 	color-scheme: light;
 
 	/* 背景层级 — 映射 DESIGN.md §2 Surface Hierarchy */
-	--color-base-100: oklch(97.42% 0.012 276.10); /* surface #f4f6ff — 无限画布 */
-	--color-base-200: oklch(95.70% 0.020 264.47); /* surface_container_low #eaf1ff */
-	--color-base-300: oklch(93.10% 0.033 261.03); /* surface_container #dce9ff */
+	--color-base-100: oklch(97.42% 0.012 276.1); /* surface #f4f6ff — 无限画布 */
+	--color-base-200: oklch(95.7% 0.02 264.47); /* surface_container_low #eaf1ff */
+	--color-base-300: oklch(93.1% 0.033 261.03); /* surface_container #dce9ff */
 	--color-base-content: oklch(30.22% 0.029 256.84); /* on_surface #252f3d */
 
 	/* 主色 — 高色度的"外科手术式"能量打击 */
@@ -29,7 +29,7 @@
 	--color-accent: oklch(71.61% 0.152 282.28); /* primary_container #9695ff */
 	--color-accent-content: oklch(30.22% 0.029 256.84);
 	--color-neutral: oklch(30.22% 0.029 256.84); /* on_surface */
-	--color-neutral-content: oklch(97.42% 0.012 276.10);
+	--color-neutral-content: oklch(97.42% 0.012 276.1);
 
 	/* 语义色 */
 	--color-info: oklch(74% 0.16 232.661);
@@ -62,25 +62,25 @@
    暗色主题: "editorial-dark"
    系统暗色模式自动切换
    ═══════════════════════════════════════════════ */
-@plugin "daisyui/theme" {
-	name: "editorial-dark";
+@plugin 'daisyui/theme' {
+	name: 'editorial-dark';
 	default: false;
 	prefersdark: true;
 	color-scheme: dark;
 
-	--color-base-100: oklch(25% 0.020 260);
+	--color-base-100: oklch(25% 0.02 260);
 	--color-base-200: oklch(22% 0.018 260);
 	--color-base-300: oklch(19% 0.015 260);
-	--color-base-content: oklch(95% 0.010 260);
+	--color-base-content: oklch(95% 0.01 260);
 
 	--color-primary: oklch(58% 0.233 277);
 	--color-primary-content: oklch(96% 0.018 272);
-	--color-secondary: oklch(60% 0.200 342);
+	--color-secondary: oklch(60% 0.2 342);
 	--color-secondary-content: oklch(96% 0.018 342);
 	--color-accent: oklch(71.61% 0.152 282.28);
-	--color-accent-content: oklch(95% 0.010 260);
-	--color-neutral: oklch(90% 0.010 260);
-	--color-neutral-content: oklch(25% 0.020 260);
+	--color-accent-content: oklch(95% 0.01 260);
+	--color-neutral: oklch(90% 0.01 260);
+	--color-neutral-content: oklch(25% 0.02 260);
 
 	--color-info: oklch(74% 0.16 232.661);
 	--color-info-content: oklch(29% 0.066 243.157);
@@ -107,7 +107,9 @@
 @theme {
 	/* 字体栈 */
 	--font-sans: 'Inter Variable', 'Noto Sans SC Variable', ui-sans-serif, system-ui, sans-serif;
-	--font-display: 'Plus Jakarta Sans Variable', 'Inter Variable', 'Noto Sans SC Variable', ui-sans-serif, system-ui, sans-serif;
+	--font-display:
+		'Plus Jakarta Sans Variable', 'Inter Variable', 'Noto Sans SC Variable', ui-sans-serif,
+		system-ui, sans-serif;
 
 	/* 编辑性表面层级色 → bg-surface-*, text-surface-* */
 	--color-surface-lowest: var(--surface-lowest);
@@ -151,11 +153,7 @@
 		--glass-blur: 24px;
 
 		/* 渐变 CTA (DESIGN.md §2) — primary → primary_container 135° */
-		--gradient-cta: linear-gradient(
-			135deg,
-			oklch(49.61% 0.242 275.31),
-			oklch(71.61% 0.152 282.28)
-		);
+		--gradient-cta: linear-gradient(135deg, oklch(49.61% 0.242 275.31), oklch(71.61% 0.152 282.28));
 
 		/* 环境阴影 (DESIGN.md §4) — 使用 on_surface 色调，非纯黑 */
 		--shadow-ambient: 0 20px 40px -10px oklch(30.22% 0.029 256.84 / 8%);
@@ -174,11 +172,7 @@
 			--on-surface-variant: oklch(70% 0.02 259);
 			--outline-variant: oklch(40% 0.02 252);
 			--glass-bg: oklch(25% 0.02 260 / 80%);
-			--gradient-cta: linear-gradient(
-				135deg,
-				oklch(58% 0.233 277),
-				oklch(71.61% 0.152 282.28)
-			);
+			--gradient-cta: linear-gradient(135deg, oklch(58% 0.233 277), oklch(71.61% 0.152 282.28));
 			--shadow-ambient: 0 20px 40px -10px oklch(0% 0 0 / 20%);
 			--shadow-editorial-sm: 0 4px 12px -4px oklch(0% 0 0 / 15%);
 		}
@@ -194,11 +188,7 @@
 		--on-surface-variant: oklch(70% 0.02 259);
 		--outline-variant: oklch(40% 0.02 252);
 		--glass-bg: oklch(25% 0.02 260 / 80%);
-		--gradient-cta: linear-gradient(
-			135deg,
-			oklch(58% 0.233 277),
-			oklch(71.61% 0.152 282.28)
-		);
+		--gradient-cta: linear-gradient(135deg, oklch(58% 0.233 277), oklch(71.61% 0.152 282.28));
 		--shadow-ambient: 0 20px 40px -10px oklch(0% 0 0 / 20%);
 		--shadow-editorial-sm: 0 4px 12px -4px oklch(0% 0 0 / 15%);
 	}

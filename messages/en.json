@@ -53,5 +53,16 @@
 	"col_start_date": "Start Date",
 	"col_end_date": "End Date",
 	"col_level": "Level",
-	"showing_users": "Showing {from} to {to} of {total} users"
+	"showing_users": "Showing {from} to {to} of {total} users",
+	"edit_user": "Edit User",
+	"create_user": "Create User",
+	"confirm_password": "Confirm Password",
+	"email": "Email",
+	"optional": "Optional",
+	"admin_only_visible": "Admin-only visible",
+	"cancel": "Cancel",
+	"save_changes": "Save Changes",
+	"add_admin_note": "Add administrative note...",
+	"email_placeholder": "email@example.com",
+	"close": "Close"
 }

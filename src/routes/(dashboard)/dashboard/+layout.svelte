@@ -35,8 +35,8 @@
 		<AdminSidebar open={sidebarOpen} onclose={toggleSidebar} />
 
 		<!-- 主内容区域 -->
-		<main class="lg:ml-72 flex-1 min-h-screen">
-			<div class="p-6 pt-16 lg:p-10 max-w-7xl mx-auto w-full">
+		<main class="min-h-screen flex-1 lg:ml-72">
+			<div class="mx-auto w-full max-w-7xl p-6 pt-16 lg:p-10">
 				{@render children()}
 			</div>
 		</main>

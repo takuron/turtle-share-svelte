@@ -49,21 +49,21 @@
 
 <!-- 翻页导航 — 匹配原型中的 editorial 风格 -->
 {#if totalPages > 1}
-	<nav aria-label="Pagination" class="flex justify-center items-center space-x-2 my-12">
+	<nav aria-label="Pagination" class="my-12 flex items-center justify-center space-x-2">
 		<!-- 上一页按钮 -->
 		{#if currentPage > 1}
 			<a
 				href={getHref(currentPage - 1)}
-				class="flex items-center px-4 py-2 text-sm font-semibold text-on-surface-variant bg-surface-lowest
-					rounded-lg hover:bg-base-300 hover:text-primary transition-colors"
+				class="flex items-center rounded-lg bg-surface-lowest px-4 py-2 text-sm font-semibold
+					text-on-surface-variant transition-colors hover:bg-base-300 hover:text-primary"
 			>
 				<ChevronLeft size={16} class="mr-1" />
 				{m.previous()}
 			</a>
 		{:else}
 			<span
-				class="flex items-center px-4 py-2 text-sm font-semibold text-on-surface-variant bg-surface-lowest
-					rounded-lg opacity-50 cursor-not-allowed"
+				class="flex cursor-not-allowed items-center rounded-lg bg-surface-lowest px-4 py-2 text-sm
+					font-semibold text-on-surface-variant opacity-50"
 			>
 				<ChevronLeft size={16} class="mr-1" />
 				{m.previous()}
@@ -77,16 +77,16 @@
 					<span class="px-2 text-on-surface-variant">...</span>
 				{:else if page === currentPage}
 					<span
-						class="w-10 h-10 flex items-center justify-center rounded-lg bg-primary text-primary-content
-							font-bold text-sm shadow-editorial-sm"
+						class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-sm
+							font-bold text-primary-content shadow-editorial-sm"
 					>
 						{page}
 					</span>
 				{:else}
 					<a
 						href={getHref(page)}
-						class="w-10 h-10 flex items-center justify-center rounded-lg bg-surface-lowest text-on-surface-variant
-							font-semibold text-sm hover:bg-base-300 hover:text-primary transition-colors"
+						class="flex h-10 w-10 items-center justify-center rounded-lg bg-surface-lowest text-sm
+							font-semibold text-on-surface-variant transition-colors hover:bg-base-300 hover:text-primary"
 					>
 						{page}
 					</a>
@@ -98,16 +98,16 @@
 		{#if currentPage < totalPages}
 			<a
 				href={getHref(currentPage + 1)}
-				class="flex items-center px-4 py-2 text-sm font-semibold text-on-surface-variant bg-surface-lowest
-					rounded-lg hover:bg-base-300 hover:text-primary transition-colors"
+				class="flex items-center rounded-lg bg-surface-lowest px-4 py-2 text-sm font-semibold
+					text-on-surface-variant transition-colors hover:bg-base-300 hover:text-primary"
 			>
 				{m.next()}
 				<ChevronRight size={16} class="ml-1" />
 			</a>
 		{:else}
 			<span
-				class="flex items-center px-4 py-2 text-sm font-semibold text-on-surface-variant bg-surface-lowest
-					rounded-lg opacity-50 cursor-not-allowed"
+				class="flex cursor-not-allowed items-center rounded-lg bg-surface-lowest px-4 py-2 text-sm
+					font-semibold text-on-surface-variant opacity-50"
 			>
 				{m.next()}
 				<ChevronRight size={16} class="ml-1" />

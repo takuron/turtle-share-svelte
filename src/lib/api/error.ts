@@ -13,7 +13,12 @@ export function mapApiError(error: unknown): string {
 	if (!error) return m.err_unknown({ message: 'Unknown' });
 
 	// 如果是我们定义的 ApiError 结构
-	if (typeof error === 'object' && 'success' in error && error.success === false && 'error' in error) {
+	if (
+		typeof error === 'object' &&
+		'success' in error &&
+		error.success === false &&
+		'error' in error
+	) {
 		const apiErr = error as ApiError;
 		const code = apiErr.error?.code;
 

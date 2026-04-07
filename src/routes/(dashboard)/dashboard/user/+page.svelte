@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import UserListCard from '$lib/components/admin/UserListCard.svelte';
 	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
+	import UserEditModal from '$lib/components/admin/UserEditModal.svelte';
 
 	// 1. 页面状态。
 	let users = $state<AdminUserItem[]>([]);
@@ -63,7 +64,33 @@
 		if (!pageInfo) return '';
 		const from = (currentPage - 1) * ADMIN_USERS_PAGE_SIZE + 1;
 		const to = Math.min(currentPage * ADMIN_USERS_PAGE_SIZE, pageInfo.total_items);
-		return m.showing_users({ from: String(from), to: String(to), total: String(pageInfo.total_items) });
+		return m.showing_users({
+			from: String(from),
+			to: String(to),
+			total: String(pageInfo.total_items)
+		});
+	}
+
+	// 5. 编辑/创建用户模态框状态。
+	let isModalOpen = $state(false);
+	let editingUser = $state<AdminUserItem | null>(null);
+
+	function openCreateModal() {
+		editingUser = null;
+		isModalOpen = true;
+	}
+
+	function openEditModal(user: AdminUserItem) {
+		editingUser = user;
+		isModalOpen = true;
+	}
+
+	async function handleModalSubmit(data: any) {
+		// 这里暂未实现真实的 API 调用，先模拟提交成功
+		console.log('Submit user data:', data);
+		isModalOpen = false;
+		// 重新加载列表
+		loadPage(currentPage);
 	}
 
 	onMount(() => {
@@ -72,12 +99,13 @@
 </script>
 
 <!-- 用户管理页面 -->
-<div class="flex flex-col sm:flex-row items-start sm:items-end justify-between mb-8 gap-4">
-	<h2 class="text-3xl font-extrabold text-on-surface tracking-tight px-2 lg:px-6 font-display">
+<div class="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
+	<h2 class="px-2 font-display text-3xl font-extrabold tracking-tight text-on-surface lg:px-6">
 		{m.nav_user_management()}
 	</h2>
 	<button
-		class="flex items-center gap-2 gradient-cta text-white px-6 py-3 lg:px-8 lg:py-4 rounded-full font-bold shadow-xl shadow-primary/20 hover:scale-[1.02] active:scale-95 transition-all text-sm lg:text-base cursor-pointer"
+		class="flex cursor-pointer items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white shadow-xl shadow-primary/20 transition-all gradient-cta hover:scale-[1.02] active:scale-95 lg:px-8 lg:py-4 lg:text-base"
+		onclick={openCreateModal}
 	>
 		<CirclePlus size={20} />
 		{m.create_new_user()}
@@ -86,7 +114,9 @@
 
 <div class="space-y-4">
 	<!-- 表头 -->
-	<div class="hidden lg:grid grid-cols-12 px-6 py-3 text-xs font-black uppercase tracking-widest text-on-surface-variant">
+	<div
+		class="hidden grid-cols-12 px-6 py-3 text-xs font-black tracking-widest text-on-surface-variant uppercase lg:grid"
+	>
 		<div class="col-span-1 pl-4"></div>
 		<div class="col-span-4">{m.col_username()}</div>
 		<div class="col-span-6">{m.col_note()}</div>
@@ -97,26 +127,27 @@
 	{#if loading}
 		<div class="flex items-center justify-center py-20">
 			<Loader2 size={24} class="animate-spin text-primary" />
-			<span class="ml-3 text-on-surface-variant text-sm">{m.loading_articles()}</span>
+			<span class="ml-3 text-sm text-on-surface-variant">{m.loading_articles()}</span>
 		</div>
 	{:else if error}
 		<!-- 错误状态 -->
 		<div class="flex items-center justify-center py-20">
-			<p class="text-error text-sm">{error}</p>
+			<p class="text-sm text-error">{error}</p>
 		</div>
 	{:else if users.length === 0}
 		<!-- 空状态 -->
 		<div class="flex items-center justify-center py-20">
-			<p class="text-on-surface-variant text-sm">{m.no_articles()}</p>
+			<p class="text-sm text-on-surface-variant">{m.no_articles()}</p>
 		</div>
 	{:else}
 		<!-- 用户列表卡片 -->
-		<div class="bg-surface-lowest rounded-xl shadow-editorial-sm overflow-hidden">
+		<div class="overflow-hidden rounded-xl bg-surface-lowest shadow-editorial-sm">
 			{#each users as user (user.hash_id)}
 				<UserListCard
 					{user}
 					expanded={expandedUserId === user.hash_id}
 					ontoggle={() => toggleExpand(user.hash_id)}
+					onedit={() => openEditModal(user)}
 				/>
 			{/each}
 		</div>
@@ -132,3 +163,11 @@
 		{/if}
 	{/if}
 </div>
+
+<!-- 用户编辑/创建模态框 -->
+<UserEditModal
+	open={isModalOpen}
+	user={editingUser}
+	onclose={() => (isModalOpen = false)}
+	onsubmit={handleModalSubmit}
+/>

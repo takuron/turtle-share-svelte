@@ -17,7 +17,12 @@
 	// // @prop {string} [showingText] - 可选的"显示第 X 至 Y 条"文本。
 	import { ChevronLeft, ChevronRight } from 'lucide-svelte';
 
-	let { currentPage, totalPages, onpagechange, showingText = '' }: {
+	let {
+		currentPage,
+		totalPages,
+		onpagechange,
+		showingText = ''
+	}: {
 		currentPage: number;
 		totalPages: number;
 		onpagechange: (page: number) => void;
@@ -34,9 +39,9 @@
 </script>
 
 {#if totalPages > 1}
-	<div class="flex flex-col sm:flex-row justify-between items-center mt-12 px-2 lg:px-6 gap-4">
+	<div class="mt-12 flex flex-col items-center justify-between gap-4 px-2 sm:flex-row lg:px-6">
 		{#if showingText}
-			<p class="text-xs font-bold text-on-surface-variant uppercase tracking-wider">
+			<p class="text-xs font-bold tracking-wider text-on-surface-variant uppercase">
 				{showingText}
 			</p>
 		{:else}
@@ -47,7 +52,7 @@
 			<button
 				onclick={() => onpagechange(currentPage - 1)}
 				disabled={currentPage <= 1}
-				class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-dim transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+				class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-surface-container text-on-surface transition-all hover:bg-surface-dim disabled:cursor-not-allowed disabled:opacity-30"
 			>
 				<ChevronLeft size={18} />
 			</button>
@@ -56,10 +61,10 @@
 			{#each getPageNumbers(currentPage, totalPages) as pageNum}
 				<button
 					onclick={() => onpagechange(pageNum)}
-					class="w-10 h-10 flex items-center justify-center rounded-full transition-all cursor-pointer
+					class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full transition-all
 						{pageNum === currentPage
-							? 'bg-primary text-white font-bold shadow-md'
-							: 'bg-surface-container text-on-surface hover:bg-surface-dim'}"
+						? 'bg-primary font-bold text-white shadow-md'
+						: 'bg-surface-container text-on-surface hover:bg-surface-dim'}"
 				>
 					{pageNum}
 				</button>
@@ -69,7 +74,7 @@
 			<button
 				onclick={() => onpagechange(currentPage + 1)}
 				disabled={currentPage >= totalPages}
-				class="w-10 h-10 flex items-center justify-center rounded-full bg-surface-container text-on-surface hover:bg-surface-dim transition-all cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
+				class="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-surface-container text-on-surface transition-all hover:bg-surface-dim disabled:cursor-not-allowed disabled:opacity-30"
 			>
 				<ChevronRight size={18} />
 			</button>

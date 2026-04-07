@@ -20,11 +20,13 @@
 	let {
 		user,
 		expanded = false,
-		ontoggle
+		ontoggle,
+		onedit
 	}: {
 		user: AdminUserItem;
 		expanded: boolean;
 		ontoggle: () => void;
+		onedit?: () => void;
 	} = $props();
 
 	// 1. 从用户名生成头像缩写（取前两个字符大写）。
@@ -70,7 +72,10 @@
 
 		<!-- 操作按钮 -->
 		<div class="col-span-4 flex justify-end gap-3 lg:col-span-1">
-			<button class="cursor-pointer text-on-surface-variant transition-colors hover:text-primary">
+			<button
+				class="cursor-pointer text-on-surface-variant transition-colors hover:text-primary"
+				onclick={onedit}
+			>
 				<Edit size={18} />
 			</button>
 			<button class="cursor-pointer text-on-surface-variant transition-colors hover:text-error">

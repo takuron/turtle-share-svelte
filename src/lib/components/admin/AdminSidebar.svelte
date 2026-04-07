@@ -49,15 +49,19 @@
 
 <!-- 侧栏 -->
 <aside
-	class="h-screen w-72 fixed left-0 top-0 overflow-y-auto flex flex-col p-6 space-y-2 z-50
-		bg-surface-lowest border-r border-outline-variant/30
+	class="fixed top-0 left-0 z-50 flex h-screen w-72 flex-col space-y-2 overflow-y-auto border-r
+		border-outline-variant/30 bg-surface-lowest p-6
 		transition-transform duration-300 ease-in-out
 		{open ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0"
 >
 	<!-- 站点标题 -->
 	<div class="mb-6 px-4">
-		<h1 class="text-xl font-bold tracking-tighter text-primary font-display">{siteStore.info.name}</h1>
-		<p class="text-xs font-medium text-on-surface-variant mt-1 uppercase tracking-widest">{m.admin_dashboard()}</p>
+		<h1 class="font-display text-xl font-bold tracking-tighter text-primary">
+			{siteStore.info.name}
+		</h1>
+		<p class="mt-1 text-xs font-medium tracking-widest text-on-surface-variant uppercase">
+			{m.admin_dashboard()}
+		</p>
 	</div>
 
 	<!-- 主导航 -->
@@ -65,10 +69,10 @@
 		{#each navItems as item}
 			<a
 				href={item.href}
-				class="px-4 py-3 flex items-center gap-3 transition-all duration-300 active:scale-[0.98] text-sm tracking-tight
+				class="flex items-center gap-3 px-4 py-3 text-sm tracking-tight transition-all duration-300 active:scale-[0.98]
 					{isActive(item.href)
-						? 'text-primary font-bold bg-primary/5 border-r-2 border-primary rounded-l-full rounded-r-none'
-						: 'text-on-surface-variant hover:text-on-surface hover:bg-surface-low rounded-full font-medium'}"
+					? 'rounded-l-full rounded-r-none border-r-2 border-primary bg-primary/5 font-bold text-primary'
+					: 'rounded-full font-medium text-on-surface-variant hover:bg-surface-low hover:text-on-surface'}"
 			>
 				<item.icon size={20} />
 				<span>{item.label()}</span>
@@ -77,20 +81,20 @@
 	</nav>
 
 	<!-- 底部操作 -->
-	<div class="pt-6 border-t border-outline-variant/30 space-y-1">
+	<div class="space-y-1 border-t border-outline-variant/30 pt-6">
 		<a
 			href="/"
-			class="text-on-surface-variant hover:text-on-surface hover:bg-surface-low rounded-full px-4 py-3 flex items-center gap-3 transition-all duration-300 active:scale-[0.98]"
+			class="flex items-center gap-3 rounded-full px-4 py-3 text-on-surface-variant transition-all duration-300 hover:bg-surface-low hover:text-on-surface active:scale-[0.98]"
 		>
 			<Home size={20} />
-			<span class="font-medium text-sm tracking-tight">{m.nav_return_home()}</span>
+			<span class="text-sm font-medium tracking-tight">{m.nav_return_home()}</span>
 		</a>
 		<button
 			onclick={handleLogout}
-			class="w-full text-on-surface-variant hover:text-on-surface hover:bg-surface-low rounded-full px-4 py-3 flex items-center gap-3 transition-all duration-300 active:scale-[0.98] cursor-pointer"
+			class="flex w-full cursor-pointer items-center gap-3 rounded-full px-4 py-3 text-on-surface-variant transition-all duration-300 hover:bg-surface-low hover:text-on-surface active:scale-[0.98]"
 		>
 			<LogOut size={20} />
-			<span class="font-medium text-sm tracking-tight">{m.logout()}</span>
+			<span class="text-sm font-medium tracking-tight">{m.logout()}</span>
 		</button>
 	</div>
 </aside>
@@ -98,9 +102,9 @@
 <!-- 移动端悬浮菜单按钮 -->
 <button
 	onclick={onclose}
-	class="fixed top-4 left-4 z-50 lg:hidden w-10 h-10 flex items-center justify-center
+	class="fixed top-4 left-4 z-50 flex h-10 w-10 cursor-pointer items-center justify-center
 		rounded-full bg-surface-lowest text-on-surface shadow-editorial-sm
-		hover:bg-surface-low transition-all duration-200 cursor-pointer"
+		transition-all duration-200 hover:bg-surface-low lg:hidden"
 	aria-label="Toggle sidebar"
 >
 	{#if open}

@@ -1,4 +1,5 @@
 # TurtleShare Frontend Architecture
+
 # TurtleShare 前端架构文档
 
 ## 1. Overview / 概述
@@ -13,22 +14,23 @@ The backend is built with Rust (Axum + SQLite). Backend documentation is availab
 
 ## 2. Tech Stack / 技术栈
 
-| Category | Technology | Version |
-|----------|-----------|---------|
-| Framework | SvelteKit | 2.50+ |
-| UI Library | Svelte 5 (Runes mode) | 5.54+ |
-| Language | TypeScript (strict) | 5.9+ |
-| Styling | Tailwind CSS 4 + DaisyUI v5 | 4.1 / 5.5 |
-| Typography | @tailwindcss/typography | 0.5 |
-| i18n | Paraglide (inlang) | 2.10+ |
-| Markdown | MDsvex | 0.12+ |
-| Build | Vite | 7.3+ |
-| Testing | Vitest + Playwright | 4.1+ |
-| Adapter | @sveltejs/adapter-static | 3.0+ |
+| Category   | Technology                  | Version   |
+| ---------- | --------------------------- | --------- |
+| Framework  | SvelteKit                   | 2.50+     |
+| UI Library | Svelte 5 (Runes mode)       | 5.54+     |
+| Language   | TypeScript (strict)         | 5.9+      |
+| Styling    | Tailwind CSS 4 + DaisyUI v5 | 4.1 / 5.5 |
+| Typography | @tailwindcss/typography     | 0.5       |
+| i18n       | Paraglide (inlang)          | 2.10+     |
+| Markdown   | MDsvex                      | 0.12+     |
+| Build      | Vite                        | 7.3+      |
+| Testing    | Vitest + Playwright         | 4.1+      |
+| Adapter    | @sveltejs/adapter-static    | 3.0+      |
 
 ## 3. Frontend-Backend Integration / 前后端集成
 
 The frontend is built as a static site and deployed to the backend's `/static` directory:
+
 1. `pnpm build` produces static HTML/CSS/JS in the `build/` directory.
 2. The built files are served by the Rust backend's static file fallback (SPA routing).
 3. API calls from the frontend go to `/api/*` endpoints on the same origin.
@@ -47,6 +49,7 @@ All backend API responses follow a consistent format (see `docs/backend/api.md` 
 ```
 
 ### Common Error Codes / 常见错误码
+
 - `UNAUTHORIZED` (401) — invalid or missing token
 - `FORBIDDEN` (403) — insufficient permissions
 - `NOT_FOUND` (404) — resource not found
@@ -57,6 +60,7 @@ All backend API responses follow a consistent format (see `docs/backend/api.md` 
 ## 4. Authentication Flow / 认证流程
 
 ### Admin Authentication / 管理员认证
+
 1. Admin submits credentials via login page → `POST /api/admin/login`
 2. Backend returns JWT token (`sub: "admin", role: "admin"`)
 3. Frontend stores token in memory (Svelte Runes state)
@@ -64,11 +68,13 @@ All backend API responses follow a consistent format (see `docs/backend/api.md` 
 5. Token expiration handled client-side with redirect to login
 
 ### User Authentication / 用户认证
+
 1. User submits credentials → `POST /api/users/login`
 2. Backend returns JWT token (`sub: "user:<hash_id>", role: "user"`)
 3. Same storage and header pattern as admin
 
 ### Access Control / 访问控制
+
 - **Public articles** (`is_public=true`, `required_tier=0`): accessible to everyone
 - **Public articles** (`is_public=true`, `required_tier>0`): title/cover visible, content requires subscription
 - **Private articles**: only visible to users with sufficient tier at article's `created_at` time
@@ -79,30 +85,33 @@ All backend API responses follow a consistent format (see `docs/backend/api.md` 
 > Complete API documentation: `docs/backend/api.md`
 
 ### Public (no auth)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/health` | Health check |
-| GET | `/api/public/site-info` | Site configuration (name, theme, etc.) |
-| GET | `/api/public/articles` | List public articles |
-| GET | `/api/public/articles/:hash_id` | Public article detail (tier 0 only) |
+
+| Method | Endpoint                        | Description                            |
+| ------ | ------------------------------- | -------------------------------------- |
+| GET    | `/api/health`                   | Health check                           |
+| GET    | `/api/public/site-info`         | Site configuration (name, theme, etc.) |
+| GET    | `/api/public/articles`          | List public articles                   |
+| GET    | `/api/public/articles/:hash_id` | Public article detail (tier 0 only)    |
 
 ### User (user JWT)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/users/login` | User login |
-| PUT | `/api/users/password` | Change password |
-| GET | `/api/users/subscriptions` | Own subscription history |
-| GET | `/api/users/articles` | Accessible articles list |
-| GET | `/api/users/articles/:hash_id` | Article detail (tier-gated) |
+
+| Method | Endpoint                       | Description                 |
+| ------ | ------------------------------ | --------------------------- |
+| POST   | `/api/users/login`             | User login                  |
+| PUT    | `/api/users/password`          | Change password             |
+| GET    | `/api/users/subscriptions`     | Own subscription history    |
+| GET    | `/api/users/articles`          | Accessible articles list    |
+| GET    | `/api/users/articles/:hash_id` | Article detail (tier-gated) |
 
 ### Admin (admin JWT)
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/admin/login` | Admin login |
-| CRUD | `/api/admin/users/*` | User management |
-| CRUD | `/api/admin/articles/*` | Article management |
-| CRUD | `/api/admin/files/*` | File management |
-| CRUD | `/api/admin/users/:id/subscriptions` | Subscription management |
+
+| Method | Endpoint                             | Description             |
+| ------ | ------------------------------------ | ----------------------- |
+| POST   | `/api/admin/login`                   | Admin login             |
+| CRUD   | `/api/admin/users/*`                 | User management         |
+| CRUD   | `/api/admin/articles/*`              | Article management      |
+| CRUD   | `/api/admin/files/*`                 | File management         |
+| CRUD   | `/api/admin/users/:id/subscriptions` | Subscription management |
 
 ## 6. Frontend Documentation / 前端文档
 
