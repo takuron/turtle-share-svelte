@@ -69,5 +69,16 @@
 	"confirm_delete_user": "删除用户",
 	"confirm_delete_user_desc": "您确定要删除用户 {username} 吗？此操作无法撤销。",
 	"confirm": "确认",
-	"delete": "删除"
+	"delete": "删除",
+	"edit_subscription": "编辑订阅",
+	"quick_duration": "快速时长",
+	"enter_level": "请输入等级",
+	"confirm_subscription": "确认订阅",
+	"error_missing_dates": "必须填写开始和结束日期",
+	"error_missing_tier": "必须填写等级",
+	"error_invalid_dates": "结束日期必须在开始日期之后",
+	"days_7": "7 天",
+	"month_1": "1 个月",
+	"months_3": "3 个月",
+	"year_1": "1 年"
 }

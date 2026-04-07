@@ -126,7 +126,8 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 - **Admin Components** (`src/lib/components/admin/`):
   - `AdminSidebar.svelte` — Dashboard sidebar with nav links, home link, logout. Props: `open`, `onclose`. Responsive: off-screen on mobile, toggled via floating button.
   - `UserListCard.svelte` — Single user row in admin user list. Props: `user`, `expanded`, `ontoggle`. Expandable to show UserSubscriptionPanel.
-  - `UserSubscriptionPanel.svelte` — Subscription management panel for a user. Props: `user`. Fetches all subscriptions via API, client-side pagination (5/page), mini-pagination (w-7 h-7).
+  - `UserSubscriptionPanel.svelte` — Subscription management panel for a user. Props: `user`. Fetches all subscriptions via API, client-side pagination (5/page), mini-pagination (w-7 h-7). Includes Add/Edit capabilities calling `SubscriptionEditModal`.
+  - `SubscriptionEditModal.svelte` — Modal for adding/editing a subscription. Props: `open`, `subscription`, `onclose`, `onsubmit`. Includes quick duration logic.
   - `AdminPagination.svelte` — Reusable pagination. Props: `currentPage`, `totalPages`, `onpagechange`, `showingText?`. Displays page numbers with prev/next buttons.
 - **API & Stores** (API modules organized by permission level under `src/lib/api/`):
   - `src/lib/api/client.ts` — Generic `apiRequest()` helper with auto-attached JWT Authorization header.

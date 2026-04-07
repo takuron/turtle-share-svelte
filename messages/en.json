@@ -69,5 +69,16 @@
 	"confirm_delete_user": "Delete User",
 	"confirm_delete_user_desc": "Are you sure you want to delete user {username}? This action cannot be undone.",
 	"confirm": "Confirm",
-	"delete": "Delete"
+	"delete": "Delete",
+	"edit_subscription": "Edit Subscription",
+	"quick_duration": "Quick Duration",
+	"enter_level": "Enter level number",
+	"confirm_subscription": "Confirm Subscription",
+	"error_missing_dates": "Start and end dates are required",
+	"error_missing_tier": "Level is required",
+	"error_invalid_dates": "End date must be after start date",
+	"days_7": "7 Days",
+	"month_1": "1 Month",
+	"months_3": "3 Months",
+	"year_1": "1 Year"
 }

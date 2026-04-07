@@ -15,6 +15,7 @@
 	import { ADMIN_SUBSCRIPTIONS_PAGE_SIZE } from '$lib/api/types';
 	import { fetchAdminUserSubscriptions } from '$lib/api/admin/users';
 	import { onMount } from 'svelte';
+	import SubscriptionEditModal from './SubscriptionEditModal.svelte';
 
 	let { user }: { user: AdminUserItem } = $props();
 
@@ -24,7 +25,12 @@
 	let error = $state<string | null>(null);
 	let currentPage = $state(1);
 
+	// 模态框状态
+	let editModalOpen = $state(false);
+	let currentEditSubscription = $state<AdminSubscriptionItem | null>(null);
+
 	// 2. 派生当前页的订阅切片。
+
 	let pageSubscriptions = $derived(() => {
 		const start = (currentPage - 1) * ADMIN_SUBSCRIPTIONS_PAGE_SIZE;
 		return allSubscriptions.slice(start, start + ADMIN_SUBSCRIPTIONS_PAGE_SIZE);
@@ -74,6 +80,44 @@
 		currentPage = page;
 	}
 
+	// 8. 模态框控制逻辑
+	function openAddModal() {
+		currentEditSubscription = null;
+		editModalOpen = true;
+	}
+
+	function openEditModal(sub: AdminSubscriptionItem) {
+		currentEditSubscription = sub;
+		editModalOpen = true;
+	}
+
+	async function handleSubscriptionSubmit(data: {
+		start_date: number;
+		end_date: number;
+		tier: number;
+		note?: string;
+	}) {
+		// 无真实后端 API，仅在前端本地更新状态
+		if (currentEditSubscription) {
+			const idx = allSubscriptions.findIndex((s) => s.hash_id === currentEditSubscription!.hash_id);
+			if (idx !== -1) {
+				allSubscriptions[idx] = { ...allSubscriptions[idx], ...data };
+			}
+		} else {
+			const newSub: AdminSubscriptionItem = {
+				hash_id: Math.random().toString(36).substring(7),
+				user_hash_id: user.hash_id,
+				start_date: data.start_date,
+				end_date: data.end_date,
+				tier: data.tier,
+				note: data.note || null,
+				created_at: Math.floor(Date.now() / 1000)
+			};
+			allSubscriptions = [newSub, ...allSubscriptions];
+		}
+		editModalOpen = false;
+	}
+
 	onMount(() => {
 		loadSubscriptions();
 	});
@@ -90,6 +134,7 @@
 			{m.subscription_cycles()}
 		</h3>
 		<button
+			onclick={openAddModal}
 			class="flex cursor-pointer items-center gap-1.5 rounded-full border border-outline-variant/50 bg-surface-lowest px-3 py-1.5 text-xs font-bold text-primary shadow-editorial-sm transition-all hover:bg-primary hover:text-white"
 		>
 			<Plus size={14} />
@@ -141,6 +186,7 @@
 							<td class="w-24 px-4 py-3 text-right">
 								<div class="flex justify-end gap-2">
 									<button
+										onclick={() => openEditModal(sub)}
 										class="cursor-pointer text-on-surface-variant transition-colors hover:text-primary"
 									>
 										<Edit size={16} />
@@ -192,3 +238,10 @@
 		</div>
 	{/if}
 </div>
+
+<SubscriptionEditModal
+	open={editModalOpen}
+	subscription={currentEditSubscription}
+	onclose={() => (editModalOpen = false)}
+	onsubmit={handleSubscriptionSubmit}
+/>
