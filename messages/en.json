@@ -64,5 +64,10 @@
 	"save_changes": "Save Changes",
 	"add_admin_note": "Add administrative note...",
 	"email_placeholder": "email@example.com",
-	"close": "Close"
+	"close": "Close",
+	"err_passwords_mismatch": "Passwords do not match.",
+	"confirm_delete_user": "Delete User",
+	"confirm_delete_user_desc": "Are you sure you want to delete user {username}? This action cannot be undone.",
+	"confirm": "Confirm",
+	"delete": "Delete"
 }

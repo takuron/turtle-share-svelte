@@ -52,3 +52,62 @@ export function fetchAdminUserSubscriptions(
 ): Promise<ApiResponse<AdminSubscriptionItem[]>> {
 	return apiRequest<AdminSubscriptionItem[]>(`/admin/users/${userHashId}/subscriptions`);
 }
+
+/**
+ * Create a new user (admin view).
+ * @param data - User data to create.
+ */
+// // 创建新用户（管理员视角）。
+// // @param data - 要创建的用户数据。
+
+// 原始端点: POST /api/admin/users — 创建新用户（需要管理员 JWT）
+export function createAdminUser(data: {
+	username: string;
+	password?: string;
+	email?: string;
+	note?: string;
+}): Promise<ApiResponse<AdminUserItem>> {
+	return apiRequest<AdminUserItem>('/admin/users', {
+		method: 'POST',
+		body: JSON.stringify(data)
+	});
+}
+
+/**
+ * Update an existing user (admin view).
+ * @param hashId - The user's hash ID.
+ * @param data - User data to update.
+ */
+// // 更新现有用户（管理员视角）。
+// // @param hashId - 用户的哈希 ID。
+// // @param data - 要更新的用户数据。
+
+// 原始端点: PUT /api/admin/users/:hash_id — 更新现有用户（需要管理员 JWT）
+export function updateAdminUser(
+	hashId: string,
+	data: {
+		username?: string;
+		password?: string;
+		email?: string;
+		note?: string;
+	}
+): Promise<ApiResponse<AdminUserItem>> {
+	return apiRequest<AdminUserItem>(`/admin/users/${hashId}`, {
+		method: 'PUT',
+		body: JSON.stringify(data)
+	});
+}
+
+/**
+ * Delete a user (admin view).
+ * @param hashId - The user's hash ID.
+ */
+// // 删除用户（管理员视角）。
+// // @param hashId - 用户的哈希 ID。
+
+// 原始端点: DELETE /api/admin/users/:hash_id — 删除用户（需要管理员 JWT）
+export function deleteAdminUser(hashId: string): Promise<ApiResponse<{ deleted: boolean }>> {
+	return apiRequest<{ deleted: boolean }>(`/admin/users/${hashId}`, {
+		method: 'DELETE'
+	});
+}

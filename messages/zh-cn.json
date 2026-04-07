@@ -64,5 +64,10 @@
 	"save_changes": "保存更改",
 	"add_admin_note": "添加管理员可见的备注…",
 	"email_placeholder": "email@example.com",
-	"close": "关闭"
+	"close": "关闭",
+	"err_passwords_mismatch": "两次输入的密码不一致。",
+	"confirm_delete_user": "删除用户",
+	"confirm_delete_user_desc": "您确定要删除用户 {username} 吗？此操作无法撤销。",
+	"confirm": "确认",
+	"delete": "删除"
 }

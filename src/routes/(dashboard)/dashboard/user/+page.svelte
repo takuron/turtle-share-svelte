@@ -6,12 +6,19 @@
 	// // 管理员用户管理页面，从后端 API 获取真实用户数据。
 	import { CirclePlus, Loader2 } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
-	import { fetchAdminUsersPage, fetchAdminUsersPageInfo } from '$lib/api/admin/users';
+	import {
+		fetchAdminUsersPage,
+		fetchAdminUsersPageInfo,
+		createAdminUser,
+		updateAdminUser,
+		deleteAdminUser
+	} from '$lib/api/admin/users';
 	import { ADMIN_USERS_PAGE_SIZE, type AdminUserItem, type PageInfo } from '$lib/api/types';
 	import { onMount } from 'svelte';
 	import UserListCard from '$lib/components/admin/UserListCard.svelte';
 	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
 	import UserEditModal from '$lib/components/admin/UserEditModal.svelte';
+	import ConfirmModal from '$lib/components/admin/ConfirmModal.svelte';
 
 	// 1. 页面状态。
 	let users = $state<AdminUserItem[]>([]);
@@ -85,12 +92,54 @@
 		isModalOpen = true;
 	}
 
-	async function handleModalSubmit(data: any) {
-		// 这里暂未实现真实的 API 调用，先模拟提交成功
-		console.log('Submit user data:', data);
+	async function handleModalSubmit(data: any): Promise<string | void> {
+		if (editingUser) {
+			const res = await updateAdminUser(editingUser.hash_id, data);
+			if (!res.success) {
+				return res.error.message;
+			}
+		} else {
+			const res = await createAdminUser(data);
+			if (!res.success) {
+				return res.error.message;
+			}
+		}
+
 		isModalOpen = false;
 		// 重新加载列表
 		loadPage(currentPage);
+	}
+
+	// 6. 删除用户状态。
+	let isDeleteModalOpen = $state(false);
+	let userToDelete = $state<AdminUserItem | null>(null);
+	let isDeleting = $state(false);
+
+	function openDeleteModal(user: AdminUserItem) {
+		userToDelete = user;
+		isDeleteModalOpen = true;
+	}
+
+	async function handleDeleteConfirm() {
+		if (!userToDelete) return;
+		isDeleting = true;
+
+		const res = await deleteAdminUser(userToDelete.hash_id);
+
+		isDeleting = false;
+
+		if (res.success) {
+			isDeleteModalOpen = false;
+			userToDelete = null;
+			// 如果当前页没有数据了，回退一页
+			if (users.length === 1 && currentPage > 1) {
+				loadPage(currentPage - 1);
+			} else {
+				loadPage(currentPage);
+			}
+		} else {
+			alert(res.error.message); // fallback simple alert for deletion failure
+		}
 	}
 
 	onMount(() => {
@@ -148,6 +197,7 @@
 					expanded={expandedUserId === user.hash_id}
 					ontoggle={() => toggleExpand(user.hash_id)}
 					onedit={() => openEditModal(user)}
+					ondelete={() => openDeleteModal(user)}
 				/>
 			{/each}
 		</div>
@@ -170,4 +220,16 @@
 	user={editingUser}
 	onclose={() => (isModalOpen = false)}
 	onsubmit={handleModalSubmit}
+/>
+
+<!-- 删除确认模态框 -->
+<ConfirmModal
+	open={isDeleteModalOpen}
+	title={m.confirm_delete_user()}
+	description={userToDelete ? m.confirm_delete_user_desc({ username: userToDelete.username }) : ''}
+	confirmText={m.delete()}
+	danger={true}
+	loading={isDeleting}
+	onclose={() => (isDeleteModalOpen = false)}
+	onconfirm={handleDeleteConfirm}
 />

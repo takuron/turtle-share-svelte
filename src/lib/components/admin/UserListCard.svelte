@@ -21,12 +21,14 @@
 		user,
 		expanded = false,
 		ontoggle,
-		onedit
+		onedit,
+		ondelete
 	}: {
 		user: AdminUserItem;
 		expanded: boolean;
 		ontoggle: () => void;
 		onedit?: () => void;
+		ondelete?: () => void;
 	} = $props();
 
 	// 1. 从用户名生成头像缩写（取前两个字符大写）。
@@ -78,7 +80,10 @@
 			>
 				<Edit size={18} />
 			</button>
-			<button class="cursor-pointer text-on-surface-variant transition-colors hover:text-error">
+			<button
+				class="cursor-pointer text-on-surface-variant transition-colors hover:text-error"
+				onclick={ondelete}
+			>
 				<Trash2 size={18} />
 			</button>
 		</div>
