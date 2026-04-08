@@ -27,11 +27,12 @@ import {
 	SiEagle,
 	SiReddit,
 	SiMisskey,
-	SiPaypal
+	SiPaypal,
+	SiXiaohongshu
 } from '@icons-pack/svelte-simple-icons';
 
 // 通用图标 (Lucide)
-import { Mail, Globe, Rss } from 'lucide-svelte';
+import { Mail, Globe, Rss, Palette } from 'lucide-svelte';
 
 /**
  * Social link item as returned by site-info API.
@@ -52,6 +53,7 @@ export const socialPlatforms: Record<string, SocialPlatform> = {
 	// 社交媒体
 	x: { label: 'X (Twitter)', icon: SiX },
 	weibo: { label: '微博', icon: SiSinaweibo },
+	xiaohongshu: { label: '小红书', icon: SiXiaohongshu },
 	threads: { label: 'Threads', icon: SiThreads },
 	mastodon: { label: 'Mastodon', icon: SiMastodon },
 	bluesky: { label: 'Bluesky', icon: SiBluesky },
@@ -59,6 +61,7 @@ export const socialPlatforms: Record<string, SocialPlatform> = {
 	// 创作/作品
 	pixiv: { label: 'Pixiv', icon: SiPixiv },
 	bilibili: { label: 'Bilibili', icon: SiBilibili },
+	mihuashi: { label: '米画师', icon: Palette },
 	youtube: { label: 'YouTube', icon: SiYoutube },
 	artstation: { label: 'ArtStation', icon: SiArtstation },
 

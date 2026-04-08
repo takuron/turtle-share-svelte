@@ -52,3 +52,5 @@
 [2026-04-07T19:19:44+08:00] Modified admin file list item action button to use DaisyUI tooltip for copy success/failure feedback.
 [2026-04-07T19:49:33+08:00] Implemented upload progress tracking using XMLHttpRequest and DaisyUI radial-progress. Fixed file URL encoding to escape spaces correctly for copy link actions.
 [2026-04-07T19:52:34+08:00] Replaced native JS alert with inline DaisyUI alert for file upload errors.
+[2026-04-08T18:59:49+08:00] Added Xiaohongshu and Mihuashi icons to socialPlatforms using lucide-svelte icons (BookHeart and Palette).
+[2026-04-08T19:04:09+08:00] Updated Xiaohongshu icon to use the official SiXiaohongshu icon from @icons-pack/svelte-simple-icons.
