@@ -54,3 +54,4 @@
 [2026-04-07T19:52:34+08:00] Replaced native JS alert with inline DaisyUI alert for file upload errors.
 [2026-04-08T18:59:49+08:00] Added Xiaohongshu and Mihuashi icons to socialPlatforms using lucide-svelte icons (BookHeart and Palette).
 [2026-04-08T19:04:09+08:00] Updated Xiaohongshu icon to use the official SiXiaohongshu icon from @icons-pack/svelte-simple-icons.
+[2026-04-08T19:39:22+08:00] Added custom Mihuashi SVG icon component and updated socialPlatforms to use it.

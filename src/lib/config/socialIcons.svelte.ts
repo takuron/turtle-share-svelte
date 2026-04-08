@@ -32,7 +32,10 @@ import {
 } from '@icons-pack/svelte-simple-icons';
 
 // 通用图标 (Lucide)
-import { Mail, Globe, Rss, Palette } from 'lucide-svelte';
+import { Mail, Globe, Rss } from 'lucide-svelte';
+
+// 自定义图标
+import MihuashiIcon from '$lib/components/icons/MihuashiIcon.svelte';
 
 /**
  * Social link item as returned by site-info API.
@@ -61,7 +64,7 @@ export const socialPlatforms: Record<string, SocialPlatform> = {
 	// 创作/作品
 	pixiv: { label: 'Pixiv', icon: SiPixiv },
 	bilibili: { label: 'Bilibili', icon: SiBilibili },
-	mihuashi: { label: '米画师', icon: Palette },
+	mihuashi: { label: '米画师', icon: MihuashiIcon },
 	youtube: { label: 'YouTube', icon: SiYoutube },
 	artstation: { label: 'ArtStation', icon: SiArtstation },
 
