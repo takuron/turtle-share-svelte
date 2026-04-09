@@ -29,6 +29,17 @@ export interface ApiOptions extends RequestInit {
 }
 
 /**
+ * Read the stored JWT token from localStorage.
+ * 从 localStorage 读取已存储的 JWT token。
+ */
+// // 从 localStorage 读取已存储的 JWT token。
+export function getAuthToken(): string | null {
+	return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
+		? window.localStorage.getItem('auth_token')
+		: null;
+}
+
+/**
  * Sends a JSON request to the backend API.
  * @param path - API path relative to API_URL (e.g., '/admin/login').
  * @param options - Fetch options (method, body, headers, custom fetch).
@@ -42,17 +53,16 @@ export async function apiRequest<T>(
 	path: string,
 	options: ApiOptions = {}
 ): Promise<ApiResponse<T>> {
-	// 1. 合并默认 headers，如果有 body 则添加 Content-Type。
+	// 1. 合并默认 headers，如果有 body 且不是 FormData 则添加 Content-Type。
 	const headers: Record<string, string> = {
-		...(options.body ? { 'Content-Type': 'application/json' } : {}),
+		...(options.body && !(options.body instanceof FormData)
+			? { 'Content-Type': 'application/json' }
+			: {}),
 		...(options.headers as Record<string, string>)
 	};
 
 	// 2. 从 localStorage 读取 token，如果存在则附加 Authorization 头。
-	const token =
-		typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
-			? window.localStorage.getItem('auth_token')
-			: null;
+	const token = getAuthToken();
 	if (token) {
 		headers['Authorization'] = `Bearer ${token}`;
 	}

@@ -1,4 +1,4 @@
-import { apiRequest, type ApiResponse } from '../client';
+import { apiRequest, getAuthToken, type ApiResponse } from '../client';
 import type { AdminFileItem, PageInfo } from '../types';
 import { API_URL } from '$lib/config';
 
@@ -45,14 +45,16 @@ export async function uploadAdminFile(
 	const formData = new FormData();
 	formData.append('file', file);
 
-	const token =
-		typeof window !== 'undefined' && typeof window.localStorage !== 'undefined'
-			? window.localStorage.getItem('auth_token')
-			: null;
+	// 复用全局 token 获取逻辑，避免重复实现。
+	const token = getAuthToken();
+
+	// 上传超时时间：2 分钟。
+	const UPLOAD_TIMEOUT_MS = 120_000;
 
 	return new Promise((resolve) => {
 		const xhr = new XMLHttpRequest();
 		xhr.open('POST', `${API_URL}/admin/files`, true);
+		xhr.timeout = UPLOAD_TIMEOUT_MS;
 
 		if (token) {
 			xhr.setRequestHeader('Authorization', `Bearer ${token}`);
@@ -71,7 +73,7 @@ export async function uploadAdminFile(
 			try {
 				const response = JSON.parse(xhr.responseText);
 				resolve(response as ApiResponse<AdminFileItem>);
-			} catch (e) {
+			} catch {
 				resolve({
 					success: false,
 					error: { code: 'PARSE_ERROR', message: 'Failed to parse response' }
@@ -83,6 +85,13 @@ export async function uploadAdminFile(
 			resolve({
 				success: false,
 				error: { code: 'NETWORK_ERROR', message: 'Network error occurred' }
+			});
+		};
+
+		xhr.ontimeout = () => {
+			resolve({
+				success: false,
+				error: { code: 'TIMEOUT', message: 'Upload timed out' }
 			});
 		};
 

@@ -28,6 +28,9 @@ export interface AuthSession {
 	exp: number;
 }
 
+// 模块级标志：防止重复注册 auth:unauthorized 事件监听器。
+let authListenerAdded = false;
+
 // 1. 使用 Svelte 5 Runes 定义全局认证状态。initialized 标志用于区分"未初始化"和"未登录"。
 export const authStore = $state<{ session: AuthSession | null; initialized: boolean }>({
 	session: null,
@@ -84,11 +87,9 @@ export function initAuth() {
 	}
 	authStore.initialized = true;
 
-	if (typeof window !== 'undefined') {
-		if (!(window as any).__auth_listener_added) {
-			window.addEventListener('auth:unauthorized', logout);
-			(window as any).__auth_listener_added = true;
-		}
+	if (typeof window !== 'undefined' && !authListenerAdded) {
+		window.addEventListener('auth:unauthorized', logout);
+		authListenerAdded = true;
 	}
 }
 

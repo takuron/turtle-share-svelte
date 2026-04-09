@@ -14,6 +14,16 @@
 	const avatar = $derived(siteStore.info.avatar);
 	const bio = $derived(siteStore.info.bio);
 	const socialLinks: SocialLink[] = $derived(siteStore.info.social_links ?? []);
+
+	// 2. 校验 URL 协议，仅允许安全协议，防止 javascript: 等 XSS 注入。
+	function isSafeUrl(url: string): boolean {
+		try {
+			const u = new URL(url);
+			return ['http:', 'https:', 'mailto:'].includes(u.protocol);
+		} catch {
+			return false;
+		}
+	}
 </script>
 
 <!-- 作者资料卡 — surface_container_lowest 背景，最高层级 -->
@@ -46,20 +56,22 @@
 				<div class="mt-2 flex flex-wrap gap-3">
 					{#each socialLinks as link}
 						{@const platform = socialPlatforms[link.platform]}
-						<a
-							href={link.url}
-							target="_blank"
-							rel="noopener noreferrer"
-							title={platform?.label ?? link.platform}
-							class="flex h-8 w-8 items-center justify-center rounded-full bg-base-200 text-on-surface-variant
-								transition-colors hover:bg-primary/10 hover:text-primary"
-						>
-							{#if platform}
-								<platform.icon size={16} />
-							{:else}
-								<Globe size={16} />
-							{/if}
-						</a>
+						{#if isSafeUrl(link.url)}
+							<a
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								title={platform?.label ?? link.platform}
+								class="flex h-8 w-8 items-center justify-center rounded-full bg-base-200 text-on-surface-variant
+									transition-colors hover:bg-primary/10 hover:text-primary"
+							>
+								{#if platform}
+									<platform.icon size={16} />
+								{:else}
+									<Globe size={16} />
+								{/if}
+							</a>
+						{/if}
 					{/each}
 				</div>
 			{/if}
