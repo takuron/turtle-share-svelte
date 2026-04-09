@@ -138,5 +138,6 @@
 	"enter_confirm_password": "Confirm your new password",
 	"password_changed_success": "Password changed successfully",
 	"confirm_change_password": "Change Password",
-	"err_password_empty": "All fields are required."
+	"err_password_empty": "All fields are required.",
+	"err_network": "Network error. The server may be unreachable."
 }

@@ -118,6 +118,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button. User dropdown triggers `UserSubscriptionModal` for subscription viewing and `ChangePasswordModal` for password change.
   - `UserSubscriptionModal.svelte` — Popup dialog showing user's current subscription tier and recent subscription history (max 5 records). Props: `open`, `onclose`. Fetches data from `GET /api/users/subscriptions`.
   - `ChangePasswordModal.svelte` — Popup dialog for users to change their password. Includes current password, new password, and confirm password fields with visibility toggles. Props: `open`, `onclose`. Calls `PUT /api/users/password`.
+  - `NetworkToast.svelte` — Global DaisyUI toast (bottom-right, `z-[9999]`) for network-level errors. Renders from `toastStore`. Mounted once in root `+layout.svelte`. Shows error alerts with close button; auto-dismisses after 5 s.
   - `AuthorProfile.svelte` — Author profile header (magazine cover style).
   - `PostCard.svelte` — Post card displaying article data. Props: `title`, `hashId`, `coverImage`, `requiredTier`, `accessible`, `createdAt`. Shows readable/locked state based on `accessible`.
   - `ArticleFeed.svelte` — Shared article feed component. Accepts `page` prop, fetches articles + page info from API, renders PostCards + Pagination.
@@ -132,7 +133,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `SubscriptionEditModal.svelte` — Modal for adding/editing a subscription. Props: `open`, `subscription`, `onclose`, `onsubmit`. Includes quick duration logic.
   - `AdminPagination.svelte` — Reusable pagination. Props: `currentPage`, `totalPages`, `onpagechange`, `showingText?`. Displays page numbers with prev/next buttons.
 - **API & Stores** (API modules organized by permission level under `src/lib/api/`):
-  - `src/lib/api/client.ts` — Generic `apiRequest()` helper with auto-attached JWT Authorization header.
+  - `src/lib/api/client.ts` — Generic `apiRequest()` helper with auto-attached JWT Authorization header. Catches network errors (fetch failures) and HTTP 429 rate limits, pushing them to the global `toastStore` for display via `NetworkToast`.
   - `src/lib/api/types.ts` — Shared types: `ArticleListItem`, `AdminArticleRawItem`, `AdminUserItem`, `AdminSubscriptionItem`, `UserSubscriptionItem`, `PageInfo`, `DEFAULT_PAGE_SIZE`, `ADMIN_USERS_PAGE_SIZE`, `ADMIN_SUBSCRIPTIONS_PAGE_SIZE`.
   - `src/lib/api/public/auth.ts` — Login API: `loginRequest()` for admin/user login. Endpoints: `POST /api/admin/login`, `POST /api/users/login`.
   - `src/lib/api/public/site.ts` — Site API: `fetchSiteInfoRequest()`. Endpoint: `GET /api/public/site-info`.
@@ -143,6 +144,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `src/lib/api/admin/users.ts` — Admin users API: `fetchAdminUsersPage()`, `fetchAdminUsersPageInfo()`, `fetchAdminUserSubscriptions()`. Endpoints: `GET /api/admin/users/page/:page`, `GET /api/admin/users/page`, `GET /api/admin/users/:hash_id/subscriptions`. Requires admin JWT.
   - `src/lib/stores/auth.svelte.ts` — Auth store: JWT decode, `login()`, `logout()`, `initAuth()`. Two roles (admin/user) are mutually exclusive. Delegates API calls to `src/lib/api/public/auth.ts`.
   - `src/lib/stores/site.svelte.ts` — Site info store with `fetchSiteInfo()`. Delegates API calls to `src/lib/api/public/site.ts`.
+  - `src/lib/stores/toast.svelte.ts` — Global toast store. `toastStore.messages` (reactive array). `addToast(text, duration?)` pushes a message (deduplicates by text, auto-removes after 5 s). `removeToast(id)` removes by id. Used by `apiRequest()` to surface network errors and 429 rate limits.
 - **Route Structure**:
   - `+layout.svelte` — Root layout: CSS imports, favicon, i18n links, `initAuth()` + `fetchSiteInfo()`.
   - `(main)/+layout.svelte` — Main layout group: TopNavBar + main content + SiteFooter.

@@ -80,3 +80,4 @@
 [2026-04-09T13:32:38+08:00] Add ChangePasswordModal component with old/new/confirm password fields and eye-toggle; wire up from TopNavBar dropdown.
 [2026-04-09T13:35:52+08:00] Wire ChangePasswordModal to PUT /api/users/password via changeUserPassword(); remove mock delay.
 [2026-04-09T13:39:04+08:00] Add skipUnauthorizedEvent option to apiRequest; apply to changeUserPassword to prevent logout on wrong-password 401.
+[2026-04-09T13:58:49+08:00] Add global NetworkToast component (DaisyUI native toast, bottom-right) and toast store. apiRequest now catches fetch network errors and HTTP 429, pushing localized messages to toastStore. NetworkToast mounted in root +layout.svelte. Added err_network i18n key.

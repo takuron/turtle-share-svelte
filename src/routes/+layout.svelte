@@ -6,6 +6,7 @@
 	import { fetchSiteInfo } from '$lib/stores/site.svelte';
 	import { initAuth } from '$lib/stores/auth.svelte';
 	import { onMount } from 'svelte';
+	import NetworkToast from '$lib/components/NetworkToast.svelte';
 
 	let { children } = $props();
 
@@ -19,6 +20,9 @@
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
 {@render children()}
+
+<!-- 全局网络错误 Toast -->
+<NetworkToast />
 
 <!-- i18n 隐藏链接 -->
 <div style="display:none">

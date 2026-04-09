@@ -1,4 +1,6 @@
 import { API_URL } from '$lib/config';
+import { addToast } from '$lib/stores/toast.svelte';
+import * as m from '$lib/paraglide/messages.js';
 
 /**
  * Generic API response wrapper matching backend format.
@@ -59,14 +61,26 @@ export async function apiRequest<T>(
 
 	const fetchFn = fetchOptions.fetch || globalThis.fetch;
 
-	const res = await fetchFn(`${API_URL}${path}`, {
-		...fetchOptions,
-		headers
-	});
+	// 3. 执行网络请求，捕获网络级错误（如后端无响应）并通过全局 toast 提示。
+	let res: Response;
+	try {
+		res = await fetchFn(`${API_URL}${path}`, {
+			...fetchOptions,
+			headers
+		});
+	} catch (err) {
+		addToast(m.err_network());
+		throw err;
+	}
+
+	// 4. 如果 HTTP 状态码为 429（速率限制），通过全局 toast 提示。
+	if (res.status === 429) {
+		addToast(m.err_too_many_requests());
+	}
 
 	const data = (await res.json()) as ApiResponse<T>;
 
-	// 3. 如果遇到 401 错误或认证错误，且未设置 skipUnauthorizedEvent，触发未授权事件
+	// 5. 如果遇到 401 错误或认证错误，且未设置 skipUnauthorizedEvent，触发未授权事件
 	if (
 		!skipUnauthorizedEvent &&
 		!data.success &&

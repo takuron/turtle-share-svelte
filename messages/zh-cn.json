@@ -138,5 +138,6 @@
 	"enter_confirm_password": "请再次输入新密码",
 	"password_changed_success": "密码修改成功",
 	"confirm_change_password": "确认修改",
-	"err_password_empty": "所有字段均为必填项。"
+	"err_password_empty": "所有字段均为必填项。",
+	"err_network": "网络错误，服务器可能无法连接。"
 }
