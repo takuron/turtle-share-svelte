@@ -161,5 +161,8 @@
 	"error_page_generic": "出了点问题",
 	"error_page_generic_desc": "发生了意外错误，请稍后再试。",
 	"error_return_home": "返回首页",
-	"error_login": "去登录"
+	"error_login": "去登录",
+	"page_title_page_n": "第 {page} 页",
+	"page_title_error": "{title} — {siteName}",
+	"page_title_with_site": "{title} — {siteName}"
 }

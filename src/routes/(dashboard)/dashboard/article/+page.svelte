@@ -17,6 +17,7 @@
 		deleteAdminArticle
 	} from '$lib/api/admin/articles';
 	import { ADMIN_ARTICLES_PAGE_SIZE, type AdminArticleRawItem } from '$lib/api/types';
+	import { siteStore } from '$lib/stores/site.svelte';
 
 	// 1. 状态管理
 	let articles = $state<AdminArticleRawItem[]>([]);
@@ -133,6 +134,11 @@
 		}
 	}
 </script>
+
+<!-- 内容管理页面标题 -->
+<svelte:head>
+	<title>{m.page_title_with_site({ title: m.nav_content_management(), siteName: siteStore.info.name })}</title>
+</svelte:head>
 
 <!-- 内容管理头部 -->
 <div class="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">

@@ -19,6 +19,7 @@
 	} from '$lib/api/admin/files';
 	import type { AdminFileItem } from '$lib/api/types';
 	import { ADMIN_FILES_PAGE_SIZE } from '$lib/api/types';
+	import { siteStore } from '$lib/stores/site.svelte';
 
 	// State
 	// 1. 状态管理
@@ -171,6 +172,11 @@
 		return `Showing ${start} to ${end} of ${totalItems} files`;
 	});
 </script>
+
+<!-- 文件管理页面标题 -->
+<svelte:head>
+	<title>{m.page_title_with_site({ title: m.nav_file_management(), siteName: siteStore.info.name })}</title>
+</svelte:head>
 
 <!-- 文件管理页面头部 -->
 <div class="mb-8 flex items-end justify-between">

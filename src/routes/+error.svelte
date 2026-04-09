@@ -11,6 +11,7 @@
 	import TopNavBar from '$lib/components/main/TopNavBar.svelte';
 	import SiteFooter from '$lib/components/main/SiteFooter.svelte';
 	import * as m from '$lib/paraglide/messages.js';
+	import { siteStore } from '$lib/stores/site.svelte';
 
 	// 状态码 → i18n 消息映射表
 	const statusMessages: Record<number, { title: () => string; desc: () => string }> = {
@@ -33,6 +34,11 @@
 	// 401/403 时额外显示登录按钮
 	const showLoginAction = $derived(page.status === 401 || page.status === 403);
 </script>
+
+<!-- 页面标题 -->
+<svelte:head>
+	<title>{m.page_title_error({ title, siteName: siteStore.info.name })}</title>
+</svelte:head>
 
 <!-- 顶部导航栏 -->
 <TopNavBar />

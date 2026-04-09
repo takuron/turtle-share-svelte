@@ -19,6 +19,7 @@
 	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
 	import UserEditModal from '$lib/components/admin/UserEditModal.svelte';
 	import ConfirmModal from '$lib/components/admin/ConfirmModal.svelte';
+	import { siteStore } from '$lib/stores/site.svelte';
 
 	// 1. 页面状态。
 	let users = $state<AdminUserItem[]>([]);
@@ -146,6 +147,11 @@
 		loadPage(1);
 	});
 </script>
+
+<!-- 用户管理页面标题 -->
+<svelte:head>
+	<title>{m.page_title_with_site({ title: m.nav_user_management(), siteName: siteStore.info.name })}</title>
+</svelte:head>
 
 <!-- 用户管理页面 -->
 <div class="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
