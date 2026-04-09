@@ -128,6 +128,7 @@
 	"clear_header_image": "清除头图",
 	"markdown_format_hint": "支持 GitHub Flavored Markdown 格式",
 	"current_subscription_tier": "当前订阅等级",
+	"tier_display": "等级 {tier}",
 	"recent_subscription_records": "最近订阅记录",
 	"date_range_to": "至",
 	"no_subscriptions": "暂无订阅记录",

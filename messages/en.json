@@ -128,6 +128,7 @@
 	"clear_header_image": "Clear Header Image",
 	"markdown_format_hint": "GitHub Flavored Markdown is supported",
 	"current_subscription_tier": "Current Subscription Tier",
+	"tier_display": "Tier {tier}",
 	"recent_subscription_records": "Recent Subscription Records",
 	"date_range_to": "to",
 	"no_subscriptions": "No subscription records",

@@ -98,7 +98,7 @@
 					{#if loading}
 						<span class="loading loading-dots loading-sm"></span>
 					{:else}
-						Tier {currentTier}
+						{m.tier_display({ tier: currentTier })}
 					{/if}
 				</h2>
 			</div>
@@ -132,7 +132,7 @@
 							>
 								<div class="space-y-1">
 									<span class="text-sm font-bold text-on-surface">
-										Level {sub.tier}
+										{m.tier_display({ tier: sub.tier })}
 									</span>
 									<p class="text-xs text-on-surface-variant">
 										{formatDate(sub.start_date)} {m.date_range_to()} {formatDate(sub.end_date)}
