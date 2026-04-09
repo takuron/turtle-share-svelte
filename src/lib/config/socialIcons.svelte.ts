@@ -48,6 +48,8 @@ export interface SocialLink {
 
 export interface SocialPlatform {
 	label: string;
+	// 图标组件类型：Lucide 使用 SvelteComponentTyped (Svelte 4)，无法统一为 Svelte 5 的 Component 类型
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	icon: any;
 }
 

@@ -1,5 +1,5 @@
 import { apiRequest, getAuthToken, type ApiResponse } from '../client';
-import type { AdminFileItem, PageInfo } from '../types';
+import { ADMIN_FILES_PAGE_SIZE, type AdminFileItem, type PageInfo } from '../types';
 import { API_URL } from '$lib/config';
 
 /**
@@ -12,7 +12,7 @@ import { API_URL } from '$lib/config';
 // // 获取管理员文件分页列表。
 export async function fetchAdminFilesPage(
 	page: number,
-	pageSize: number = 5
+	pageSize: number = ADMIN_FILES_PAGE_SIZE
 ): Promise<ApiResponse<AdminFileItem[]>> {
 	return apiRequest<AdminFileItem[]>(`/admin/files/page/${page}?page_size=${pageSize}`);
 }
@@ -25,7 +25,7 @@ export async function fetchAdminFilesPage(
  */
 // // 获取管理员文件分页信息（总页数、总条数）。
 export async function fetchAdminFilesPageInfo(
-	pageSize: number = 5
+	pageSize: number = ADMIN_FILES_PAGE_SIZE
 ): Promise<ApiResponse<PageInfo>> {
 	return apiRequest<PageInfo>(`/admin/files/page?page_size=${pageSize}`);
 }

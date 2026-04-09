@@ -7,6 +7,7 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import { onMount } from 'svelte';
 	import { TriangleAlert } from 'lucide-svelte';
+	import { formatShortDate } from '$lib/utils/formatDate';
 	import FileUploadZone from '$lib/components/admin/FileUploadZone.svelte';
 	import FileListItem from '$lib/components/admin/FileListItem.svelte';
 	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
@@ -141,13 +142,7 @@
 		return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 	}
 
-	function formatDate(timestamp: number) {
-		return new Date(timestamp * 1000).toLocaleDateString('en-US', {
-			month: 'short',
-			day: 'numeric',
-			year: 'numeric'
-		});
-	}
+	const formatDate = formatShortDate;
 
 	function getFullUrl(url: string) {
 		if (!url) return '';

@@ -8,6 +8,7 @@
 	import { CirclePlus, Loader2 } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { formatShortDate } from '$lib/utils/formatDate';
 	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
 	import AdminArticleListItem from '$lib/components/admin/AdminArticleListItem.svelte';
 	import ConfirmModal from '$lib/components/admin/ConfirmModal.svelte';
@@ -65,13 +66,7 @@
 	}
 
 	// 4. 格式化辅助函数
-	function formatDate(timestamp: number) {
-		return new Date(timestamp * 1000).toLocaleDateString('en-US', {
-			month: 'short',
-			day: 'numeric',
-			year: 'numeric'
-		});
-	}
+	const formatDate = formatShortDate;
 
 	function getRequirements(item: AdminArticleRawItem) {
 		const reqs = [];

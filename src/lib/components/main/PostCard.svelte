@@ -17,6 +17,7 @@
 	// // @prop {number} publishAt - 文章发布时间的 Unix 时间戳。
 	import { Lock } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
+	import { formatShortDate } from '$lib/utils/formatDate';
 
 	let {
 		title,
@@ -38,13 +39,7 @@
 	const isLocked = $derived(!accessible);
 
 	// 2. 格式化发布日期。
-	const formattedDate = $derived(
-		new Date(publishAt * 1000).toLocaleDateString(undefined, {
-			year: 'numeric',
-			month: 'short',
-			day: 'numeric'
-		})
-	);
+	const formattedDate = $derived(formatShortDate(publishAt));
 
 	// 3. 封面图片 URL，直接使用传入的链接。
 	const coverUrl = $derived(

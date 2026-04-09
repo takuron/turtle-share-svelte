@@ -4,10 +4,9 @@
 	 * 通用确认模态框。
 	 */
 	// // 通用确认模态框。
-	import { fade, scale } from 'svelte/transition';
-	import { quintOut, backOut } from 'svelte/easing';
 	import * as m from '$lib/paraglide/messages.js';
 	import { CircleAlert } from 'lucide-svelte';
+	import Modal from '$lib/components/shared/Modal.svelte';
 
 	let {
 		open = false,
@@ -32,20 +31,8 @@
 	}>();
 </script>
 
-{#if open}
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div
-		class="fixed inset-0 z-[100] flex items-center justify-center bg-black/30"
-		transition:fade={{ duration: 200, easing: quintOut }}
-		onclick={!loading ? onclose : undefined}
-	>
-		<div
-			class="border-surface-container-high w-full max-w-sm overflow-hidden rounded-3xl border bg-surface-lowest shadow-2xl"
-			transition:scale={{ duration: 300, start: 0.95, opacity: 0, easing: backOut }}
-			onclick={(e) => e.stopPropagation()}
-		>
-			<div class="px-8 pt-8 pb-6">
+<Modal open={open} onclose={!loading ? onclose : undefined} maxWidth="max-w-sm">
+		<div class="px-8 pt-8 pb-6">
 				<div class="mb-4 flex items-center gap-3">
 					{#if danger}
 						<div
@@ -86,6 +73,4 @@
 					{confirmText}
 				</button>
 			</div>
-		</div>
-	</div>
-{/if}
+</Modal>

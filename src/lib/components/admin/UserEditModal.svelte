@@ -7,8 +7,7 @@
 	import { Lock, CircleAlert } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import type { AdminUserItem } from '$lib/api/types';
-	import { fade, scale } from 'svelte/transition';
-	import { quintOut, backOut } from 'svelte/easing';
+	import Modal from '$lib/components/shared/Modal.svelte';
 
 	let {
 		open = false,
@@ -66,7 +65,7 @@
 			return;
 		}
 
-		const data: any = {};
+		const data: { username?: string; password?: string; email?: string; note?: string } = {};
 		if (!user) {
 			data.username = username;
 		}
@@ -85,20 +84,8 @@
 	}
 </script>
 
-{#if open}
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div
-		class="fixed inset-0 z-[100] flex items-center justify-center bg-black/30"
-		transition:fade={{ duration: 200, easing: quintOut }}
-		onclick={onclose}
-	>
-		<div
-			class="border-surface-container-high w-full max-w-md overflow-hidden rounded-3xl border bg-surface-lowest shadow-2xl"
-			transition:scale={{ duration: 300, start: 0.95, opacity: 0, easing: backOut }}
-			onclick={(e) => e.stopPropagation()}
-		>
-			<div class="flex items-center justify-between px-8 pt-8 pb-4">
+<Modal {open} {onclose}>
+		<div class="flex items-center justify-between px-8 pt-8 pb-4">
 				<h2 class="text-2xl font-extrabold tracking-tight text-on-surface">
 					{user ? m.edit_user() : m.create_user()}
 				</h2>
@@ -216,6 +203,4 @@
 					</button>
 				</div>
 			</form>
-		</div>
-	</div>
-{/if}
+</Modal>

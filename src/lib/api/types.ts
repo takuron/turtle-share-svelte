@@ -62,6 +62,9 @@ export const ADMIN_SUBSCRIPTIONS_PAGE_SIZE = 5;
 /** &#31649;&#29702;&#21592;&#25991;&#20214;&#31649;&#29702;&#27599;&#39029;&#25991;&#20214;&#25968; */
 export const ADMIN_FILES_PAGE_SIZE = 5;
 
+/** 用户订阅弹窗最多展示的记录数 */
+export const USER_SUBSCRIPTIONS_MAX_DISPLAY = 5;
+
 /**
  * Admin user list item as returned by the backend.
  * &#21518;&#31471;&#36820;&#22238;&#30340;&#31649;&#29702;&#21592;&#29992;&#25143;&#21015;&#34920;&#39033;&#12290;

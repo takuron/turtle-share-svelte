@@ -7,8 +7,8 @@
 	import { CircleAlert } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import type { AdminSubscriptionItem } from '$lib/api/types';
-	import { fade, scale } from 'svelte/transition';
-	import { quintOut, backOut } from 'svelte/easing';
+	import { formatIsoDate } from '$lib/utils/formatDate';
+	import Modal from '$lib/components/shared/Modal.svelte';
 
 	let {
 		open = false,
@@ -41,28 +41,19 @@
 		return Math.floor(new Date(dateString + 'T00:00:00').getTime() / 1000);
 	}
 
-	// 辅助函数：将秒级时间戳转换为 YYYY-MM-DD
-	function toDateString(timestamp: number): string {
-		const d = new Date(timestamp * 1000);
-		const year = d.getFullYear();
-		const month = String(d.getMonth() + 1).padStart(2, '0');
-		const day = String(d.getDate()).padStart(2, '0');
-		return `${year}-${month}-${day}`;
-	}
-
 	// 1. 初始化表单数据。
 	$effect(() => {
 		if (open) {
 			errorMsg = '';
 			loading = false;
 			if (subscription) {
-				startDate = toDateString(subscription.start_date);
-				endDate = toDateString(subscription.end_date);
+				startDate = formatIsoDate(subscription.start_date);
+				endDate = formatIsoDate(subscription.end_date);
 				tier = subscription.tier;
 				note = subscription.note || '';
 			} else {
 				// 新增时默认当前时间
-				startDate = toDateString(Math.floor(Date.now() / 1000));
+				startDate = formatIsoDate(Math.floor(Date.now() / 1000));
 				endDate = '';
 				tier = '';
 				note = '';
@@ -73,11 +64,11 @@
 	// 2. 快速选择时长逻辑。
 	function setQuickDuration(days: number) {
 		if (!startDate) {
-			startDate = toDateString(Math.floor(Date.now() / 1000));
+			startDate = formatIsoDate(Math.floor(Date.now() / 1000));
 		}
 		const start = new Date(startDate + 'T00:00:00');
 		start.setDate(start.getDate() + days);
-		endDate = toDateString(Math.floor(start.getTime() / 1000));
+		endDate = formatIsoDate(Math.floor(start.getTime() / 1000));
 	}
 
 	// 3. 处理表单提交。
@@ -120,20 +111,8 @@
 	}
 </script>
 
-{#if open}
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div
-		class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/30 p-4 backdrop-blur-sm"
-		transition:fade={{ duration: 200, easing: quintOut }}
-		onclick={onclose}
-	>
-		<div
-			class="border-surface-container-high my-auto w-full max-w-md overflow-hidden rounded-3xl border bg-surface-lowest shadow-2xl"
-			transition:scale={{ duration: 300, start: 0.95, opacity: 0, easing: backOut }}
-			onclick={(e) => e.stopPropagation()}
-		>
-			<div class="flex items-center justify-between px-8 pt-8 pb-4">
+<Modal {open} {onclose} scrollable>
+		<div class="flex items-center justify-between px-8 pt-8 pb-4">
 				<h2 class="text-2xl font-extrabold tracking-tight text-on-surface">
 					{subscription ? m.edit_subscription() : m.add_subscription()}
 				</h2>
@@ -270,6 +249,4 @@
 					</button>
 				</div>
 			</form>
-		</div>
-	</div>
-{/if}
+</Modal>

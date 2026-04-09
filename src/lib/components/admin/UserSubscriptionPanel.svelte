@@ -22,6 +22,7 @@
 	import { onMount } from 'svelte';
 	import SubscriptionEditModal from './SubscriptionEditModal.svelte';
 	import ConfirmModal from './ConfirmModal.svelte';
+	import { formatShortDate } from '$lib/utils/formatDate';
 
 	let { user }: { user: AdminUserItem } = $props();
 
@@ -60,13 +61,7 @@
 	});
 
 	// 5. 将 Unix 时间戳格式化为可读日期。
-	function formatDate(timestamp: number): string {
-		return new Date(timestamp * 1000).toLocaleDateString('en-US', {
-			year: 'numeric',
-			month: 'short',
-			day: '2-digit'
-		});
-	}
+	const formatDate = formatShortDate;
 
 	// 6. 加载订阅数据。
 	async function loadSubscriptions() {

@@ -71,11 +71,10 @@
 		}
 	}
 
-	// 4. 当 page 或 auth 状态变化时重新加载。
+	// 4. 当 page 或认证角色变化时重新加载（仅跟踪 role 而非整个 session，避免无关属性变化触发重载）。
 	$effect(() => {
-		// 读取 page 和 authStore 以建立依赖追踪
 		const _page = page;
-		const _session = authStore.session;
+		const _role = authStore.session?.role;
 		const _initialized = authStore.initialized;
 
 		if (_initialized) {

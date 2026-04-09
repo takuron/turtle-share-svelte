@@ -8,15 +8,15 @@
 	// //
 	// // @prop {boolean} open - 控制弹窗可见性。
 	// // @prop {() => void} onclose - 关闭弹窗的回调。
-	import { fade, scale } from 'svelte/transition';
-	import { quintOut, backOut } from 'svelte/easing';
 	import { X, History, Loader2 } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { fetchUserSubscriptions, fetchUserTier } from '$lib/api/user/subscriptions';
-	import type { UserSubscriptionItem } from '$lib/api/types';
+	import { USER_SUBSCRIPTIONS_MAX_DISPLAY, type UserSubscriptionItem } from '$lib/api/types';
+	import { formatIsoDate } from '$lib/utils/formatDate';
+	import Modal from '$lib/components/shared/Modal.svelte';
 
 	/** 最多展示的订阅记录数 */
-	const MAX_DISPLAY = 5;
+	const MAX_DISPLAY = USER_SUBSCRIPTIONS_MAX_DISPLAY;
 
 	let { open = false, onclose } = $props<{
 		open: boolean;
@@ -59,31 +59,10 @@
 		}
 		loading = false;
 	}
-
-	// 将 Unix 时间戳（秒）格式化为 YYYY-MM-DD
-	function formatDate(ts: number): string {
-		const d = new Date(ts * 1000);
-		const y = d.getFullYear();
-		const mo = String(d.getMonth() + 1).padStart(2, '0');
-		const day = String(d.getDate()).padStart(2, '0');
-		return `${y}-${mo}-${day}`;
-	}
 </script>
 
-{#if open}
-	<!-- svelte-ignore a11y_click_events_have_key_events -->
-	<!-- svelte-ignore a11y_no_static_element_interactions -->
-	<div
-		class="fixed inset-0 z-[100] flex items-center justify-center overflow-y-auto bg-black/30 p-4 backdrop-blur-sm"
-		transition:fade={{ duration: 200, easing: quintOut }}
-		onclick={onclose}
-	>
-		<div
-			class="my-auto w-full max-w-lg overflow-hidden rounded-3xl border border-surface-container-high bg-surface-lowest shadow-2xl"
-			transition:scale={{ duration: 300, start: 0.95, opacity: 0, easing: backOut }}
-			onclick={(e) => e.stopPropagation()}
-		>
-			<!-- 头部区域 — 展示当前订阅等级 -->
+<Modal {open} {onclose} maxWidth="max-w-lg" scrollable>
+		<!-- 头部区域 — 展示当前订阅等级 -->
 			<div class="relative bg-primary p-10 text-center text-white">
 				<button
 					class="absolute top-4 right-4 cursor-pointer text-white/70 transition-colors hover:text-white"
@@ -135,7 +114,7 @@
 										{m.tier_display({ tier: sub.tier })}
 									</span>
 									<p class="text-xs text-on-surface-variant">
-										{formatDate(sub.start_date)} {m.date_range_to()} {formatDate(sub.end_date)}
+										{formatIsoDate(sub.start_date)} {m.date_range_to()} {formatIsoDate(sub.end_date)}
 									</p>
 								</div>
 							</div>
@@ -143,6 +122,4 @@
 					</div>
 				{/if}
 			</div>
-		</div>
-	</div>
-{/if}
+</Modal>
