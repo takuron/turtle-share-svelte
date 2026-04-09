@@ -147,6 +147,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `src/lib/stores/toast.svelte.ts` — Global toast store. `toastStore.messages` (reactive array). `addToast(text, duration?)` pushes a message (deduplicates by text, auto-removes after 5 s). `removeToast(id)` removes by id. Used by `apiRequest()` to surface network errors and 429 rate limits.
 - **Route Structure**:
   - `+layout.svelte` — Root layout: CSS imports, favicon, i18n links, `initAuth()` + `fetchSiteInfo()`.
+  - `+error.svelte` — Global error page. Shows HTTP status code (large background text), localized title/description, and "Return to Homepage" button. Includes TopNavBar + SiteFooter. Handles 404 and generic errors with distinct copy.
   - `(main)/+layout.svelte` — Main layout group: TopNavBar + main content + SiteFooter.
   - `(main)/+page.svelte` — Homepage: AuthorProfile + ArticleFeed (page 1).
   - `(main)/page/[page]/+page.svelte` — Paginated article list: AuthorProfile + ArticleFeed (page N). Redirects `/page/1` to `/`.
