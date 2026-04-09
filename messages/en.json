@@ -130,5 +130,13 @@
 	"current_subscription_tier": "Current Subscription Tier",
 	"recent_subscription_records": "Recent Subscription Records",
 	"date_range_to": "to",
-	"no_subscriptions": "No subscription records"
+	"no_subscriptions": "No subscription records",
+	"current_password": "Current Password",
+	"new_password": "New Password",
+	"enter_current_password": "Enter current password",
+	"enter_new_password": "Enter new password",
+	"enter_confirm_password": "Confirm your new password",
+	"password_changed_success": "Password changed successfully",
+	"confirm_change_password": "Change Password",
+	"err_password_empty": "All fields are required."
 }

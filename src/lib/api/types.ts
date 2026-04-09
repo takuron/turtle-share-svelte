@@ -91,6 +91,17 @@ export interface AdminSubscriptionItem {
 }
 
 /**
+ * User subscription item as returned by the user endpoint.
+ * Unlike AdminSubscriptionItem, excludes hash_id, user_hash_id, note, created_at.
+ */
+// // 用户端订阅列表项。与管理员版不同，不包含 hash_id、user_hash_id、note、created_at。
+export interface UserSubscriptionItem {
+	tier: number;
+	start_date: number;
+	end_date: number;
+}
+
+/**
  * File link object in article detail.
  * &#25991;&#31456;&#35814;&#24773;&#20013;&#30340;&#25991;&#20214;&#38142;&#25509;&#23545;&#35937;&#12290;
  */

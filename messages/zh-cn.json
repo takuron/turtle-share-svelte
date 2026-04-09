@@ -130,5 +130,13 @@
 	"current_subscription_tier": "当前订阅等级",
 	"recent_subscription_records": "最近订阅记录",
 	"date_range_to": "至",
-	"no_subscriptions": "暂无订阅记录"
+	"no_subscriptions": "暂无订阅记录",
+	"current_password": "当前密码",
+	"new_password": "新密码",
+	"enter_current_password": "请输入当前密码",
+	"enter_new_password": "请输入新密码",
+	"enter_confirm_password": "请再次输入新密码",
+	"password_changed_success": "密码修改成功",
+	"confirm_change_password": "确认修改",
+	"err_password_empty": "所有字段均为必填项。"
 }

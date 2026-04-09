@@ -10,25 +10,64 @@
 	// // @prop {() => void} onclose - 关闭弹窗的回调。
 	import { fade, scale } from 'svelte/transition';
 	import { quintOut, backOut } from 'svelte/easing';
-	import { X, History } from 'lucide-svelte';
+	import { X, History, Loader2 } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
+	import { fetchUserSubscriptions, fetchUserTier } from '$lib/api/user/subscriptions';
+	import type { UserSubscriptionItem } from '$lib/api/types';
+
+	/** 最多展示的订阅记录数 */
+	const MAX_DISPLAY = 5;
 
 	let { open = false, onclose } = $props<{
 		open: boolean;
 		onclose: () => void;
 	}>();
 
-	// 模拟订阅记录数据（后续接入真实 API）
-	const mockSubscriptions = [
-		{ tier: 5, startDate: '2024-03-15', endDate: '2024-04-15' },
-		{ tier: 5, startDate: '2024-02-15', endDate: '2024-03-15' },
-		{ tier: 3, startDate: '2024-01-15', endDate: '2024-02-15' },
-		{ tier: 3, startDate: '2023-12-15', endDate: '2024-01-15' },
-		{ tier: 1, startDate: '2023-11-15', endDate: '2023-12-15' }
-	];
+	// 当前等级、订阅列表、加载状态、错误信息
+	let currentTier = $state(0);
+	let subscriptions = $state<UserSubscriptionItem[]>([]);
+	let loading = $state(false);
+	let error = $state('');
 
-	// 当前订阅等级取最新一条记录
-	const currentTier = mockSubscriptions[0]?.tier ?? 0;
+	// 每次弹窗打开时重新拉取数据
+	$effect(() => {
+		if (open) {
+			loadData();
+		}
+	});
+
+	// 并行请求当前等级和订阅列表
+	async function loadData() {
+		loading = true;
+		error = '';
+		const [tierRes, subsRes] = await Promise.all([
+			fetchUserTier(),
+			fetchUserSubscriptions()
+		]);
+
+		if (!tierRes.success) {
+			error = tierRes.error.message;
+		} else {
+			currentTier = tierRes.data.tier;
+		}
+
+		if (!subsRes.success) {
+			error = error || subsRes.error.message;
+			subscriptions = [];
+		} else {
+			subscriptions = subsRes.data.slice(0, MAX_DISPLAY);
+		}
+		loading = false;
+	}
+
+	// 将 Unix 时间戳（秒）格式化为 YYYY-MM-DD
+	function formatDate(ts: number): string {
+		const d = new Date(ts * 1000);
+		const y = d.getFullYear();
+		const mo = String(d.getMonth() + 1).padStart(2, '0');
+		const day = String(d.getDate()).padStart(2, '0');
+		return `${y}-${mo}-${day}`;
+	}
 </script>
 
 {#if open}
@@ -56,7 +95,11 @@
 					{m.current_subscription_tier()}
 				</p>
 				<h2 class="font-display text-3xl font-extrabold tracking-tight">
-					Tier {currentTier}
+					{#if loading}
+						<span class="loading loading-dots loading-sm"></span>
+					{:else}
+						Tier {currentTier}
+					{/if}
 				</h2>
 			</div>
 
@@ -69,22 +112,30 @@
 					{m.recent_subscription_records()}
 				</h3>
 
-				{#if mockSubscriptions.length === 0}
+				{#if loading}
+					<div class="flex items-center justify-center py-8">
+						<Loader2 size={24} class="animate-spin text-primary" />
+					</div>
+				{:else if error}
+					<div class="rounded-xl bg-error/10 p-4 text-center text-sm text-error">
+						{error}
+					</div>
+				{:else if subscriptions.length === 0}
 					<p class="py-4 text-center text-sm text-on-surface-variant">
 						{m.no_subscriptions()}
 					</p>
 				{:else}
 					<div class="space-y-3">
-						{#each mockSubscriptions as sub}
+						{#each subscriptions as sub}
 							<div
-								class="flex items-center justify-between rounded-2xl border border-outline-variant/5 bg-surface-container-low p-4"
+								class="flex items-center justify-between rounded-2xl border border-outline-variant/5 bg-surface-container p-4"
 							>
 								<div class="space-y-1">
 									<span class="text-sm font-bold text-on-surface">
 										Level {sub.tier}
 									</span>
 									<p class="text-xs text-on-surface-variant">
-										{sub.startDate} {m.date_range_to()} {sub.endDate}
+										{formatDate(sub.start_date)} {m.date_range_to()} {formatDate(sub.end_date)}
 									</p>
 								</div>
 							</div>

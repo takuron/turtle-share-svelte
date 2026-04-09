@@ -115,8 +115,9 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 - **i18n Locales**: `en` (base), `zh-cn`. URL pattern: `/` (en), `/zh-cn/` (zh-cn).
 - **MDsvex Extensions**: `.svx`, `.md` files are treated as Svelte components.
 - **Layout Components** (`src/lib/components/`):
-  - `TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button. User dropdown triggers `UserSubscriptionModal` for subscription viewing.
-  - `UserSubscriptionModal.svelte` — Popup dialog showing user's current subscription tier and recent subscription history. Props: `open`, `onclose`. Uses mock data (pending real API integration).
+  - `TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button. User dropdown triggers `UserSubscriptionModal` for subscription viewing and `ChangePasswordModal` for password change.
+  - `UserSubscriptionModal.svelte` — Popup dialog showing user's current subscription tier and recent subscription history (max 5 records). Props: `open`, `onclose`. Fetches data from `GET /api/users/subscriptions`.
+  - `ChangePasswordModal.svelte` — Popup dialog for users to change their password. Includes current password, new password, and confirm password fields with visibility toggles. Props: `open`, `onclose`. Calls `PUT /api/users/password`.
   - `AuthorProfile.svelte` — Author profile header (magazine cover style).
   - `PostCard.svelte` — Post card displaying article data. Props: `title`, `hashId`, `coverImage`, `requiredTier`, `accessible`, `createdAt`. Shows readable/locked state based on `accessible`.
   - `ArticleFeed.svelte` — Shared article feed component. Accepts `page` prop, fetches articles + page info from API, renders PostCards + Pagination.
@@ -132,11 +133,12 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `AdminPagination.svelte` — Reusable pagination. Props: `currentPage`, `totalPages`, `onpagechange`, `showingText?`. Displays page numbers with prev/next buttons.
 - **API & Stores** (API modules organized by permission level under `src/lib/api/`):
   - `src/lib/api/client.ts` — Generic `apiRequest()` helper with auto-attached JWT Authorization header.
-  - `src/lib/api/types.ts` — Shared types: `ArticleListItem`, `AdminArticleRawItem`, `AdminUserItem`, `AdminSubscriptionItem`, `PageInfo`, `DEFAULT_PAGE_SIZE`, `ADMIN_USERS_PAGE_SIZE`, `ADMIN_SUBSCRIPTIONS_PAGE_SIZE`.
+  - `src/lib/api/types.ts` — Shared types: `ArticleListItem`, `AdminArticleRawItem`, `AdminUserItem`, `AdminSubscriptionItem`, `UserSubscriptionItem`, `PageInfo`, `DEFAULT_PAGE_SIZE`, `ADMIN_USERS_PAGE_SIZE`, `ADMIN_SUBSCRIPTIONS_PAGE_SIZE`.
   - `src/lib/api/public/auth.ts` — Login API: `loginRequest()` for admin/user login. Endpoints: `POST /api/admin/login`, `POST /api/users/login`.
   - `src/lib/api/public/site.ts` — Site API: `fetchSiteInfoRequest()`. Endpoint: `GET /api/public/site-info`.
   - `src/lib/api/public/articles.ts` — Public articles API: `fetchPublicArticlesPage()`, `fetchPublicArticlesPageInfo()`. Endpoints: `GET /api/public/articles/page/:page`, `GET /api/public/articles/page`.
   - `src/lib/api/user/articles.ts` — User articles API: `fetchUserArticlesPage()`, `fetchUserArticlesPageInfo()`. Endpoints: `GET /api/users/articles/page/:page`, `GET /api/users/articles/page`. Requires user JWT.
+  - `src/lib/api/user/subscriptions.ts` — User subscriptions API: `fetchUserSubscriptions()`, `fetchUserTier()`, `changeUserPassword()`. Endpoints: `GET /api/users/subscriptions`, `GET /api/users/tier`, `PUT /api/users/password`. Requires user JWT.
   - `src/lib/api/admin/articles.ts` — Admin articles API: `fetchAdminArticlesPage()`, `fetchAdminArticlesPageInfo()`. Endpoints: `GET /api/admin/articles/page/:page`, `GET /api/admin/articles/page`. Requires admin JWT. Normalizes `is_public` → `accessible=true`.
   - `src/lib/api/admin/users.ts` — Admin users API: `fetchAdminUsersPage()`, `fetchAdminUsersPageInfo()`, `fetchAdminUserSubscriptions()`. Endpoints: `GET /api/admin/users/page/:page`, `GET /api/admin/users/page`, `GET /api/admin/users/:hash_id/subscriptions`. Requires admin JWT.
   - `src/lib/stores/auth.svelte.ts` — Auth store: JWT decode, `login()`, `logout()`, `initAuth()`. Two roles (admin/user) are mutually exclusive. Delegates API calls to `src/lib/api/public/auth.ts`.

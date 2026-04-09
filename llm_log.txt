@@ -75,3 +75,8 @@
 [2026-04-09T12:32:37+08:00] Fix initAuth crash in SSR: guard with browser check, skip data fetch on server side.
 [2026-04-09T12:37:41+08:00] Globally disable SSR (ssr=false in root +layout.ts) so dev mode runs as pure client-side SPA.
 [2026-04-09T12:56:59+08:00] Add UserSubscriptionModal component with mock data; wire up from TopNavBar dropdown.
+[2026-04-09T13:07:14+08:00] Wire UserSubscriptionModal to real API (GET /api/users/subscriptions); add UserSubscriptionItem type and fetchUserSubscriptions API function; limit display to 5 records.
+[2026-04-09T13:21:13+08:00] Use dedicated GET /api/users/tier endpoint for current tier in UserSubscriptionModal; parallel fetch tier + subscriptions on open.
+[2026-04-09T13:32:38+08:00] Add ChangePasswordModal component with old/new/confirm password fields and eye-toggle; wire up from TopNavBar dropdown.
+[2026-04-09T13:35:52+08:00] Wire ChangePasswordModal to PUT /api/users/password via changeUserPassword(); remove mock delay.
+[2026-04-09T13:39:04+08:00] Add skipUnauthorizedEvent option to apiRequest; apply to changeUserPassword to prevent logout on wrong-password 401.

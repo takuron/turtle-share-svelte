@@ -22,6 +22,8 @@ export type ApiResponse<T> = ApiSuccess<T> | ApiError;
 
 export interface ApiOptions extends RequestInit {
 	fetch?: typeof fetch;
+	/** 为 true 时，即使返回 401 也不触发全局 unauthorized 事件 */
+	skipUnauthorizedEvent?: boolean;
 }
 
 /**
@@ -53,17 +55,20 @@ export async function apiRequest<T>(
 		headers['Authorization'] = `Bearer ${token}`;
 	}
 
-	const fetchFn = options.fetch || globalThis.fetch;
+	const { skipUnauthorizedEvent, ...fetchOptions } = options;
+
+	const fetchFn = fetchOptions.fetch || globalThis.fetch;
 
 	const res = await fetchFn(`${API_URL}${path}`, {
-		...options,
+		...fetchOptions,
 		headers
 	});
 
 	const data = (await res.json()) as ApiResponse<T>;
 
-	// 3. 如果遇到 401 错误或认证错误，触发未授权事件
+	// 3. 如果遇到 401 错误或认证错误，且未设置 skipUnauthorizedEvent，触发未授权事件
 	if (
+		!skipUnauthorizedEvent &&
 		!data.success &&
 		(res.status === 401 ||
 			data.error?.code === 'UNAUTHORIZED' ||
