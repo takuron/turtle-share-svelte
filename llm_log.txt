@@ -64,3 +64,4 @@
 [2026-04-09T09:33:44+08:00] Fixed input/textarea background colors to match design prototype by changing bg-surface-container-lowest to bg-white in ArticleEditor.svelte.
 [2026-04-09T09:35:29+08:00] Fixed input/textarea border colors to match design prototype by changing border-none to border-surface-container in ArticleEditor.svelte.
 [2026-04-09T09:36:53+08:00] Fixed input/textarea background and border colors to match design prototype by changing bg-surface-container-lowest to bg-white and border-none to border-surface-container in ArticleEditor.svelte.
+[2026-04-09T09:37:46+08:00] Fixed TypeScript generics syntax error in ArticleEditor.svelte ().

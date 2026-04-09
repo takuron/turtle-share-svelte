@@ -50,16 +50,16 @@
 	}
 </script>
 
-<div class="mx-auto flex w-full max-w-5xl flex-col p-6 lg:p-10">
+<div class="mx-auto flex w-full max-w-5xl flex-col p-4 lg:p-6">
 	<!-- Header -->
-	<div class="mb-10 flex items-center justify-between">
+	<div class="mb-6 flex items-center justify-between">
 		<h2 class="font-display text-3xl font-extrabold tracking-tight text-on-surface">
 			{pageTitle}
 		</h2>
 		<div class="ml-auto flex items-center gap-4">
 			<button
 				onclick={handleSave}
-				class="flex cursor-pointer items-center gap-2 rounded-full px-8 py-4 text-base font-bold text-white shadow-xl shadow-indigo-200 transition-all gradient-cta hover:scale-[1.02] active:scale-95 dark:shadow-indigo-900/20"
+				class="flex cursor-pointer items-center gap-2 rounded-full px-8 py-3 text-base font-bold text-white shadow-xl shadow-indigo-200 transition-all gradient-cta hover:scale-[1.02] active:scale-95 dark:shadow-indigo-900/20"
 			>
 				<Send size={20} />
 				{isEdit ? m.save_article() : m.publish_article()}
@@ -68,7 +68,7 @@
 	</div>
 
 	<!-- Title & Cover Image -->
-	<div class="mb-8">
+	<div class="mb-6">
 		<label
 			class="text-outline mb-2 ml-1 block text-xs font-black tracking-widest uppercase"
 			for="article-title"
@@ -93,7 +93,7 @@
 	</div>
 
 	<!-- Content -->
-	<div class="mb-10">
+	<div class="mb-6">
 		<label
 			class="text-outline mb-2 ml-1 block text-xs font-black tracking-widest uppercase"
 			for="article-content"
@@ -105,13 +105,13 @@
 			bind:value={formData.content}
 			placeholder={m.start_writing()}
 			rows="12"
-			class="w-full resize-none rounded-2xl border border-surface-container bg-white px-6 py-6 text-base leading-relaxed text-on-surface shadow-sm placeholder:text-surface-dim focus:ring-2 focus:ring-primary/20"
+			class="w-full resize-none rounded-2xl border border-surface-container bg-white px-6 py-4 text-base leading-relaxed text-on-surface shadow-sm placeholder:text-surface-dim focus:ring-2 focus:ring-primary/20"
 		></textarea>
 	</div>
 
 	<!-- Meta & Attachments -->
-	<div class="mb-10 grid grid-cols-1 gap-10 md:grid-cols-2">
-		<div class="space-y-8">
+	<div class="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+		<div class="space-y-6">
 			<!-- Publication Date -->
 			<div>
 				<label
@@ -121,13 +121,11 @@
 					{m.publication_date()}
 				</label>
 				<div class="relative">
-					<Calendar size={20} class="text-outline absolute top-1/2 left-4 -translate-y-1/2" />
 					<input
-						type="text"
+						type="date"
 						id="publication-date"
 						bind:value={formData.publishDate}
-						placeholder={m.publication_date_placeholder()}
-						class="w-full rounded-2xl border border-surface-container bg-white py-4 pr-6 pl-12 font-semibold text-on-surface shadow-sm focus:ring-2 focus:ring-primary/20"
+						class="w-full rounded-2xl border border-surface-container bg-white px-6 py-4 font-semibold text-on-surface shadow-sm focus:ring-2 focus:ring-primary/20"
 					/>
 				</div>
 			</div>
@@ -142,6 +140,7 @@
 						<input
 							type="number"
 							id="full-view-level"
+							min="0"
 							bind:value={formData.requiredTier}
 							placeholder={m.enter_full_view_level()}
 							class="w-full rounded-2xl border border-surface-container bg-white px-6 py-4 text-sm font-semibold text-on-surface shadow-sm focus:ring-2 focus:ring-primary/20"
