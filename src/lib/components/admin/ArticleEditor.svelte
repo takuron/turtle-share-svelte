@@ -51,22 +51,34 @@
 		onsave
 	}: Props = $props();
 
-	// 1. 本地表单状态管理
+	// 1. 获取当前日期，格式为 YYYY-MM-DD，用于默认发布日期。
+	function getTodayDateString(): string {
+		const now = new Date();
+		const year = now.getFullYear();
+		const month = String(now.getMonth() + 1).padStart(2, '0');
+		const day = String(now.getDate()).padStart(2, '0');
+		return `${year}-${month}-${day}`;
+	}
+
+	// 2. 本地表单状态管理
+	//    默认值：publishDate 为当天日期，isPublic 为 true。
 	let formData = $state<ArticleFormData>({
 		title: initialData.title || '',
 		content: initialData.content || '',
-		publishDate: initialData.publishDate || '',
+		publishDate: initialData.publishDate || getTodayDateString(),
 		headerImage: initialData.headerImage || '',
 		requiredTier: initialData.requiredTier !== undefined ? initialData.requiredTier : 0,
-		isPublic: initialData.isPublic !== undefined ? initialData.isPublic : false,
+		isPublic: initialData.isPublic !== undefined ? initialData.isPublic : true,
 		fileLinks: initialData.fileLinks ? [...initialData.fileLinks] : []
 	});
 
-	// 2. 弹窗状态
+	// 3. 弹窗状态
 	let isFileModalOpen = $state(false);
 	let fileModalMode = $state<'image' | 'file'>('image');
+	// 弹窗打开时传入的初始 URL（头图模式下为当前头图链接）
+	let fileModalInitialUrl = $state('');
 
-	// 3. 保存表单数据
+	// 4. 保存表单数据
 	function handleSave() {
 		if (!formData.title.trim()) {
 			return;
@@ -76,21 +88,23 @@
 		}
 	}
 
-	// 4. 移除附件
+	// 5. 移除附件
 	function removeAttachment(index: number) {
 		formData.fileLinks = formData.fileLinks.filter((_, i) => i !== index);
 	}
 
-	// 5. 打开文件选择弹窗
+	// 6. 打开文件选择弹窗
 	function openFileModal(mode: 'image' | 'file') {
 		fileModalMode = mode;
+		// 头图模式下将当前头图 URL 传入弹窗作为初始值
+		fileModalInitialUrl = mode === 'image' ? formData.headerImage : '';
 		isFileModalOpen = true;
 	}
 
-	// 6. 处理文件选择回调
+	// 7. 处理文件选择回调
 	function handleFileSelect(data: FileData) {
 		if (fileModalMode === 'image') {
-			// 选择头图：直接设置 URL
+			// 选择头图：设置 URL（空值则清除头图）
 			formData.headerImage = data.url;
 		} else {
 			// 选择附件：添加到 fileLinks 列表
@@ -104,7 +118,7 @@
 		}
 	}
 
-	// 7. 判断文件类型图标
+	// 8. 判断文件类型图标
 	function isImageUrl(url: string): boolean {
 		return /\.(jpg|jpeg|png|webp|gif|svg|avif)$/i.test(url);
 	}
@@ -158,33 +172,28 @@
 				disabled={isSaving}
 				class="flex-1 rounded-2xl border border-surface-container bg-white px-6 py-4 text-xl font-bold text-on-surface shadow-sm placeholder:text-surface-dim focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 			/>
-			<button
-				onclick={() => openFileModal('image')}
-				disabled={isSaving}
-				class="flex cursor-pointer items-center gap-2 rounded-2xl border border-primary bg-white px-6 py-4 font-bold whitespace-nowrap text-primary shadow-sm transition-all hover:bg-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
-			>
-				<ImagePlus size={20} />
-				{#if formData.headerImage}
-					<span class="max-w-[120px] truncate">{formData.headerImage.split('/').pop()}</span>
-				{:else}
-					{m.set_header_image()}
-				{/if}
-			</button>
-		</div>
-		{#if formData.headerImage}
-			<div class="mt-3 flex items-center gap-2">
-				<span class="max-w-[300px] truncate text-xs text-on-surface-variant"
-					>{formData.headerImage}</span
-				>
+			{#if formData.headerImage}
+				<!-- 已设置头图时：显示更改按钮（弹窗内可清空 URL 来删除头图） -->
 				<button
-					onclick={() => (formData.headerImage = '')}
-					class="cursor-pointer text-outline-variant transition-colors hover:text-error"
-					title="Remove header image"
+					onclick={() => openFileModal('image')}
+					disabled={isSaving}
+					class="flex cursor-pointer items-center gap-2 rounded-2xl border border-primary bg-white px-5 py-4 font-bold whitespace-nowrap text-primary shadow-sm transition-all hover:bg-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
 				>
-					<X size={14} />
+					<ImagePlus size={20} />
+					{m.change_header_image()}
 				</button>
-			</div>
-		{/if}
+			{:else}
+				<!-- 未设置头图时：显示设置头图按钮 -->
+				<button
+					onclick={() => openFileModal('image')}
+					disabled={isSaving}
+					class="flex cursor-pointer items-center gap-2 rounded-2xl border border-primary bg-white px-6 py-4 font-bold whitespace-nowrap text-primary shadow-sm transition-all hover:bg-primary hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+				>
+					<ImagePlus size={20} />
+					{m.set_header_image()}
+				</button>
+			{/if}
+		</div>
 	</div>
 
 	<!-- Content -->
@@ -203,6 +212,10 @@
 			disabled={isSaving}
 			class="w-full resize-none rounded-2xl border border-surface-container bg-white px-6 py-4 text-base leading-relaxed text-on-surface shadow-sm placeholder:text-surface-dim focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 		></textarea>
+		<!-- 提示支持 GitHub Flavored Markdown 格式 -->
+		<p class="text-outline mt-2 ml-1 text-xs font-medium">
+			{m.markdown_format_hint()}
+		</p>
 	</div>
 
 	<!-- Meta & Attachments -->
@@ -312,6 +325,7 @@
 <FileSelectModal
 	open={isFileModalOpen}
 	mode={fileModalMode}
+	initialUrl={fileModalInitialUrl}
 	onclose={() => (isFileModalOpen = false)}
 	onselect={handleFileSelect}
 />

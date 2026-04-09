@@ -124,5 +124,7 @@
 	"enter_file_url": "https://example.com/file.pdf",
 	"select_file": "选择文件",
 	"set_attachment_dialog_title": "添加附件",
-	"change_header_image": "更改头图"
+	"change_header_image": "更改头图",
+	"clear_header_image": "清除头图",
+	"markdown_format_hint": "支持 GitHub Flavored Markdown 格式"
 }

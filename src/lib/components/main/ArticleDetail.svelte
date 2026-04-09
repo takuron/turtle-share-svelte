@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { API_URL } from '$lib/config';
 	import { Download } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import type { ArticleDetail } from '$lib/api/types';
@@ -13,10 +12,10 @@
 	// // @prop {ArticleDetail | null} article - 文章数据。
 	let { article }: { article: ArticleDetail | null } = $props();
 
-	// 根据文章数据动态拼接封面 URL
+	// 封面 URL 直接使用文章数据中的链接
 	const coverUrl = $derived(
 		article?.cover_image && article.cover_image.trim() !== ''
-			? `${API_URL}${article.cover_image}`
+			? article.cover_image
 			: null
 	);
 

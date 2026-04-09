@@ -3,7 +3,7 @@
 	 * Post card for the vertical feed. Displays article data with readable/locked states.
 	 * @prop {string} title - Article title.
 	 * @prop {string} hashId - Article hash ID for linking.
-	 * @prop {string | null} coverImage - Cover image path (relative to API).
+	 * @prop {string | null} coverImage - Cover image URL (absolute or relative).
 	 * @prop {number} requiredTier - Minimum tier to access full content.
 	 * @prop {boolean} accessible - Whether current user can access full content.
 	 * @prop {number} publishAt - Unix timestamp of article publish.
@@ -11,12 +11,11 @@
 	// // 垂直信息流中的帖子卡片。展示文章数据，支持可读和锁定两种状态。
 	// // @prop {string} title - 文章标题。
 	// // @prop {string} hashId - 文章哈希 ID，用于链接。
-	// // @prop {string | null} coverImage - 封面图片路径（相对于 API）。
+	// // @prop {string | null} coverImage - 封面图片链接（绝对或相对路径）。
 	// // @prop {number} requiredTier - 完整访问所需的最低等级。
 	// // @prop {boolean} accessible - 当前用户是否可以访问完整内容。
 	// // @prop {number} publishAt - 文章发布时间的 Unix 时间戳。
 	import { Lock } from 'lucide-svelte';
-	import { API_URL } from '$lib/config';
 	import * as m from '$lib/paraglide/messages.js';
 
 	let {
@@ -47,9 +46,9 @@
 		})
 	);
 
-	// 3. 拼接封面图片完整 URL。
+	// 3. 封面图片 URL，直接使用传入的链接。
 	const coverUrl = $derived(
-		coverImage && coverImage.trim() !== '' ? `${API_URL}${coverImage}` : null
+		coverImage && coverImage.trim() !== '' ? coverImage : null
 	);
 </script>
 

@@ -12,7 +12,7 @@
 	import type { ArticleFormData } from '$lib/components/admin/ArticleEditor.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { goto } from '$app/navigation';
-	import { createAdminArticle } from '$lib/api/admin/articles';
+	import { createAdminArticle, type CreateArticleRequest } from '$lib/api/admin/articles';
 
 	// 1. 状态管理
 	let isSaving = $state(false);
@@ -37,27 +37,14 @@
 			title: data.title.trim(),
 			content: data.content,
 			required_tier: data.requiredTier,
-			is_public: data.isPublic
+			is_public: data.isPublic,
+			cover_image: data.headerImage || null,
+			file_links: data.fileLinks || [],
+			publish_at: dateToTimestamp(data.publishDate) ?? undefined
 		};
 
-		// 封面图片：空字符串视为清除，null 表示不设置。
-		if (data.headerImage) {
-			requestBody.cover_image = data.headerImage;
-		}
-
-		// 附件列表。
-		if (data.fileLinks && data.fileLinks.length > 0) {
-			requestBody.file_links = data.fileLinks;
-		}
-
-		// 发布日期：转换为 Unix 时间戳。
-		const publishAt = dateToTimestamp(data.publishDate);
-		if (publishAt !== undefined) {
-			requestBody.publish_at = publishAt;
-		}
-
 		try {
-			const res = await createAdminArticle(requestBody as Parameters<typeof createAdminArticle>[0]);
+			const res = await createAdminArticle(requestBody);
 
 			if (res.success) {
 				// 创建成功，跳转到文章列表。

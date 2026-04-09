@@ -25,11 +25,12 @@
 	interface Props {
 		open: boolean;
 		mode?: 'image' | 'file';
+		initialUrl?: string;
 		onclose: () => void;
 		onselect: (data: FileData) => void;
 	}
 
-	let { open, mode = 'image', onclose, onselect }: Props = $props();
+	let { open, mode = 'image', initialUrl = '', onclose, onselect }: Props = $props();
 
 	// 1. 本地表单状态
 	let inputTitle = $state('');
@@ -41,9 +42,10 @@
 	let totalPages = $state(1);
 	let isLoadingFiles = $state(true);
 
-	// 3. 当弹窗打开时，加载文件列表。
+	// 3. 当弹窗打开时，预填 URL 并加载文件列表。
 	$effect(() => {
 		if (open) {
+			inputUrl = initialUrl || '';
 			loadFiles(1);
 		}
 	});
@@ -110,8 +112,9 @@
 	}
 
 	// 7. 确认选择：将输入的 URL 和标题传回父组件。
+	//    图片模式下允许空 URL（用于清除头图）。
 	function handleConfirm() {
-		if (inputUrl) {
+		if (mode === 'image' || inputUrl) {
 			onselect({
 				title: mode === 'image' ? '' : inputTitle,
 				url: inputUrl
@@ -272,7 +275,7 @@
 				<button
 					type="button"
 					onclick={handleConfirm}
-					disabled={!inputUrl}
+					disabled={mode !== 'image' && !inputUrl}
 					class="flex-[2] cursor-pointer rounded-full py-4 text-sm font-bold text-white shadow-lg shadow-primary/20 transition-all gradient-cta hover:scale-[1.02] active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
 				>
 					{mode === 'image' ? m.select_image() : m.select_file()}

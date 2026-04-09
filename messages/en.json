@@ -124,5 +124,7 @@
 	"enter_file_url": "https://example.com/file.pdf",
 	"select_file": "Select File",
 	"set_attachment_dialog_title": "Add Attachment",
-	"change_header_image": "Change Header Image"
+	"change_header_image": "Change Header Image",
+	"clear_header_image": "Clear Header Image",
+	"markdown_format_hint": "GitHub Flavored Markdown is supported"
 }
