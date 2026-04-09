@@ -22,7 +22,7 @@
 		onsave?: (data: ArticleData) => void;
 	}
 
-	let { pageTitle, isEdit = false, initialData = {}, onsave } = $props<Props>();
+	let { pageTitle, isEdit = false, initialData = {}, onsave }: Props = $props();
 
 	// 1. 本地状态管理
 	let formData = $state<ArticleData>({
