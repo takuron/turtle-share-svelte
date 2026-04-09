@@ -112,7 +112,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - Utility classes: `glass` (glassmorphism), `gradient-cta` (primary gradient), `ghost-border` (accessibility border)
   - Shadows: `shadow-ambient`, `shadow-editorial-sm`
 - **Icons**: Lucide Svelte — import individual components, tree-shakable.
-- **i18n Locales**: `en` (base), `zh-cn`. URL pattern: `/` (en), `/zh-cn/` (zh-cn).
+- **i18n Locales**: `en` (base), `zh-cn`. URL pattern: `/` (en), `/zh-cn/` (zh-cn). Browser language auto-detection on page load: Chinese variants (zh-TW, zh-HK, zh, etc.) fall back to `zh-cn`; all other unmatched languages fall back to `en`. Detection logic in `src/lib/i18n/resolveBrowserLocale.ts`, triggered in root `+layout.svelte` `onMount`.
 - **MDsvex Extensions**: `.svx`, `.md` files are treated as Svelte components.
 - **Layout Components** (`src/lib/components/`):
   - `TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button. User dropdown triggers `UserSubscriptionModal` for subscription viewing and `ChangePasswordModal` for password change.
