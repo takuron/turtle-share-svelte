@@ -152,8 +152,8 @@
 		--glass-bg: oklch(100% 0 0 / 80%);
 		--glass-blur: 24px;
 
-		/* 渐变 CTA (DESIGN.md §2) — primary → primary_container 135° */
-		--gradient-cta: linear-gradient(135deg, oklch(49.61% 0.242 275.31), oklch(71.61% 0.152 282.28));
+		/* 渐变 CTA (DESIGN.md §2) — primary → accent 135° */
+		--gradient-cta: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 
 		/* 环境阴影 (DESIGN.md §4) — 使用 on_surface 色调，非纯黑 */
 		--shadow-ambient: 0 20px 40px -10px oklch(30.22% 0.029 256.84 / 8%);
@@ -172,7 +172,7 @@
 			--on-surface-variant: oklch(70% 0.02 259);
 			--outline-variant: oklch(40% 0.02 252);
 			--glass-bg: oklch(25% 0.02 260 / 80%);
-			--gradient-cta: linear-gradient(135deg, oklch(58% 0.233 277), oklch(71.61% 0.152 282.28));
+			--gradient-cta: linear-gradient(135deg, var(--color-primary), var(--color-accent));
 			--shadow-ambient: 0 20px 40px -10px oklch(0% 0 0 / 20%);
 			--shadow-editorial-sm: 0 4px 12px -4px oklch(0% 0 0 / 15%);
 		}

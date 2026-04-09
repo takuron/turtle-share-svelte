@@ -7,13 +7,16 @@
 	import { initAuth } from '$lib/stores/auth.svelte';
 	import { onMount } from 'svelte';
 	import NetworkToast from '$lib/components/NetworkToast.svelte';
+	import { applyThemeColors } from '$lib/utils/applyThemeColors';
+	import { DEFAULT_THEME_COLORS } from '$lib/config';
 
 	let { children } = $props();
 
-	// 1. 应用启动时恢复认证状态并获取站点信息。
+	// 1. 应用启动时恢复认证状态、获取站点信息、注入主题色。
 	onMount(() => {
 		initAuth();
 		fetchSiteInfo();
+		applyThemeColors(DEFAULT_THEME_COLORS);
 	});
 </script>
 

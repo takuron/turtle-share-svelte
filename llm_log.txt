@@ -83,3 +83,4 @@
 [2026-04-09T13:58:49+08:00] Add global NetworkToast component (DaisyUI native toast, bottom-right) and toast store. apiRequest now catches fetch network errors and HTTP 429, pushing localized messages to toastStore. NetworkToast mounted in root +layout.svelte. Added err_network i18n key.
 [2026-04-09T14:44:25+08:00] Add global +error.svelte page (404/generic) based on stitch/code.html prototype; add i18n keys for error page titles and descriptions.
 [2026-04-09T14:47:24+08:00] Expand +error.svelte to support 400/401/403/404/408/429/500/502/503 with per-status i18n copy; add login button for 401/403.
+[2026-04-09T14:59:15+08:00] Add ThemeColors config to src/lib/config.ts with primary/secondary/accent; add applyThemeColors utility to inject CSS custom properties at runtime; update layout.css gradient-cta to use var() references; wire up in +layout.svelte onMount.
