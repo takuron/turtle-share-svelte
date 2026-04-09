@@ -48,7 +48,7 @@ export interface SocialLink {
 
 export interface SocialPlatform {
 	label: string;
-	icon: Component<any>;
+	icon: any;
 }
 
 // 1. 预置的平台图标注册表，键名对应 siteinfo.social_links[].platform。
