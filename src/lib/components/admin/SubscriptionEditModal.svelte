@@ -35,10 +35,14 @@
 	let errorMsg = $state('');
 	let loading = $state(false);
 
-	// 辅助函数：将 YYYY-MM-DD 转换为秒级时间戳
-	function toTimestamp(dateString: string): number {
-		// 加上 T00:00:00 避免时区问题
+	// 辅助函数：将 YYYY-MM-DD 转换为秒级时间戳（开始日期用当天 00:00:00）
+	function toStartTimestamp(dateString: string): number {
 		return Math.floor(new Date(dateString + 'T00:00:00').getTime() / 1000);
+	}
+
+	// 辅助函数：将 YYYY-MM-DD 转换为秒级时间戳（截止日期用当天 23:59:59）
+	function toEndTimestamp(dateString: string): number {
+		return Math.floor(new Date(dateString + 'T23:59:59').getTime() / 1000);
 	}
 
 	// 1. 初始化表单数据。
@@ -86,8 +90,8 @@
 			return;
 		}
 
-		const startTs = toTimestamp(startDate);
-		const endTs = toTimestamp(endDate);
+		const startTs = toStartTimestamp(startDate);
+		const endTs = toEndTimestamp(endDate);
 
 		if (startTs > endTs) {
 			errorMsg = m.error_invalid_dates();

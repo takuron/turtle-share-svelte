@@ -56,7 +56,7 @@
 	<!-- 封面图区域 -->
 	{#if coverUrl}
 		<div class="relative aspect-[5/3] w-full bg-base-300" class:grayscale-[20%]={isLocked}>
-			<img src={coverUrl} alt={title} class="absolute inset-0 h-full w-full object-cover" />
+			<img src={coverUrl} alt={title} loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
 			<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
 		</div>
 	{/if}

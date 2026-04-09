@@ -87,3 +87,4 @@
 [2026-04-09T15:51:33+08:00] Add <svelte:head><title> to all pages: homepage, paginated pages, article detail, error page, and dashboard pages (user/article/file management). Uses siteStore.info.name for dynamic site name. Added i18n keys page_title_page_n, page_title_error, page_title_with_site.
 [2026-04-09T16:17:57+08:00] Improve i18n: auto-detect browser language on page load via navigator.languages. Chinese variants (zh-TW/zh-HK/zh) fall back to zh-cn; unmatched languages fall back to en. Client-side only (SSG compatible).
 [2026-04-09T17:22:30+08:00] Fix medium-priority issues: extract shared Modal wrapper (5 modals), shared formatDate utils (6 files), centralize page size constants, fix ArticleFeed auth flicker, remove ChangePasswordModal dead code, fix UserEditModal type safety
+[2026-04-09T17:26:49+08:00] Add lazy loading to PostCard image; fix subscription end date to use 23:59:59 instead of 00:00:00
