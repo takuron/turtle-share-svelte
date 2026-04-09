@@ -242,7 +242,7 @@
 
 			<!-- Access Requirement -->
 			<div>
-				<label class="text-outline mb-4 ml-1 block text-xs font-black tracking-widest uppercase">
+				<label for="full-view-level" class="text-outline mb-4 ml-1 block text-xs font-black tracking-widest uppercase">
 					{m.access_requirement()}
 				</label>
 				<div class="space-y-4">
@@ -274,11 +274,11 @@
 			</div>
 		</div>
 
-		<!-- Attachments (file_links) -->
+		<!-- Attachments (file_links) — 标注的是一组操作按钮，用 span 而非 label -->
 		<div class="flex flex-col">
-			<label class="text-outline mb-2 ml-1 block text-xs font-black tracking-widest uppercase">
+			<span class="text-outline mb-2 ml-1 block text-xs font-black tracking-widest uppercase">
 				{m.attachments()}
-			</label>
+			</span>
 			<div class="flex flex-col gap-4">
 				<button
 					onclick={() => openFileModal('file')}

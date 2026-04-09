@@ -97,7 +97,7 @@
 	"enter_article_title": "输入引人入胜的标题...",
 	"set_header_image": "设置头图",
 	"article_content": "文章内容",
-	"start_writing": "在此开始撰写您的故事...",
+	"start_writing": "在此开始撰写您的故事...（支持 GitHub Flavored Markdown 格式）",
 	"publication_date": "发布日期",
 	"publication_date_placeholder": "例如：2024年10月24日",
 	"access_requirement": "访问权限要求",

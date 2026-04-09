@@ -134,10 +134,10 @@
 						</div>
 					{/if}
 
-					<!-- 快速时长选择 -->
+					<!-- 快速时长选择 — 标注的是一组按钮，用 span 而非 label -->
 					<div class="flex flex-col gap-3">
-						<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
-							>{m.quick_duration()}</label
+						<span class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+							>{m.quick_duration()}</span
 						>
 						<div class="grid grid-cols-2 gap-2">
 							<button
@@ -172,10 +172,11 @@
 					</div>
 
 					<div class="flex flex-col gap-2">
-						<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+						<label for="sub-edit-start" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 							>{m.col_start_date()}</label
 						>
 						<input
+							id="sub-edit-start"
 							class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 							type="date"
 							bind:value={startDate}
@@ -185,10 +186,11 @@
 					</div>
 
 					<div class="flex flex-col gap-2">
-						<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+						<label for="sub-edit-end" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 							>{m.col_end_date()}</label
 						>
 						<input
+							id="sub-edit-end"
 							class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 							type="date"
 							bind:value={endDate}
@@ -198,10 +200,11 @@
 					</div>
 
 					<div class="flex flex-col gap-2">
-						<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+						<label for="sub-edit-tier" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 							>{m.col_level()}</label
 						>
 						<input
+							id="sub-edit-tier"
 							class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 							placeholder={m.enter_level()}
 							type="number"
@@ -214,7 +217,7 @@
 					<div class="flex flex-col gap-2">
 						<div class="flex justify-between px-1">
 							<div class="flex items-center gap-1.5">
-								<label class="text-outline text-xs font-black tracking-widest uppercase"
+								<label for="sub-edit-note" class="text-outline text-xs font-black tracking-widest uppercase"
 									>{m.col_note()}</label
 								>
 							</div>
@@ -223,6 +226,7 @@
 							>
 						</div>
 						<textarea
+							id="sub-edit-note"
 							class="bg-surface-container-low border-surface-container-high w-full resize-none rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 							placeholder={m.add_admin_note()}
 							rows="2"

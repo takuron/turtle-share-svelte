@@ -97,7 +97,7 @@
 	"enter_article_title": "Enter a compelling title...",
 	"set_header_image": "Set Header Image",
 	"article_content": "Article Content",
-	"start_writing": "Start writing your story here...",
+	"start_writing": "Start writing your story here... (Supports GitHub Flavored Markdown)",
 	"publication_date": "Publication Date",
 	"publication_date_placeholder": "e.g., Oct 24, 2024",
 	"access_requirement": "Access Requirement",

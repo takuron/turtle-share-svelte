@@ -14,23 +14,15 @@ const config = {
 			return isExternalLibrary ? undefined : true;
 		}
 	},
-	kit: {
-		adapter: adapter(),
-		prerender: {
-			// 动态路由（/page/[page]、/article/[hashid] 等）无法被爬取预渲染，忽略而不报错
-			handleUnseenRoutes: 'ignore'
-		}
-	},
+	// fallback: 'index.html' 让 adapter-static 为所有未命中路由提供 SPA 入口，
+	// 搭配 prerender=false 的动态路由，由客户端 SvelteKit 路由器接管。
+	kit: { adapter: adapter({ fallback: 'index.html' }) },
 	preprocess: [mdsvex({ extensions: ['.svx', '.md'] })],
 	extensions: ['.svelte', '.svx', '.md'],
 	vitePlugin: {
-		// 在构建时将 a11y / rune 用法警告降级为 warn（而非 error），避免 adapter 无法执行
+		// ArticleEditor 表单用 $state 捕获 initialData 初始值是有意行为，降级为警告
 		onwarn(warning, defaultHandler) {
-			const suppressCodes = [
-				'a11y_label_has_associated_control',
-				'state_referenced_locally'
-			];
-			if (suppressCodes.includes(warning.code)) return;
+			if (warning.code === 'state_referenced_locally') return;
 			defaultHandler(warning);
 		}
 	}

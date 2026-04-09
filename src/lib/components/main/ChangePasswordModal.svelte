@@ -96,11 +96,12 @@
 
 			<!-- 当前密码 -->
 			<div class="flex flex-col gap-2">
-				<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+				<label for="change-pwd-current" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 					>{m.current_password()}</label
 				>
 				<div class="relative">
 					<input
+						id="change-pwd-current"
 						class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 pr-12 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 						type={showCurrent ? 'text' : 'password'}
 						placeholder={m.enter_current_password()}
@@ -125,11 +126,12 @@
 
 			<!-- 新密码 -->
 			<div class="flex flex-col gap-2">
-				<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+				<label for="change-pwd-new" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 					>{m.new_password()}</label
 				>
 				<div class="relative">
 					<input
+						id="change-pwd-new"
 						class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 pr-12 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 						type={showNew ? 'text' : 'password'}
 						placeholder={m.enter_new_password()}
@@ -154,11 +156,12 @@
 
 			<!-- 确认密码 -->
 			<div class="flex flex-col gap-2">
-				<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+				<label for="change-pwd-confirm" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 					>{m.confirm_password()}</label
 				>
 				<div class="relative">
 					<input
+						id="change-pwd-confirm"
 						class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 pr-12 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 						type={showConfirm ? 'text' : 'password'}
 						placeholder={m.enter_confirm_password()}

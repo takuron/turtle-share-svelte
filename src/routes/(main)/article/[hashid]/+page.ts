@@ -1,4 +1,7 @@
 import { error } from '@sveltejs/kit';
+// 文章详情页内容来自 API，不可预渲染。
+export const prerender = false;
+
 import { fetchPublicArticleDetail } from '$lib/api/public/articles';
 import { fetchUserArticleDetail } from '$lib/api/user/articles';
 import { fetchAdminArticleDetail } from '$lib/api/admin/articles';

@@ -103,10 +103,11 @@
 				{/if}
 
 				<div class="flex flex-col gap-2">
-					<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+					<label for="user-edit-username" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 						>{m.username()}</label
 					>
 					<input
+						id="user-edit-username"
 						class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-4 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 						placeholder={m.enter_username()}
 						type="text"
@@ -117,10 +118,11 @@
 				</div>
 
 				<div class="flex flex-col gap-2">
-					<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+					<label for="user-edit-password" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 						>{m.password()}</label
 					>
 					<input
+						id="user-edit-password"
 						class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-4 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 						placeholder={m.enter_password()}
 						type="password"
@@ -131,10 +133,11 @@
 				</div>
 
 				<div class="flex flex-col gap-2">
-					<label class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+					<label for="user-edit-confirm-pwd" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 						>{m.confirm_password()}</label
 					>
 					<input
+						id="user-edit-confirm-pwd"
 						class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-4 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 						placeholder={m.confirm_password()}
 						type="password"
@@ -146,12 +149,13 @@
 
 				<div class="flex flex-col gap-2">
 					<div class="flex justify-between px-1">
-						<label class="text-outline text-xs font-black tracking-widest uppercase"
+						<label for="user-edit-email" class="text-outline text-xs font-black tracking-widest uppercase"
 							>{m.email()}</label
 						>
 						<span class="text-[10px] font-bold text-outline-variant uppercase">{m.optional()}</span>
 					</div>
 					<input
+						id="user-edit-email"
 						class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-4 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 						placeholder={m.email_placeholder()}
 						type="email"
@@ -163,7 +167,7 @@
 				<div class="flex flex-col gap-2">
 					<div class="flex justify-between px-1">
 						<div class="flex items-center gap-1.5">
-							<label class="text-outline text-xs font-black tracking-widest uppercase"
+							<label for="user-edit-note" class="text-outline text-xs font-black tracking-widest uppercase"
 								>{m.col_note()}</label
 							>
 							<Lock size={14} class="text-outline-variant" />
@@ -174,6 +178,7 @@
 						<span class="text-[10px] font-bold text-outline-variant uppercase">{m.optional()}</span>
 					</div>
 					<textarea
+						id="user-edit-note"
 						class="bg-surface-container-low border-surface-container-high w-full resize-none rounded-xl border px-5 py-4 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 						placeholder={m.add_admin_note()}
 						rows="3"
