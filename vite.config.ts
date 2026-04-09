@@ -4,12 +4,20 @@ import { defineConfig } from 'vitest/config';
 import { playwright } from '@vitest/browser-playwright';
 import { sveltekit } from '@sveltejs/kit/vite';
 
-export default defineConfig({
+export default defineConfig(({ mode }) => ({
 	plugins: [
 		tailwindcss(),
 		sveltekit(),
 		paraglideVitePlugin({ project: './project.inlang', outdir: './src/lib/paraglide' })
 	],
+	// debug 模式：不压缩 + 内联 sourcemap，便于生产环境排查问题
+	// release 模式（默认）：压缩 + 无 sourcemap
+	...(mode === 'debug' && {
+		build: {
+			minify: false,
+			sourcemap: 'inline'
+		}
+	}),
 	server: {
 		proxy: {
 			'/api': {
@@ -50,4 +58,4 @@ export default defineConfig({
 			}
 		]
 	}
-});
+}));

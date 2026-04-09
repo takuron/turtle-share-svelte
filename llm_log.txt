@@ -92,3 +92,4 @@
 [2026-04-09T18:05:29+08:00] Revert debug logging from all 6 files; release build succeeds cleanly (exit 0)
 [2026-04-09T18:16:58+08:00] Elegant build fixes: explicit prerender=false for 3 dynamic routes + adapter fallback:'index.html'; fix all a11y label for/id pairs in 4 components; section headers changed from label to span; onwarn reduced to state_referenced_locally only
 [2026-04-09T18:21:48+08:00] Update article content textarea placeholder to hint GitHub Flavored Markdown support (en + zh-cn)
+[2026-04-09T18:25:39+08:00] Add build:debug script (vite build --mode debug) with minify:false + sourcemap:inline; vite.config.ts now uses defineConfig(({mode}) => ...) factory pattern
