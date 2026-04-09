@@ -107,5 +107,22 @@
 	"add_attachment": "Add Attachment",
 	"create_article_title": "Create Article",
 	"edit_article_title": "Edit Article",
-	"save_article": "Save Changes"
+	"save_article": "Save Changes",
+	"set_header_image_dialog_title": "Set Header Image",
+	"header_image_title_label": "Header Image Title",
+	"enter_image_desc": "Enter image description...",
+	"image_url_label": "Image URL",
+	"enter_image_url": "https://example.com/image.jpg",
+	"select_from_uploaded_files": "Select from uploaded files",
+	"select_image": "Select Image",
+	"uploaded_ago": "Uploaded {time} ago",
+	"size_mb": "{size} MB",
+	"size_kb": "{size} KB",
+	"file_title_label": "File Title",
+	"enter_file_title": "Enter file title...",
+	"file_url_label": "File URL",
+	"enter_file_url": "https://example.com/file.pdf",
+	"select_file": "Select File",
+	"set_attachment_dialog_title": "Add Attachment",
+	"change_header_image": "Change Header Image"
 }

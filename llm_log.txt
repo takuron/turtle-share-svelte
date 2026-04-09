@@ -65,3 +65,6 @@
 [2026-04-09T09:35:29+08:00] Fixed input/textarea border colors to match design prototype by changing border-none to border-surface-container in ArticleEditor.svelte.
 [2026-04-09T09:36:53+08:00] Fixed input/textarea background and border colors to match design prototype by changing bg-surface-container-lowest to bg-white and border-none to border-surface-container in ArticleEditor.svelte.
 [2026-04-09T09:37:46+08:00] Fixed TypeScript generics syntax error in ArticleEditor.svelte ().
+[2026-04-09T10:39:41+08:00] Refined FileSelectModal.svelte UI: set white background, removed top divider, and updated footer buttons to rounded-full to match other dialogs.
+[2026-04-09T10:51:08+08:00] Refactored FileSelectModal.svelte to match standard project modal patterns: used fade/scale transitions, removed X button, applied white background, and updated footer to use rounded-full buttons.
+[2026-04-09T11:27:48+08:00] Fix 3 TypeScript errors: use proper CreateArticleRequest/UpdateArticleRequest types instead of Record<string, unknown> casts in create/edit article pages; add articleId null guard in edit page.[Claude Opus 4.6]

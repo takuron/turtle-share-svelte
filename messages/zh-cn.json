@@ -107,5 +107,22 @@
 	"add_attachment": "添加附件",
 	"create_article_title": "创建文章",
 	"edit_article_title": "编辑文章",
-	"save_article": "保存更改"
+	"save_article": "保存更改",
+	"set_header_image_dialog_title": "设置头图",
+	"header_image_title_label": "图片标题",
+	"enter_image_desc": "输入图片描述...",
+	"image_url_label": "图片链接",
+	"enter_image_url": "https://example.com/image.jpg",
+	"select_from_uploaded_files": "从已上传文件中选择",
+	"select_image": "选择图片",
+	"uploaded_ago": "{time}前上传",
+	"size_mb": "{size} MB",
+	"size_kb": "{size} KB",
+	"file_title_label": "文件标题",
+	"enter_file_title": "输入文件标题...",
+	"file_url_label": "文件链接",
+	"enter_file_url": "https://example.com/file.pdf",
+	"select_file": "选择文件",
+	"set_attachment_dialog_title": "添加附件",
+	"change_header_image": "更改头图"
 }

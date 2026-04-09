@@ -2,9 +2,78 @@ import { apiRequest, type ApiResponse } from '$lib/api/client';
 import {
 	DEFAULT_PAGE_SIZE,
 	type AdminArticleRawItem,
+	type ArticleDetail,
 	type ArticleListItem,
+	type FileLink,
 	type PageInfo
 } from '$lib/api/types';
+
+/**
+ * Request body for creating a new article.
+ * 创建新文章的请求体。
+ */
+// // 创建新文章的请求体。
+export interface CreateArticleRequest {
+	title: string;
+	cover_image?: string | null;
+	content: string;
+	required_tier: number;
+	is_public: boolean;
+	file_links?: FileLink[];
+	publish_at?: number | null;
+}
+
+/**
+ * Request body for updating an existing article. All fields are optional.
+ * 更新现有文章的请求体。所有字段均为可选。
+ */
+// // 更新现有文章的请求体。所有字段均为可选。
+export interface UpdateArticleRequest {
+	title?: string;
+	cover_image?: string | null;
+	content?: string;
+	required_tier?: number;
+	is_public?: boolean;
+	file_links?: FileLink[];
+	publish_at?: number | null;
+}
+
+/**
+ * Create a new article.
+ * @param data - The article data to create.
+ */
+// // 创建新文章。
+// // @param data - 要创建的文章数据。
+
+// 原始端点: POST /api/admin/articles — 创建新文章（需要管理员 JWT）
+export function createAdminArticle(
+	data: CreateArticleRequest
+): Promise<ApiResponse<ArticleDetail>> {
+	return apiRequest<ArticleDetail>('/admin/articles', {
+		method: 'POST',
+		body: JSON.stringify(data)
+	});
+}
+
+/**
+ * Update an existing article. Only the provided fields are updated.
+ * @param hashId - The article hash ID.
+ * @param data - The fields to update.
+ */
+// // 更新现有文章。仅更新提供的字段。
+// // @param hashId - 文章哈希 ID。
+// // @param data - 要更新的字段。
+
+// 原始端点: PUT /api/admin/articles/:hash_id — 更新现有文章（需要管理员 JWT）
+export function updateAdminArticle(
+	hashId: string,
+	data: UpdateArticleRequest
+): Promise<ApiResponse<ArticleDetail>> {
+	return apiRequest<ArticleDetail>(`/admin/articles/${hashId}`, {
+		method: 'PUT',
+		body: JSON.stringify(data)
+	});
+}
 
 /**
  * Fetch a page of all articles (admin view).
@@ -101,7 +170,7 @@ export function deleteAdminArticle(hashId: string): Promise<ApiResponse<{ delete
 // // @param hashId - 文章哈希 ID。
 // // @param customFetch - 可选的自定义 fetch 实例（例如 SvelteKit 的 fetch）。
 export function fetchAdminArticleDetail(hashId: string, customFetch?: typeof fetch) {
-	return apiRequest<import('$lib/api/types').ArticleDetail>(`/admin/articles/${hashId}`, {
+	return apiRequest<ArticleDetail>(`/admin/articles/${hashId}`, {
 		fetch: customFetch
 	});
 }
