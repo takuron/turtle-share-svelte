@@ -115,7 +115,8 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 - **i18n Locales**: `en` (base), `zh-cn`. URL pattern: `/` (en), `/zh-cn/` (zh-cn).
 - **MDsvex Extensions**: `.svx`, `.md` files are treated as Svelte components.
 - **Layout Components** (`src/lib/components/`):
-  - `TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button.
+  - `TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button. User dropdown triggers `UserSubscriptionModal` for subscription viewing.
+  - `UserSubscriptionModal.svelte` — Popup dialog showing user's current subscription tier and recent subscription history. Props: `open`, `onclose`. Uses mock data (pending real API integration).
   - `AuthorProfile.svelte` — Author profile header (magazine cover style).
   - `PostCard.svelte` — Post card displaying article data. Props: `title`, `hashId`, `coverImage`, `requiredTier`, `accessible`, `createdAt`. Shows readable/locked state based on `accessible`.
   - `ArticleFeed.svelte` — Shared article feed component. Accepts `page` prop, fetches articles + page info from API, renders PostCards + Pagination.

@@ -74,3 +74,4 @@
 [2026-04-09T12:29:59+08:00] Fix 403 on direct article page access as admin: ensure initAuth() runs before load function checks role.
 [2026-04-09T12:32:37+08:00] Fix initAuth crash in SSR: guard with browser check, skip data fetch on server side.
 [2026-04-09T12:37:41+08:00] Globally disable SSR (ssr=false in root +layout.ts) so dev mode runs as pure client-side SPA.
+[2026-04-09T12:56:59+08:00] Add UserSubscriptionModal component with mock data; wire up from TopNavBar dropdown.

@@ -126,5 +126,9 @@
 	"set_attachment_dialog_title": "添加附件",
 	"change_header_image": "更改头图",
 	"clear_header_image": "清除头图",
-	"markdown_format_hint": "支持 GitHub Flavored Markdown 格式"
+	"markdown_format_hint": "支持 GitHub Flavored Markdown 格式",
+	"current_subscription_tier": "当前订阅等级",
+	"recent_subscription_records": "最近订阅记录",
+	"date_range_to": "至",
+	"no_subscriptions": "暂无订阅记录"
 }

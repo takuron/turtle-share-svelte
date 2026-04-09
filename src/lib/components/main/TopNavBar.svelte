@@ -8,6 +8,10 @@
 	import { siteStore } from '$lib/stores/site.svelte';
 	import { authStore, logout } from '$lib/stores/auth.svelte';
 	import * as m from '$lib/paraglide/messages.js';
+	import UserSubscriptionModal from './UserSubscriptionModal.svelte';
+
+	// 订阅弹窗状态
+	let subscriptionModalOpen = $state(false);
 
 	// 1. 处理退出登录并刷新页面，清除状态
 	function handleLogout() {
@@ -55,10 +59,13 @@
 				>
 					{#if authStore.session.role === 'user'}
 						<li>
-							<a href="/user/subscriptions" class="text-sm text-base-content hover:bg-base-200">
+							<button
+								class="text-sm text-base-content hover:bg-base-200"
+								onclick={() => (subscriptionModalOpen = true)}
+							>
 								<ListVideo size={18} class="mr-2" />
 								{m.my_subscriptions()}
-							</a>
+							</button>
 						</li>
 						<li>
 							<a href="/user/password" class="text-sm text-base-content hover:bg-base-200">
@@ -97,3 +104,6 @@
 		{/if}
 	</div>
 </nav>
+
+<!-- 用户订阅信息弹窗 -->
+<UserSubscriptionModal open={subscriptionModalOpen} onclose={() => (subscriptionModalOpen = false)} />

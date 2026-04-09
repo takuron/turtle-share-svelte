@@ -126,5 +126,9 @@
 	"set_attachment_dialog_title": "Add Attachment",
 	"change_header_image": "Change Header Image",
 	"clear_header_image": "Clear Header Image",
-	"markdown_format_hint": "GitHub Flavored Markdown is supported"
+	"markdown_format_hint": "GitHub Flavored Markdown is supported",
+	"current_subscription_tier": "Current Subscription Tier",
+	"recent_subscription_records": "Recent Subscription Records",
+	"date_range_to": "to",
+	"no_subscriptions": "No subscription records"
 }
