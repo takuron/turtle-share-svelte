@@ -71,3 +71,6 @@
 [2026-04-09T11:43:38+08:00] Implemented real API calls for article create/edit pages: added createAdminArticle and updateAdminArticle API functions, updated ArticleEditor component with real data (file_links, loading/error states, GFM hint, default publishDate=today, default isPublic=true, header image edit/clear UX), updated FileSelectModal with real file API pagination, updated create/edit page routes to call real backend APIs.
 [2026-04-09T11:52:21+08:00] Header image dialog now pre-fills current URL when editing; empty URL clears header image; removed separate delete button.
 [2026-04-09T12:21:29+08:00] PostCard and ArticleDetail: removed API_URL prefix concatenation for cover image; use URL as-is.
+[2026-04-09T12:29:59+08:00] Fix 403 on direct article page access as admin: ensure initAuth() runs before load function checks role.
+[2026-04-09T12:32:37+08:00] Fix initAuth crash in SSR: guard with browser check, skip data fetch on server side.
+[2026-04-09T12:37:41+08:00] Globally disable SSR (ssr=false in root +layout.ts) so dev mode runs as pure client-side SPA.

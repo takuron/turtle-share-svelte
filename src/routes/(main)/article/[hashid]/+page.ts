@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 import { fetchPublicArticleDetail } from '$lib/api/public/articles';
 import { fetchUserArticleDetail } from '$lib/api/user/articles';
 import { fetchAdminArticleDetail } from '$lib/api/admin/articles';
-import { authStore } from '$lib/stores/auth.svelte';
+import { authStore, initAuth } from '$lib/stores/auth.svelte';
 import { building } from '$app/environment';
 
 /** @type {import('./$types').PageLoad} */
@@ -12,6 +12,11 @@ export async function load({ params, fetch }) {
 	// SSG 阶段跳过数据获取，避免 build 失败
 	if (building) {
 		return { article: null };
+	}
+
+	// 确保认证状态已从 localStorage 恢复（load 早于 onMount 执行）。
+	if (!authStore.initialized) {
+		initAuth();
 	}
 
 	let res;
