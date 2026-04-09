@@ -58,3 +58,5 @@
 [2026-04-09T08:49:21+08:00] Implement admin article management page prototype based on stitch/code.html
 [2026-04-09T08:55:44+08:00] Refactor admin article management prototype: componentize list items, apply i18n, update button styles
 [2026-04-09T09:00:19+08:00] Refactor admin article list style: remove wrapper background, align action header, adjust button and border styling to match file manager
+[2026-04-09T09:06:22+08:00] Connect admin article management page to real API with pagination and deletion support
+[2026-04-09T09:09:16+08:00] Update article requirement display logic to show level always and public if applicable

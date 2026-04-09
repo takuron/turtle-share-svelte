@@ -35,12 +35,14 @@
 	<div class="col-span-2">
 		<p class="text-sm font-semibold text-on-surface">{article.date}</p>
 	</div>
-	<div class="col-span-3 flex items-center">
-		<span
-			class="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold {article.requirementClass}"
-		>
-			{article.requirement}
-		</span>
+	<div class="col-span-3 flex flex-wrap items-center gap-2">
+		{#each article.requirements as req}
+			<span
+				class="inline-flex items-center rounded-full px-3 py-1 text-xs font-bold {req.className}"
+			>
+				{req.text}
+			</span>
+		{/each}
 	</div>
 	<div class="col-span-1 flex justify-end gap-1">
 		<div class="tooltip tooltip-top" data-tip={m.edit()}>

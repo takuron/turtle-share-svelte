@@ -88,5 +88,8 @@
 	"col_date": "Date",
 	"col_requirement": "Requirement",
 	"edit": "Edit",
-	"showing_articles": "Showing {from} to {to} of {total} articles"
+	"showing_articles": "Showing {from} to {to} of {total} articles",
+	"req_private": "Private",
+	"req_public": "Public",
+	"req_level": "Level {tier}"
 }

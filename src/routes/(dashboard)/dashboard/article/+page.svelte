@@ -1,55 +1,136 @@
 <script lang="ts">
 	/**
-	 * Admin Article/Content Management page (Prototype).
-	 * 管理员文章/内容管理页面（原型）。
+	 * Admin Article/Content Management page.
+	 * 管理员文章/内容管理页面。
 	 */
-	// // 管理员文章/内容管理页面（原型）。
+	// // 管理员文章/内容管理页面。
 	import * as m from '$lib/paraglide/messages.js';
-	import { CirclePlus } from 'lucide-svelte';
+	import { CirclePlus, Loader2 } from 'lucide-svelte';
+	import { onMount } from 'svelte';
 	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
 	import AdminArticleListItem from '$lib/components/admin/AdminArticleListItem.svelte';
+	import ConfirmModal from '$lib/components/admin/ConfirmModal.svelte';
+	import {
+		fetchAdminArticlesRawPage,
+		fetchAdminArticlesPageInfo,
+		deleteAdminArticle
+	} from '$lib/api/admin/articles';
+	import { ADMIN_ARTICLES_PAGE_SIZE, type AdminArticleRawItem } from '$lib/api/types';
 
-	// 1. Mock data based on the prototype.
-	const mockArticles = [
-		{
-			id: 1,
-			title: 'The Future of Generative UI: A Deep Dive',
-			date: 'Oct 24, 2023',
-			requirement: 'Public',
-			requirementClass: 'bg-indigo-100 text-indigo-700'
-		},
-		{
-			id: 2,
-			title: 'Understanding Modern CSS Layouts',
-			date: 'Oct 26, 2023',
-			requirement: 'Level 5',
-			requirementClass: 'bg-slate-200 text-slate-700'
-		},
-		{
-			id: 3,
-			title: 'Building Personal Brands in 2024',
-			date: 'Oct 28, 2023',
-			requirement: 'Public',
-			requirementClass: 'bg-indigo-100 text-indigo-700'
-		}
-	];
-
-	// 2. 分页状态。
+	// 1. 状态管理
+	let articles = $state<AdminArticleRawItem[]>([]);
 	let currentPage = $state(1);
-	let totalPages = 15;
+	let totalPages = $state(1);
+	let totalItems = $state(0);
+	let isLoading = $state(true);
 
-	// 3. 处理页码切换。
-	function handlePageChange(page: number) {
+	// 2. 删除确认模态框状态
+	let isDeleteModalOpen = $state(false);
+	let isDeleting = $state(false);
+	let articleToDelete = $state<AdminArticleRawItem | null>(null);
+
+	// 初始化
+	onMount(() => {
+		loadPage(1);
+	});
+
+	// 3. 加载分页数据
+	async function loadPage(page: number) {
+		isLoading = true;
 		currentPage = page;
+		try {
+			const [infoRes, listRes] = await Promise.all([
+				fetchAdminArticlesPageInfo(ADMIN_ARTICLES_PAGE_SIZE),
+				fetchAdminArticlesRawPage(page, ADMIN_ARTICLES_PAGE_SIZE)
+			]);
+
+			if (infoRes.success) {
+				totalPages = infoRes.data.total_pages;
+				totalItems = infoRes.data.total_items;
+			}
+			if (listRes.success) {
+				articles = listRes.data;
+			}
+		} catch (error) {
+			console.error('Failed to load articles', error);
+		} finally {
+			isLoading = false;
+		}
 	}
 
-	// 4. Mock 回调
-	function handleEdit(article: any) {
-		console.log('Edit article', article.id);
+	function handlePageChange(page: number) {
+		loadPage(page);
 	}
 
-	function handleDelete(article: any) {
-		console.log('Delete article', article.id);
+	// 4. 格式化辅助函数
+	function formatDate(timestamp: number) {
+		return new Date(timestamp * 1000).toLocaleDateString('en-US', {
+			month: 'short',
+			day: 'numeric',
+			year: 'numeric'
+		});
+	}
+
+	function getRequirements(item: AdminArticleRawItem) {
+		const reqs = [];
+		reqs.push({
+			text: m.req_level({ tier: String(item.required_tier) }),
+			className: 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300'
+		});
+		if (item.is_public) {
+			reqs.push({
+				text: m.req_public(),
+				className: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400'
+			});
+		}
+		return reqs;
+	}
+
+	// 计算分页显示文本
+	let showingText = $derived(() => {
+		if (totalItems === 0) return m.no_articles();
+		const start = (currentPage - 1) * ADMIN_ARTICLES_PAGE_SIZE + 1;
+		const end = Math.min(currentPage * ADMIN_ARTICLES_PAGE_SIZE, totalItems);
+		return m.showing_articles({
+			from: String(start),
+			to: String(end),
+			total: String(totalItems)
+		});
+	});
+
+	// 5. 事件处理
+	function handleEdit(article: AdminArticleRawItem) {
+		// TODO: Navigate to article editor page
+		console.log('Edit article', article.hash_id);
+	}
+
+	function confirmDelete(article: AdminArticleRawItem) {
+		articleToDelete = article;
+		isDeleteModalOpen = true;
+	}
+
+	async function handleDelete() {
+		if (!articleToDelete) return;
+		isDeleting = true;
+		try {
+			const res = await deleteAdminArticle(articleToDelete.hash_id);
+			if (res.success) {
+				isDeleteModalOpen = false;
+				articleToDelete = null;
+				// 如果当前页没有数据了，回退一页
+				if (articles.length === 1 && currentPage > 1) {
+					await loadPage(currentPage - 1);
+				} else {
+					await loadPage(currentPage);
+				}
+			} else {
+				alert(`Delete failed: ${res.error?.message}`);
+			}
+		} catch (error) {
+			console.error('Delete error:', error);
+		} finally {
+			isDeleting = false;
+		}
 	}
 </script>
 
@@ -78,20 +159,51 @@
 		<div class="col-span-1 text-right">{m.col_actions()}</div>
 	</div>
 
-	<!-- 列表项容器 -->
-	{#each mockArticles as article (article.id)}
-		<AdminArticleListItem
-			{article}
-			onedit={() => handleEdit(article)}
-			ondelete={() => handleDelete(article)}
-		/>
-	{/each}
+	{#if isLoading}
+		<div class="flex items-center justify-center py-20">
+			<Loader2 size={24} class="animate-spin text-primary" />
+			<span class="ml-3 text-sm text-on-surface-variant">{m.loading_articles()}</span>
+		</div>
+	{:else if articles.length === 0}
+		<div class="flex items-center justify-center py-20">
+			<p class="text-sm font-medium text-on-surface-variant">{m.no_articles()}</p>
+		</div>
+	{:else}
+		<!-- 列表项容器 -->
+		{#each articles as article (article.hash_id)}
+			{@const reqs = getRequirements(article)}
+			<AdminArticleListItem
+				article={{
+					title: article.title,
+					date: formatDate(article.publish_at),
+					requirements: reqs
+				}}
+				onedit={() => handleEdit(article)}
+				ondelete={() => confirmDelete(article)}
+			/>
+		{/each}
+	{/if}
 </div>
 
 <!-- 分页 -->
-<AdminPagination
-	{currentPage}
-	{totalPages}
-	onpagechange={handlePageChange}
-	showingText={m.showing_articles({ from: '1', to: '3', total: '142' })}
+{#if totalPages > 1}
+	<AdminPagination
+		{currentPage}
+		{totalPages}
+		onpagechange={handlePageChange}
+		showingText={showingText()}
+	/>
+{/if}
+
+<!-- Confirm Delete Modal -->
+<ConfirmModal
+	open={isDeleteModalOpen}
+	title={m.delete()}
+	description={`Are you sure you want to delete "${articleToDelete?.title}"? This action cannot be undone.`}
+	confirmText={m.delete()}
+	cancelText={m.cancel()}
+	danger={true}
+	loading={isDeleting}
+	onclose={() => (isDeleteModalOpen = false)}
+	onconfirm={handleDelete}
 />

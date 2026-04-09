@@ -88,5 +88,8 @@
 	"col_date": "日期",
 	"col_requirement": "解锁条件",
 	"edit": "编辑",
-	"showing_articles": "显示第 {from} 至 {to} 条，共 {total} 篇文章"
+	"showing_articles": "显示第 {from} 至 {to} 条，共 {total} 篇文章",
+	"req_private": "未公开",
+	"req_public": "公开",
+	"req_level": "等级 {tier}"
 }

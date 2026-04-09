@@ -64,6 +64,33 @@ export function fetchAdminArticlesPageInfo(
 }
 
 /**
+ * Fetch raw admin articles page for management dashboard.
+ * @param page
+ * @param pageSize
+ */
+// // 获取供管理面板使用的未格式化的管理员文章分页数据（保留 is_public）。
+// // @param page - 页码
+// // @param pageSize - 每页数量
+export function fetchAdminArticlesRawPage(
+	page: number,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<AdminArticleRawItem[]>> {
+	return apiRequest<AdminArticleRawItem[]>(`/admin/articles/page/${page}?page_size=${pageSize}`);
+}
+
+/**
+ * Delete an article.
+ * @param hashId - The article hash ID.
+ */
+// // 删除一篇文章。
+// // @param hashId - 文章哈希 ID。
+export function deleteAdminArticle(hashId: string): Promise<ApiResponse<{ deleted: boolean }>> {
+	return apiRequest<{ deleted: boolean }>(`/admin/articles/${hashId}`, {
+		method: 'DELETE'
+	});
+}
+
+/**
  * Fetch detail for a specific article (admin view).
  * Admin has full access to all article details.
  * @param hashId - The article hash ID.
