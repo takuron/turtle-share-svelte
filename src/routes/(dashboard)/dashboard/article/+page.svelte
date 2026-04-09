@@ -7,6 +7,7 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import { CirclePlus, Loader2 } from 'lucide-svelte';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
 	import AdminArticleListItem from '$lib/components/admin/AdminArticleListItem.svelte';
 	import ConfirmModal from '$lib/components/admin/ConfirmModal.svelte';
@@ -100,8 +101,7 @@
 
 	// 5. 事件处理
 	function handleEdit(article: AdminArticleRawItem) {
-		// TODO: Navigate to article editor page
-		console.log('Edit article', article.hash_id);
+		goto(`/dashboard/article/edit/${article.hash_id}`);
 	}
 
 	function confirmDelete(article: AdminArticleRawItem) {
@@ -140,6 +140,7 @@
 		{m.nav_content_management()}
 	</h2>
 	<button
+		onclick={() => goto('/dashboard/article/create')}
 		class="flex cursor-pointer items-center gap-2 rounded-full px-6 py-3 text-sm font-bold text-white shadow-xl shadow-primary/20 transition-all gradient-cta hover:scale-[1.02] active:scale-95 lg:px-8 lg:py-4 lg:text-base"
 	>
 		<CirclePlus size={20} />

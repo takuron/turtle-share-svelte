@@ -91,5 +91,21 @@
 	"showing_articles": "显示第 {from} 至 {to} 条，共 {total} 篇文章",
 	"req_private": "未公开",
 	"req_public": "公开",
-	"req_level": "等级 {tier}"
+	"req_level": "等级 {tier}",
+	"publish_article": "发布文章",
+	"article_title": "文章标题",
+	"enter_article_title": "输入引人入胜的标题...",
+	"set_header_image": "设置头图",
+	"article_content": "文章内容",
+	"start_writing": "在此开始撰写您的故事...",
+	"publication_date": "发布日期",
+	"publication_date_placeholder": "例如：2024年10月24日",
+	"access_requirement": "访问权限要求",
+	"enter_full_view_level": "输入完整阅读等级（如：5）",
+	"mark_as_public": "设为公开",
+	"attachments": "附件",
+	"add_attachment": "添加附件",
+	"create_article_title": "创建文章",
+	"edit_article_title": "编辑文章",
+	"save_article": "保存更改"
 }

@@ -60,3 +60,6 @@
 [2026-04-09T09:00:19+08:00] Refactor admin article list style: remove wrapper background, align action header, adjust button and border styling to match file manager
 [2026-04-09T09:06:22+08:00] Connect admin article management page to real API with pagination and deletion support
 [2026-04-09T09:09:16+08:00] Update article requirement display logic to show level always and public if applicable
+[2026-04-09T09:30:11+08:00] Implemented create and edit article pages with shared ArticleEditor component based on stitch/code.html prototype, including i18n support.
+[2026-04-09T09:33:44+08:00] Fixed input/textarea background colors to match design prototype by changing bg-surface-container-lowest to bg-white in ArticleEditor.svelte.
+[2026-04-09T09:35:29+08:00] Fixed input/textarea border colors to match design prototype by changing border-none to border-surface-container in ArticleEditor.svelte.
