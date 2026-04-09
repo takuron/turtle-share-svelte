@@ -129,12 +129,12 @@
 		onclick={onclose}
 	>
 		<div
-			class="border-surface-container-high bg-surface-lowest my-auto w-full max-w-md overflow-hidden rounded-3xl border shadow-2xl"
+			class="border-surface-container-high my-auto w-full max-w-md overflow-hidden rounded-3xl border bg-surface-lowest shadow-2xl"
 			transition:scale={{ duration: 300, start: 0.95, opacity: 0, easing: backOut }}
 			onclick={(e) => e.stopPropagation()}
 		>
-			<div class="flex items-center justify-between px-8 pb-4 pt-8">
-				<h2 class="text-on-surface text-2xl font-extrabold tracking-tight">
+			<div class="flex items-center justify-between px-8 pt-8 pb-4">
+				<h2 class="text-2xl font-extrabold tracking-tight text-on-surface">
 					{subscription ? m.edit_subscription() : m.add_subscription()}
 				</h2>
 			</div>
@@ -159,28 +159,28 @@
 						<div class="grid grid-cols-2 gap-2">
 							<button
 								type="button"
-								class="bg-surface-container-low border-surface-container-high text-on-surface hover:border-primary hover:bg-primary rounded-xl border px-2 py-3 text-xs font-bold transition-all hover:text-white"
+								class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
 								onclick={() => setQuickDuration(7)}
 							>
 								{m.days_7()}
 							</button>
 							<button
 								type="button"
-								class="bg-surface-container-low border-surface-container-high text-on-surface hover:border-primary hover:bg-primary rounded-xl border px-2 py-3 text-xs font-bold transition-all hover:text-white"
+								class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
 								onclick={() => setQuickDuration(30)}
 							>
 								{m.month_1()}
 							</button>
 							<button
 								type="button"
-								class="bg-surface-container-low border-surface-container-high text-on-surface hover:border-primary hover:bg-primary rounded-xl border px-2 py-3 text-xs font-bold transition-all hover:text-white"
+								class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
 								onclick={() => setQuickDuration(90)}
 							>
 								{m.months_3()}
 							</button>
 							<button
 								type="button"
-								class="bg-surface-container-low border-surface-container-high text-on-surface hover:border-primary hover:bg-primary rounded-xl border px-2 py-3 text-xs font-bold transition-all hover:text-white"
+								class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
 								onclick={() => setQuickDuration(365)}
 							>
 								{m.year_1()}
@@ -193,7 +193,7 @@
 							>{m.col_start_date()}</label
 						>
 						<input
-							class="bg-surface-container-low border-surface-container-high focus:border-primary focus:ring-primary/20 w-full rounded-xl border px-5 py-3.5 text-sm font-medium outline-none transition-all focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50"
+							class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 							type="date"
 							bind:value={startDate}
 							required
@@ -206,7 +206,7 @@
 							>{m.col_end_date()}</label
 						>
 						<input
-							class="bg-surface-container-low border-surface-container-high focus:border-primary focus:ring-primary/20 w-full rounded-xl border px-5 py-3.5 text-sm font-medium outline-none transition-all focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50"
+							class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 							type="date"
 							bind:value={endDate}
 							required
@@ -219,7 +219,7 @@
 							>{m.col_level()}</label
 						>
 						<input
-							class="bg-surface-container-low border-surface-container-high focus:border-primary focus:ring-primary/20 w-full rounded-xl border px-5 py-3.5 text-sm font-medium outline-none transition-all focus:ring-2 disabled:cursor-not-allowed disabled:opacity-50"
+							class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 							placeholder={m.enter_level()}
 							type="number"
 							bind:value={tier}
@@ -235,10 +235,12 @@
 									>{m.col_note()}</label
 								>
 							</div>
-							<span class="text-outline-variant text-[10px] font-bold uppercase">{m.optional()}</span>
+							<span class="text-[10px] font-bold text-outline-variant uppercase"
+								>{m.optional()}</span
+							>
 						</div>
 						<textarea
-							class="bg-surface-container-low border-surface-container-high focus:border-primary focus:ring-primary/20 w-full resize-none rounded-xl border px-5 py-3.5 text-sm font-medium outline-none transition-all focus:ring-2 disabled:opacity-50"
+							class="bg-surface-container-low border-surface-container-high w-full resize-none rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
 							placeholder={m.add_admin_note()}
 							rows="2"
 							bind:value={note}
@@ -250,7 +252,7 @@
 				<div class="flex items-center gap-4 pt-6">
 					<button
 						type="button"
-						class="hover:bg-surface-container-high bg-surface-container text-on-surface w-[35%] cursor-pointer rounded-full py-3.5 text-sm font-bold transition-all active:scale-95 disabled:opacity-50"
+						class="hover:bg-surface-container-high w-[35%] cursor-pointer rounded-full bg-surface-container py-3.5 text-sm font-bold text-on-surface transition-all active:scale-95 disabled:opacity-50"
 						onclick={onclose}
 						disabled={loading}
 					>
@@ -258,11 +260,11 @@
 					</button>
 					<button
 						type="submit"
-						class="gradient-cta shadow-primary/20 flex w-[65%] cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full py-4 text-sm font-bold text-white shadow-lg transition-all hover:scale-[1.02] active:scale-95 disabled:opacity-50"
+						class="flex w-[65%] cursor-pointer items-center justify-center gap-2 rounded-full py-4 text-sm font-bold whitespace-nowrap text-white shadow-lg shadow-primary/20 transition-all gradient-cta hover:scale-[1.02] active:scale-95 disabled:opacity-50"
 						disabled={loading}
 					>
 						{#if loading}
-							<span class="loading loading-spinner loading-sm"></span>
+							<span class="loading loading-sm loading-spinner"></span>
 						{/if}
 						{m.confirm_subscription()}
 					</button>

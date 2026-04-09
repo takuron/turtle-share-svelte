@@ -151,7 +151,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `(auth)/admin/+page.svelte` — Admin login page (dot-pattern background).
   - `(dashboard)/dashboard/+layout.svelte` — Dashboard layout group: fixed sidebar (72w) + main content area. Admin-only guard redirects non-admin to `/admin`. Sidebar has nav links (User/Article/File), home link, and logout button.
   - `(dashboard)/dashboard/user/+page.svelte` — User Management page. Fetches real user data from API (page_size=5), paginated list with expandable subscription panel (subscription loading TBD).
-  - `(dashboard)/dashboard/article/+page.svelte` — Content Management page (skeleton).
+  - `(dashboard)/dashboard/article/+page.svelte` — Content Management page (prototype implemented with mock data).
   - `(dashboard)/dashboard/file/+page.svelte` — File Management page (skeleton).
 
 ### Available Scripts / 可用脚本

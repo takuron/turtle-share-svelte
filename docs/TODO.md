@@ -24,7 +24,7 @@
 
 - [ ] Admin layout with sidebar navigation
 - [ ] Dashboard overview page (`/admin`)
-- [ ] Article management CRUD (`/admin/articles`)
+- [x] Article management CRUD (`/admin/articles`)
 - [ ] Article editor with Markdown preview
 - [ ] File/attachment upload
 - [ ] User management (`/admin/users`)

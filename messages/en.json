@@ -82,5 +82,11 @@
 	"months_3": "3 Months",
 	"year_1": "1 Year",
 	"confirm_delete_subscription": "Delete Subscription",
-	"confirm_delete_subscription_desc": "Are you sure you want to delete this subscription? This action cannot be undone."
+	"confirm_delete_subscription_desc": "Are you sure you want to delete this subscription? This action cannot be undone.",
+	"publish_new_article": "Publish New Article",
+	"col_article_title": "Article Title",
+	"col_date": "Date",
+	"col_requirement": "Requirement",
+	"edit": "Edit",
+	"showing_articles": "Showing {from} to {to} of {total} articles"
 }
