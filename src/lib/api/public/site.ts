@@ -23,3 +23,11 @@ export function fetchSiteInfoRequest(): Promise<ApiResponse<SiteInfo>> {
 export function fetchTiersRequest(): Promise<ApiResponse<TierDescriptionsResponse>> {
 	return apiRequest<TierDescriptionsResponse>('/public/tier-descriptions');
 }
+
+/**
+ * Fetch current site announcement.
+ */
+// // 获取当前站点公告。
+export function fetchAnnouncementRequest(): Promise<ApiResponse<any>> {
+	return apiRequest<any>('/public/announcement');
+}

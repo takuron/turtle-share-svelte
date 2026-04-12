@@ -101,3 +101,5 @@
 [2026-04-12T14:45:33+08:00] Reverted TopNavBar alignment changes back to simple items-center without flex on links.
 [2026-04-12T15:05:04+08:00] Implemented dynamic subscription tiers page by fetching /api/public/tier-descriptions from backend.
 [2026-04-12T15:10:03+08:00] Implemented the new Page Management admin page based on the prototype design, including announcement and subscription level management UI, and added the corresponding sidebar navigation link.
+[2026-04-12T15:35:45+08:00] Integrated backend API endpoints for page management including announcement reading/saving and tier descriptions configuration.
+[2026-04-12T15:49:24+08:00] Refactored page management subscription tier synchronization logic: now uses a diff-based approach to only send modified tiers to the API, and fixed the bug causing duplicate tier generation on new additions.
