@@ -45,6 +45,8 @@
 
 			if (announcementRes.success && announcementRes.data) {
 				announcement = announcementRes.data.content || '';
+			} else {
+				announcement = '';
 			}
 
 			if (tiersRes.success && tiersRes.data) {
@@ -59,10 +61,10 @@
 
 	// 2. 操作实现
 	async function handleUpdateAnnouncement() {
-		if (!announcement.trim()) return;
 		isSavingAnnouncement = true;
 		try {
 			await updateAdminAnnouncement(announcement);
+			await loadData();
 		} catch (e) {
 			console.error('Failed to update announcement:', e);
 		} finally {
