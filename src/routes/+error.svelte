@@ -44,11 +44,13 @@
 <TopNavBar />
 
 <!-- 错误页主体 — 全屏垂直居中布局 -->
-<main class="mx-auto flex w-full max-w-2xl flex-grow flex-col items-center justify-center px-4 pt-24">
+<main
+	class="mx-auto flex w-full max-w-2xl flex-grow flex-col items-center justify-center px-4 pt-24"
+>
 	<div class="text-center">
 		<!-- 大号状态码背景文字 -->
 		<h1
-			class="font-display select-none text-[12rem] font-extrabold leading-none tracking-tighter text-primary/10"
+			class="font-display text-[12rem] leading-none font-extrabold tracking-tighter text-primary/10 select-none"
 		>
 			{page.status}
 		</h1>
@@ -67,12 +69,12 @@
 
 			<!-- 操作按钮区域 -->
 			<div class="flex flex-wrap items-center justify-center gap-4 pt-4">
-				<a href="/" class="btn btn-primary btn-lg rounded-full px-10 shadow-lg">
+				<a href="/" class="btn rounded-full px-10 shadow-lg btn-lg btn-primary">
 					<Home size={18} />
 					{m.error_return_home()}
 				</a>
 				{#if showLoginAction}
-					<a href="/user" class="btn btn-outline btn-lg rounded-full px-10">
+					<a href="/user" class="btn rounded-full px-10 btn-outline btn-lg">
 						<LogIn size={18} />
 						{m.error_login()}
 					</a>

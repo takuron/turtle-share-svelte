@@ -26,7 +26,12 @@
 
 <!-- 分页标题 -->
 <svelte:head>
-	<title>{m.page_title_with_site({ title: m.page_title_page_n({ page: String(pageNum) }), siteName: siteStore.info.name })}</title>
+	<title
+		>{m.page_title_with_site({
+			title: m.page_title_page_n({ page: String(pageNum) }),
+			siteName: siteStore.info.name
+		})}</title
+	>
 </svelte:head>
 
 <main class="mx-auto max-w-2xl px-4 pt-24 pb-12">

@@ -14,10 +14,16 @@
 	</p>
 	<p class="text-xs font-medium text-on-surface-variant">
 		Powered by
-		<a href="https://github.com/takuron/TurtleShare" class="text-primary hover:underline">TurtleShare</a>
+		<a href="https://github.com/takuron/TurtleShare" class="text-primary hover:underline"
+			>TurtleShare</a
+		>
 		&
-		<a href="https://github.com/takuron/turtle-share-svelte" class="text-primary hover:underline">turtle-share-svelte</a>
+		<a href="https://github.com/takuron/turtle-share-svelte" class="text-primary hover:underline"
+			>turtle-share-svelte</a
+		>
 		· Source code licensed under
-		<a href="https://www.gnu.org/licenses/agpl-3.0.html" class="text-primary hover:underline">AGPL-3.0</a>
+		<a href="https://www.gnu.org/licenses/agpl-3.0.html" class="text-primary hover:underline"
+			>AGPL-3.0</a
+		>
 	</p>
 </footer>

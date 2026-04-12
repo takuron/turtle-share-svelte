@@ -152,6 +152,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `(main)/+page.svelte` — Homepage: AuthorProfile + ArticleFeed (page 1).
   - `(main)/page/[page]/+page.svelte` — Paginated article list: AuthorProfile + ArticleFeed (page N). Redirects `/page/1` to `/`.
   - `(main)/post/[post_hashid]/+page.svelte` — Article detail page (skeleton implemented).
+  - `(main)/subscribe/+page.svelte` — Subscription tiers page (design prototype implemented).
   - `(auth)/+layout.svelte` — Auth layout group: full-screen, no nav/footer, no scroll. Redirects to `/` if already logged in.
   - `(auth)/user/+page.svelte` — User login page (dot-pattern background).
   - `(auth)/admin/+page.svelte` — Admin login page (dot-pattern background).

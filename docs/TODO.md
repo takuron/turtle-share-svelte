@@ -29,14 +29,14 @@
 - [ ] Article editor with Markdown preview
 - [ ] File/attachment upload
 - [ ] User management (`/admin/users`)
-- [ ] Subscription tier management (`/admin/tiers`)
+- [x] Subscription tier management (`/admin/tiers`)
 
 ## Phase 3: Public Content / 公开内容
 
 - [ ] Landing/home page design
 - [ ] Article list page
 - [ ] Article detail page (`/post/[post_hashid]`) with access control (skeleton done)
-- [ ] Subscription page
+- [x] Subscription page
 
 ## Phase 4: Polish / 完善
 

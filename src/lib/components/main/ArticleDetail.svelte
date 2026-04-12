@@ -14,9 +14,7 @@
 
 	// 封面 URL 直接使用文章数据中的链接
 	const coverUrl = $derived(
-		article?.cover_image && article.cover_image.trim() !== ''
-			? article.cover_image
-			: null
+		article?.cover_image && article.cover_image.trim() !== '' ? article.cover_image : null
 	);
 
 	// 解析 Markdown 内容为安全的 HTML

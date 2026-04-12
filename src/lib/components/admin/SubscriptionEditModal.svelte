@@ -90,6 +90,12 @@
 			return;
 		}
 
+		const tierNum = Number(tier);
+		if (tierNum < 0 || tierNum > 255) {
+			errorMsg = m.error_invalid_tier();
+			return;
+		}
+
 		const startTs = toStartTimestamp(startDate);
 		const endTs = toEndTimestamp(endDate);
 
@@ -101,7 +107,7 @@
 		const data = {
 			start_date: startTs,
 			end_date: endTs,
-			tier: Number(tier),
+			tier: tierNum,
 			note
 		};
 
@@ -116,145 +122,153 @@
 </script>
 
 <Modal {open} {onclose} scrollable>
-		<div class="flex items-center justify-between px-8 pt-8 pb-4">
-				<h2 class="text-2xl font-extrabold tracking-tight text-on-surface">
-					{subscription ? m.edit_subscription() : m.add_subscription()}
-				</h2>
-			</div>
+	<div class="flex items-center justify-between px-8 pt-8 pb-4">
+		<h2 class="text-2xl font-extrabold tracking-tight text-on-surface">
+			{subscription ? m.edit_subscription() : m.add_subscription()}
+		</h2>
+	</div>
 
-			<form onsubmit={handleSubmit} class="px-8 pb-6">
-				<div class="space-y-5">
-					<!-- 错误提示 -->
-					{#if errorMsg}
-						<div
-							class="flex items-center gap-2 rounded-xl bg-error/10 px-4 py-3 text-sm font-medium text-error"
-						>
-							<CircleAlert size={16} />
-							{errorMsg}
-						</div>
-					{/if}
-
-					<!-- 快速时长选择 — 标注的是一组按钮，用 span 而非 label -->
-					<div class="flex flex-col gap-3">
-						<span class="text-outline px-1 text-xs font-black tracking-widest uppercase"
-							>{m.quick_duration()}</span
-						>
-						<div class="grid grid-cols-2 gap-2">
-							<button
-								type="button"
-								class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
-								onclick={() => setQuickDuration(7)}
-							>
-								{m.days_7()}
-							</button>
-							<button
-								type="button"
-								class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
-								onclick={() => setQuickDuration(30)}
-							>
-								{m.month_1()}
-							</button>
-							<button
-								type="button"
-								class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
-								onclick={() => setQuickDuration(90)}
-							>
-								{m.months_3()}
-							</button>
-							<button
-								type="button"
-								class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
-								onclick={() => setQuickDuration(365)}
-							>
-								{m.year_1()}
-							</button>
-						</div>
-					</div>
-
-					<div class="flex flex-col gap-2">
-						<label for="sub-edit-start" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
-							>{m.col_start_date()}</label
-						>
-						<input
-							id="sub-edit-start"
-							class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
-							type="date"
-							bind:value={startDate}
-							required
-							disabled={loading}
-						/>
-					</div>
-
-					<div class="flex flex-col gap-2">
-						<label for="sub-edit-end" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
-							>{m.col_end_date()}</label
-						>
-						<input
-							id="sub-edit-end"
-							class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
-							type="date"
-							bind:value={endDate}
-							required
-							disabled={loading}
-						/>
-					</div>
-
-					<div class="flex flex-col gap-2">
-						<label for="sub-edit-tier" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
-							>{m.col_level()}</label
-						>
-						<input
-							id="sub-edit-tier"
-							class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
-							placeholder={m.enter_level()}
-							type="number"
-							bind:value={tier}
-							required
-							disabled={loading}
-						/>
-					</div>
-
-					<div class="flex flex-col gap-2">
-						<div class="flex justify-between px-1">
-							<div class="flex items-center gap-1.5">
-								<label for="sub-edit-note" class="text-outline text-xs font-black tracking-widest uppercase"
-									>{m.col_note()}</label
-								>
-							</div>
-							<span class="text-[10px] font-bold text-outline-variant uppercase"
-								>{m.optional()}</span
-							>
-						</div>
-						<textarea
-							id="sub-edit-note"
-							class="bg-surface-container-low border-surface-container-high w-full resize-none rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
-							placeholder={m.add_admin_note()}
-							rows="2"
-							bind:value={note}
-							disabled={loading}
-						></textarea>
-					</div>
+	<form onsubmit={handleSubmit} class="px-8 pb-6">
+		<div class="space-y-5">
+			<!-- 错误提示 -->
+			{#if errorMsg}
+				<div
+					class="flex items-center gap-2 rounded-xl bg-error/10 px-4 py-3 text-sm font-medium text-error"
+				>
+					<CircleAlert size={16} />
+					{errorMsg}
 				</div>
+			{/if}
 
-				<div class="flex items-center gap-4 pt-6">
+			<!-- 快速时长选择 — 标注的是一组按钮，用 span 而非 label -->
+			<div class="flex flex-col gap-3">
+				<span class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+					>{m.quick_duration()}</span
+				>
+				<div class="grid grid-cols-2 gap-2">
 					<button
 						type="button"
-						class="hover:bg-surface-container-high w-[35%] cursor-pointer rounded-full bg-surface-container py-3.5 text-sm font-bold text-on-surface transition-all active:scale-95 disabled:opacity-50"
-						onclick={onclose}
-						disabled={loading}
+						class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
+						onclick={() => setQuickDuration(7)}
 					>
-						{m.cancel()}
+						{m.days_7()}
 					</button>
 					<button
-						type="submit"
-						class="flex w-[65%] cursor-pointer items-center justify-center gap-2 rounded-full py-4 text-sm font-bold whitespace-nowrap text-white shadow-lg shadow-primary/20 transition-all gradient-cta hover:scale-[1.02] active:scale-95 disabled:opacity-50"
-						disabled={loading}
+						type="button"
+						class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
+						onclick={() => setQuickDuration(30)}
 					>
-						{#if loading}
-							<span class="loading loading-sm loading-spinner"></span>
-						{/if}
-						{m.confirm_subscription()}
+						{m.month_1()}
+					</button>
+					<button
+						type="button"
+						class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
+						onclick={() => setQuickDuration(90)}
+					>
+						{m.months_3()}
+					</button>
+					<button
+						type="button"
+						class="bg-surface-container-low border-surface-container-high rounded-xl border px-2 py-3 text-xs font-bold text-on-surface transition-all hover:border-primary hover:bg-primary hover:text-white"
+						onclick={() => setQuickDuration(365)}
+					>
+						{m.year_1()}
 					</button>
 				</div>
-			</form>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<label
+					for="sub-edit-start"
+					class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+					>{m.col_start_date()}</label
+				>
+				<input
+					id="sub-edit-start"
+					class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
+					type="date"
+					bind:value={startDate}
+					required
+					disabled={loading}
+				/>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<label
+					for="sub-edit-end"
+					class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+					>{m.col_end_date()}</label
+				>
+				<input
+					id="sub-edit-end"
+					class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
+					type="date"
+					bind:value={endDate}
+					required
+					disabled={loading}
+				/>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<label
+					for="sub-edit-tier"
+					class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+					>{m.col_level()}</label
+				>
+				<input
+					id="sub-edit-tier"
+					class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
+					placeholder={m.enter_level()}
+					type="number"
+					min="0"
+					max="255"
+					bind:value={tier}
+					required
+					disabled={loading}
+				/>
+			</div>
+
+			<div class="flex flex-col gap-2">
+				<div class="flex justify-between px-1">
+					<div class="flex items-center gap-1.5">
+						<label
+							for="sub-edit-note"
+							class="text-outline text-xs font-black tracking-widest uppercase"
+							>{m.col_note()}</label
+						>
+					</div>
+					<span class="text-[10px] font-bold text-outline-variant uppercase">{m.optional()}</span>
+				</div>
+				<textarea
+					id="sub-edit-note"
+					class="bg-surface-container-low border-surface-container-high w-full resize-none rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:opacity-50"
+					placeholder={m.add_admin_note()}
+					rows="2"
+					bind:value={note}
+					disabled={loading}
+				></textarea>
+			</div>
+		</div>
+
+		<div class="flex items-center gap-4 pt-6">
+			<button
+				type="button"
+				class="hover:bg-surface-container-high w-[35%] cursor-pointer rounded-full bg-surface-container py-3.5 text-sm font-bold text-on-surface transition-all active:scale-95 disabled:opacity-50"
+				onclick={onclose}
+				disabled={loading}
+			>
+				{m.cancel()}
+			</button>
+			<button
+				type="submit"
+				class="flex w-[65%] cursor-pointer items-center justify-center gap-2 rounded-full py-4 text-sm font-bold whitespace-nowrap text-white shadow-lg shadow-primary/20 transition-all gradient-cta hover:scale-[1.02] active:scale-95 disabled:opacity-50"
+				disabled={loading}
+			>
+				{#if loading}
+					<span class="loading loading-sm loading-spinner"></span>
+				{/if}
+				{m.confirm_subscription()}
+			</button>
+		</div>
+	</form>
 </Modal>
