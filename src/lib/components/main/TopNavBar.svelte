@@ -4,7 +4,15 @@
 	 * Reads site name from siteStore.
 	 */
 	// // 顶部导航栏，带玻璃拟态效果。站点名称从 siteStore 读取，用户下拉栏根据 JWT 认证状态渲染。
-	import { LogIn, ChevronDown, ListVideo, Lock, LayoutDashboard, LogOut } from 'lucide-svelte';
+	import {
+		LogIn,
+		ChevronDown,
+		ListVideo,
+		Lock,
+		LayoutDashboard,
+		LogOut,
+		Menu
+	} from 'lucide-svelte';
 	import { siteStore } from '$lib/stores/site.svelte';
 	import { tiersStore } from '$lib/stores/tiers.svelte';
 	import { authStore, logout } from '$lib/stores/auth.svelte';
@@ -28,7 +36,36 @@
 <!-- 顶部导航栏 — 固定定位 + 玻璃拟态 (DESIGN.md §2 Glass Rule) -->
 <nav class="fixed top-0 z-50 w-full glass shadow-ambient">
 	<div class="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-		<div class="flex items-center gap-8">
+		<div class="flex items-center gap-3 md:gap-8">
+			{#if !tiersStore.loading && tiersStore.tiers.length > 0}
+				<!-- 移动端下拉菜单 -->
+				<div class="dropdown md:hidden">
+					<div
+						tabindex="0"
+						role="button"
+						class="btn -ml-2 btn-circle text-base-content btn-ghost btn-sm"
+					>
+						<Menu size={20} />
+					</div>
+					<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+					<ul
+						tabindex="0"
+						class="dropdown-content menu z-[1] mt-3 w-52 menu-sm rounded-box border border-base-200/50 bg-base-100 p-2 shadow-xl"
+					>
+						<li>
+							<a
+								href="/subscribe"
+								class={$page.url.pathname.endsWith('/subscribe')
+									? 'font-bold text-primary'
+									: 'text-base-content'}
+							>
+								{m.subscribe()}
+							</a>
+						</li>
+					</ul>
+				</div>
+			{/if}
+
 			<a
 				href="/"
 				class="font-display text-2xl font-bold tracking-tighter text-primary transition-opacity hover:opacity-80"

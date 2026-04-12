@@ -44,7 +44,11 @@
 					<div class="flex-[1.5] text-center md:text-left">
 						<div class="mb-3 flex flex-col items-center gap-2 md:flex-row">
 							<h3 class="font-display text-2xl font-extrabold text-on-surface">
-								{tier.name} <span class="text-lg font-bold text-primary">(Tier {tier.tier})</span>
+								{#if tier.name}
+									{tier.name} <span class="text-lg font-bold text-primary">(Tier {tier.tier})</span>
+								{:else}
+									Tier {tier.tier}
+								{/if}
 							</h3>
 						</div>
 						{#if tier.description}
@@ -59,7 +63,7 @@
 						>
 							{#if tier.price}
 								<div class="text-center md:text-right">
-									<span class="font-display text-4xl font-black text-on-surface">{tier.price}</span>
+									<span class="font-display text-2xl font-black text-on-surface">{tier.price}</span>
 								</div>
 							{/if}
 							{#if tier.purchase_url}
