@@ -42,7 +42,7 @@
 {#if open}
 	<!-- svelte-ignore a11y_no_static_element_interactions -->
 	<div
-		class="fixed inset-0 z-40 bg-black/30 lg:hidden"
+		class="fixed inset-0 z-50 bg-black/30 lg:hidden"
 		onclick={onclose}
 		onkeydown={() => {}}
 	></div>
@@ -50,19 +50,30 @@
 
 <!-- 侧栏 -->
 <aside
-	class="fixed top-0 left-0 z-50 flex h-screen w-72 flex-col space-y-2 overflow-y-auto border-r
+	class="fixed top-0 left-0 z-60 flex h-screen w-72 flex-col space-y-2 overflow-y-auto border-r
 		border-outline-variant/30 bg-surface-lowest p-6
 		transition-transform duration-300 ease-in-out
 		{open ? 'translate-x-0' : '-translate-x-full'} lg:translate-x-0"
 >
 	<!-- 站点标题 -->
-	<div class="mb-6 px-4">
-		<h1 class="font-display text-xl font-bold tracking-tighter text-primary">
-			{siteStore.info.name}
-		</h1>
-		<p class="mt-1 text-xs font-medium tracking-widest text-on-surface-variant uppercase">
-			{m.admin_dashboard()}
-		</p>
+	<div class="mb-6 flex items-center justify-between px-4">
+		<div>
+			<h1 class="font-display text-xl font-bold tracking-tighter text-primary">
+				{siteStore.info.name}
+			</h1>
+			<p class="mt-1 text-xs font-medium tracking-widest text-on-surface-variant uppercase">
+				{m.admin_dashboard()}
+			</p>
+		</div>
+		{#if open}
+			<button
+				onclick={onclose}
+				class="btn -mr-2 btn-circle text-on-surface-variant btn-ghost btn-sm lg:hidden"
+				aria-label="Close sidebar"
+			>
+				<X size={20} />
+			</button>
+		{/if}
 	</div>
 
 	<!-- 主导航 -->
@@ -103,7 +114,7 @@
 <!-- 移动端悬浮菜单按钮 -->
 <button
 	onclick={onclose}
-	class="fixed top-4 left-4 z-50 flex h-10 w-10 cursor-pointer items-center justify-center
+	class="fixed top-4 left-4 z-40 flex h-10 w-10 cursor-pointer items-center justify-center
 		rounded-full bg-surface-lowest text-on-surface shadow-editorial-sm
 		transition-all duration-200 hover:bg-surface-low lg:hidden"
 	aria-label="Toggle sidebar"

@@ -11,3 +11,5 @@
 [2026-04-12T16:07:35+08:00] Added an announcement card to the home page (+page.svelte) based on the stitch/code.html design, fetching data from the backend and rendering it with GitHub Flavored Markdown support via parseMarkdown().
 [2026-04-12T16:29:07+08:00] Add mobile dropdown menu for subscription links to TopNavBar
 [2026-04-12T16:34:27+08:00] Update subscription tier name display logic and reduce price font size
+[2026-04-12T16:38:19+08:00] Adjust z-index for AdminSidebar and add internal close button for mobile
+[2026-04-12T16:41:00+08:00] Restrict subscription tier level input range to 0-255 with validation

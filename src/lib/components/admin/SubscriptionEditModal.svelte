@@ -90,6 +90,12 @@
 			return;
 		}
 
+		const tierNum = Number(tier);
+		if (tierNum < 0 || tierNum > 255) {
+			errorMsg = m.error_invalid_tier();
+			return;
+		}
+
 		const startTs = toStartTimestamp(startDate);
 		const endTs = toEndTimestamp(endDate);
 
@@ -101,7 +107,7 @@
 		const data = {
 			start_date: startTs,
 			end_date: endTs,
-			tier: Number(tier),
+			tier: tierNum,
 			note
 		};
 
@@ -214,6 +220,8 @@
 					class="bg-surface-container-low border-surface-container-high w-full rounded-xl border px-5 py-3.5 text-sm font-medium transition-all outline-none focus:border-primary focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
 					placeholder={m.enter_level()}
 					type="number"
+					min="0"
+					max="255"
 					bind:value={tier}
 					required
 					disabled={loading}
