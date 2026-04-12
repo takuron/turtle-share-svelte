@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { siteStore } from '$lib/stores/site.svelte';
+	import { toastStore, addToast } from '$lib/stores/toast.svelte';
 	import { Plus, Trash2, ChevronDown, Loader2 } from 'lucide-svelte';
 	import { fetchAnnouncementRequest, fetchTiersRequest } from '$lib/api/public/site';
 	import {
@@ -63,10 +64,16 @@
 	async function handleUpdateAnnouncement() {
 		isSavingAnnouncement = true;
 		try {
-			await updateAdminAnnouncement(announcement);
-			await loadData();
+			const res = await updateAdminAnnouncement(announcement);
+			if (res.success) {
+				await loadData();
+				addToast(m.save_success(), 'success');
+			} else {
+				addToast(m.save_failed(), 'error');
+			}
 		} catch (e) {
 			console.error('Failed to update announcement:', e);
+			addToast(m.save_failed(), 'error');
 		} finally {
 			isSavingAnnouncement = false;
 		}
@@ -81,12 +88,12 @@
 			const cloudTiersMap = new Map(cloudTiers.map((t) => [t.tier, t]));
 
 			const localLevels = new Set(tiers.map((t) => t.tier));
-			const promises: Promise<any>[] = [];
+			const promises: Promise<ApiResponse<any>>[] = [];
 
 			// 2. 删除云端有但本地没有的等级
 			for (const ct of cloudTiers) {
 				if (!localLevels.has(ct.tier)) {
-					promises.push(deleteAdminTierDescription(ct.tier).catch(console.error));
+					promises.push(deleteAdminTierDescription(ct.tier));
 				}
 			}
 
@@ -104,19 +111,24 @@
 					// 过滤掉本地的临时 _id 字段
 					// eslint-disable-next-line @typescript-eslint/no-unused-vars
 					const { _id, ...tierData } = lt;
-					promises.push(
-						updateAdminTierDescription(tierData as SubscriptionTier).catch(console.error)
-					);
+					promises.push(updateAdminTierDescription(tierData as SubscriptionTier));
 				}
 			}
 
 			// 等待所有差异提交完成
-			await Promise.all(promises);
+			const results = await Promise.all(promises);
+			const allSuccess = results.every((r) => r.success);
 
-			// 同步最新的云端状态到本地
-			await loadData();
+			if (allSuccess) {
+				// 同步最新的云端状态到本地
+				await loadData();
+				addToast(m.save_success(), 'success');
+			} else {
+				addToast(m.save_failed(), 'error');
+			}
 		} catch (e) {
 			console.error('Failed to save tiers:', e);
+			addToast(m.save_failed(), 'error');
 		} finally {
 			isSavingTiers = false;
 		}

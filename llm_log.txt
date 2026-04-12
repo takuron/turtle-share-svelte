@@ -13,3 +13,4 @@
 [2026-04-12T16:34:27+08:00] Update subscription tier name display logic and reduce price font size
 [2026-04-12T16:38:19+08:00] Adjust z-index for AdminSidebar and add internal close button for mobile
 [2026-04-12T16:41:00+08:00] Restrict subscription tier level input range to 0-255 with validation
+[2026-04-12T16:44:44+08:00] Add success/error toast notifications for Page Management and update toastStore to support types

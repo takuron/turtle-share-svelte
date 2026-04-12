@@ -180,5 +180,7 @@
 	"price": "Price",
 	"access_link": "Access Link",
 	"description": "Description",
+	"save_success": "Saved successfully",
+	"save_failed": "Failed to save, please try again",
 	"err_duplicate_level": "Duplicate level"
 }

@@ -180,5 +180,7 @@
 	"price": "价格",
 	"access_link": "访问链接",
 	"description": "描述",
+	"save_success": "保存成功",
+	"save_failed": "保存失败，请重试",
 	"err_duplicate_level": "等级重复"
 }
