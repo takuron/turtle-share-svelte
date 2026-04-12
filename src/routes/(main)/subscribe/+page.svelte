@@ -44,7 +44,7 @@
 					<div class="flex-[1.5] text-center md:text-left">
 						<div class="mb-3 flex flex-col items-center gap-2 md:flex-row">
 							<h3 class="font-display text-2xl font-extrabold text-on-surface">
-								{tier.name} <span class="text-lg font-bold text-primary">(LEVEL {tier.tier})</span>
+								{tier.name} <span class="text-lg font-bold text-primary">(Tier {tier.tier})</span>
 							</h3>
 						</div>
 						{#if tier.description}
