@@ -166,5 +166,18 @@
 	"page_title_page_n": "第 {page} 页",
 	"page_title_error": "{title} — {siteName}",
 	"page_title_with_site": "{title} — {siteName}",
-	"subscribe": "赞助与订阅"
+	"subscribe": "赞助与订阅",
+	"nav_page_management": "页面管理",
+	"page_management_title": "公告管理",
+	"update_announcement": "更新公告",
+	"current_announcement": "当前公告",
+	"announcement_placeholder": "在此输入公告, 支持 GitHub Flavored Markdown 格式",
+	"subscription_level_management": "订阅等级管理",
+	"add_new_level": "添加新等级",
+	"save_all_changes": "保存所有更改",
+	"level_name": "等级名称",
+	"price": "价格",
+	"access_link": "访问链接",
+	"description": "描述",
+	"err_duplicate_level": "等级重复"
 }

@@ -100,3 +100,4 @@
 [2026-04-12T14:44:10+08:00] Fixed TopNavBar alignment between english logo and chinese link by switching from items-center to items-baseline to match font metrics.
 [2026-04-12T14:45:33+08:00] Reverted TopNavBar alignment changes back to simple items-center without flex on links.
 [2026-04-12T15:05:04+08:00] Implemented dynamic subscription tiers page by fetching /api/public/tier-descriptions from backend.
+[2026-04-12T15:10:03+08:00] Implemented the new Page Management admin page based on the prototype design, including announcement and subscription level management UI, and added the corresponding sidebar navigation link.

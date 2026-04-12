@@ -14,7 +14,7 @@
 	import { page } from '$app/state';
 	import { siteStore } from '$lib/stores/site.svelte';
 	import { logout } from '$lib/stores/auth.svelte';
-	import { Users, FileText, FolderOpen, Home, LogOut, Menu, X } from 'lucide-svelte';
+	import { Users, FileText, FolderOpen, Home, LogOut, Menu, X, Megaphone } from 'lucide-svelte';
 	import * as m from '$lib/paraglide/messages.js';
 
 	let { open = false, onclose }: { open: boolean; onclose: () => void } = $props();
@@ -23,7 +23,8 @@
 	const navItems = [
 		{ href: '/dashboard/user', label: () => m.nav_user_management(), icon: Users },
 		{ href: '/dashboard/article', label: () => m.nav_content_management(), icon: FileText },
-		{ href: '/dashboard/file', label: () => m.nav_file_management(), icon: FolderOpen }
+		{ href: '/dashboard/file', label: () => m.nav_file_management(), icon: FolderOpen },
+		{ href: '/dashboard/page', label: () => m.nav_page_management(), icon: Megaphone }
 	];
 
 	// 2. 判断当前路径是否匹配导航项。

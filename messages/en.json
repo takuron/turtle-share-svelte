@@ -166,5 +166,18 @@
 	"page_title_page_n": "Page {page}",
 	"page_title_error": "{title} — {siteName}",
 	"page_title_with_site": "{title} — {siteName}",
-	"subscribe": "Sponsor & Subscribe"
+	"subscribe": "Sponsor & Subscribe",
+	"nav_page_management": "Page Management",
+	"page_management_title": "Announcement Management",
+	"update_announcement": "Update Announcement",
+	"current_announcement": "Current Announcement",
+	"announcement_placeholder": "Type your announcement here, GitHub Flavored Markdown is supported",
+	"subscription_level_management": "Subscription Level Management",
+	"add_new_level": "Add New Level",
+	"save_all_changes": "Save All Changes",
+	"level_name": "Level Name",
+	"price": "Price",
+	"access_link": "Access Link",
+	"description": "Description",
+	"err_duplicate_level": "Duplicate level"
 }
