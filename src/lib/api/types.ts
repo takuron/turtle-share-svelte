@@ -146,3 +146,26 @@ export interface AdminFileItem {
 	url: string;
 	created_at: number;
 }
+
+/**
+ * Public subscription tier definition.
+ * 订阅等级定义，包含用于公开展示的字段。
+ */
+// // 公开的订阅等级定义。
+export interface SubscriptionTier {
+	tier: number;
+	name: string;
+	description: string;
+	price: string;
+	purchase_url: string;
+}
+
+/**
+ * Public tier descriptions response.
+ * 获取所有公开的订阅等级说明。
+ */
+// // 公开获取订阅等级说明的响应数据结构。
+export interface TierDescriptionsResponse {
+	tiers: SubscriptionTier[];
+	updated_at: number;
+}

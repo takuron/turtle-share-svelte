@@ -6,6 +6,7 @@
 	// // 顶部导航栏，带玻璃拟态效果。站点名称从 siteStore 读取，用户下拉栏根据 JWT 认证状态渲染。
 	import { LogIn, ChevronDown, ListVideo, Lock, LayoutDashboard, LogOut } from 'lucide-svelte';
 	import { siteStore } from '$lib/stores/site.svelte';
+	import { tiersStore } from '$lib/stores/tiers.svelte';
 	import { authStore, logout } from '$lib/stores/auth.svelte';
 	import { page } from '$app/stores';
 	import * as m from '$lib/paraglide/messages.js';
@@ -35,18 +36,20 @@
 				{siteStore.info.name}
 			</a>
 
-			<div class="hidden items-center gap-6 md:flex">
-				<a
-					href="/subscribe"
-					class="text-sm font-semibold transition-opacity hover:opacity-80 {$page.url.pathname.endsWith(
-						'/subscribe'
-					)
-						? 'text-primary'
-						: 'text-on-surface'}"
-				>
-					{m.subscribe()}
-				</a>
-			</div>
+			{#if !tiersStore.loading && tiersStore.tiers.length > 0}
+				<div class="hidden items-center gap-6 md:flex">
+					<a
+						href="/subscribe"
+						class="text-sm font-semibold transition-opacity hover:opacity-80 {$page.url.pathname.endsWith(
+							'/subscribe'
+						)
+							? 'text-primary'
+							: 'text-on-surface'}"
+					>
+						{m.subscribe()}
+					</a>
+				</div>
+			{/if}
 		</div>
 
 		<div class="flex items-center gap-4">

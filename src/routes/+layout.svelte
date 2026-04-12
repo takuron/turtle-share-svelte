@@ -5,6 +5,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { fetchSiteInfo } from '$lib/stores/site.svelte';
 	import { initAuth } from '$lib/stores/auth.svelte';
+	import { fetchTiers } from '$lib/stores/tiers.svelte';
 	import { onMount } from 'svelte';
 	import NetworkToast from '$lib/components/NetworkToast.svelte';
 	import { applyThemeColors } from '$lib/utils/applyThemeColors';
@@ -21,9 +22,10 @@
 			return; // 页面即将刷新，跳过后续初始化。
 		}
 
-		// 2. 应用启动时恢复认证状态、获取站点信息、注入主题色。
+		// 2. 应用启动时恢复认证状态、获取站点信息、订阅等级、注入主题色。
 		initAuth();
 		fetchSiteInfo();
+		fetchTiers();
 		applyThemeColors(DEFAULT_THEME_COLORS);
 	});
 </script>
