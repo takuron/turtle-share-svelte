@@ -160,7 +160,7 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
   - `(dashboard)/dashboard/user/+page.svelte` — User Management page. Fetches real user data from API (page_size=5), paginated list with expandable subscription panel (subscription loading TBD).
   - `(dashboard)/dashboard/article/+page.svelte` — Content Management page (prototype implemented with mock data).
   - `(dashboard)/dashboard/file/+page.svelte` — File Management page (skeleton).
-
+  - `(dashboard)/dashboard/page/+page.svelte` — Page Management page (Announcement and Subscription Tier management).
 ### Available Scripts / 可用脚本
 
 | Command        | Description                 |

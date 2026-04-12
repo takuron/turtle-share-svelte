@@ -14,3 +14,6 @@
 [2026-04-12T16:38:19+08:00] Adjust z-index for AdminSidebar and add internal close button for mobile
 [2026-04-12T16:41:00+08:00] Restrict subscription tier level input range to 0-255 with validation
 [2026-04-12T16:44:44+08:00] Add success/error toast notifications for Page Management and update toastStore to support types
+[2026-04-12T17:57:28+08:00] Modified Page Management to save subscription tiers individually and removed global save button.
+[2026-04-12T18:03:05+08:00] Refined Page Management: added stable titles, global sync on save, and local validation for non-empty items and unique tiers.
+[2026-04-12T18:07:55+08:00] Refactored Page Management to use .raw for one-time write logic and removed local reactive list updates.
