@@ -12,7 +12,11 @@
 
 <!-- 文章标题：文章名 — 站点名 -->
 <svelte:head>
-	<title>{article?.title ? m.page_title_with_site({ title: article.title, siteName: siteStore.info.name }) : siteStore.info.name}</title>
+	<title
+		>{article?.title
+			? m.page_title_with_site({ title: article.title, siteName: siteStore.info.name })
+			: siteStore.info.name}</title
+	>
 </svelte:head>
 
 <main class="mx-auto max-w-5xl px-6 pt-28 pb-20">

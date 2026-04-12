@@ -41,7 +41,9 @@
 		onclick={onclose}
 	>
 		<div
-			class="{scrollable ? 'my-auto' : ''} w-full {maxWidth} overflow-hidden rounded-3xl border border-surface-container-high bg-surface-lowest shadow-2xl"
+			class="{scrollable
+				? 'my-auto'
+				: ''} w-full {maxWidth} border-surface-container-high overflow-hidden rounded-3xl border bg-surface-lowest shadow-2xl"
 			transition:scale={{ duration: 300, start: 0.95, opacity: 0, easing: backOut }}
 			onclick={(e) => e.stopPropagation()}
 		>

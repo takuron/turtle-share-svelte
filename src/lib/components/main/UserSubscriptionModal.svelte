@@ -40,10 +40,7 @@
 	async function loadData() {
 		loading = true;
 		error = '';
-		const [tierRes, subsRes] = await Promise.all([
-			fetchUserTier(),
-			fetchUserSubscriptions()
-		]);
+		const [tierRes, subsRes] = await Promise.all([fetchUserTier(), fetchUserSubscriptions()]);
 
 		if (!tierRes.success) {
 			error = tierRes.error.message;
@@ -62,64 +59,64 @@
 </script>
 
 <Modal {open} {onclose} maxWidth="max-w-lg" scrollable>
-		<!-- 头部区域 — 展示当前订阅等级 -->
-			<div class="relative bg-primary p-10 text-center text-white">
-				<button
-					class="absolute top-4 right-4 cursor-pointer text-white/70 transition-colors hover:text-white"
-					onclick={onclose}
-				>
-					<X size={20} />
-				</button>
-				<p class="mb-1 text-xs font-bold uppercase tracking-widest text-primary-content/70">
-					{m.current_subscription_tier()}
-				</p>
-				<h2 class="font-display text-3xl font-extrabold tracking-tight">
-					{#if loading}
-						<span class="loading loading-dots loading-sm"></span>
-					{:else}
-						{m.tier_display({ tier: currentTier })}
-					{/if}
-				</h2>
-			</div>
+	<!-- 头部区域 — 展示当前订阅等级 -->
+	<div class="relative bg-primary p-10 text-center text-white">
+		<button
+			class="absolute top-4 right-4 cursor-pointer text-white/70 transition-colors hover:text-white"
+			onclick={onclose}
+		>
+			<X size={20} />
+		</button>
+		<p class="mb-1 text-xs font-bold tracking-widest text-primary-content/70 uppercase">
+			{m.current_subscription_tier()}
+		</p>
+		<h2 class="font-display text-3xl font-extrabold tracking-tight">
+			{#if loading}
+				<span class="loading loading-sm loading-dots"></span>
+			{:else}
+				{m.tier_display({ tier: currentTier })}
+			{/if}
+		</h2>
+	</div>
 
-			<!-- 订阅记录列表 -->
-			<div class="p-6">
-				<h3
-					class="mb-4 flex items-center gap-2 px-1 text-sm font-bold text-on-surface"
-				>
-					<History size={18} class="text-primary" />
-					{m.recent_subscription_records()}
-				</h3>
+	<!-- 订阅记录列表 -->
+	<div class="p-6">
+		<h3 class="mb-4 flex items-center gap-2 px-1 text-sm font-bold text-on-surface">
+			<History size={18} class="text-primary" />
+			{m.recent_subscription_records()}
+		</h3>
 
-				{#if loading}
-					<div class="flex items-center justify-center py-8">
-						<Loader2 size={24} class="animate-spin text-primary" />
-					</div>
-				{:else if error}
-					<div class="rounded-xl bg-error/10 p-4 text-center text-sm text-error">
-						{error}
-					</div>
-				{:else if subscriptions.length === 0}
-					<p class="py-4 text-center text-sm text-on-surface-variant">
-						{m.no_subscriptions()}
-					</p>
-				{:else}
-					<div class="space-y-3">
-						{#each subscriptions as sub}
-							<div
-								class="flex items-center justify-between rounded-2xl border border-outline-variant/5 bg-surface-container p-4"
-							>
-								<div class="space-y-1">
-									<span class="text-sm font-bold text-on-surface">
-										{m.tier_display({ tier: sub.tier })}
-									</span>
-									<p class="text-xs text-on-surface-variant">
-										{formatIsoDate(sub.start_date)} {m.date_range_to()} {formatIsoDate(sub.end_date)}
-									</p>
-								</div>
-							</div>
-						{/each}
-					</div>
-				{/if}
+		{#if loading}
+			<div class="flex items-center justify-center py-8">
+				<Loader2 size={24} class="animate-spin text-primary" />
 			</div>
+		{:else if error}
+			<div class="rounded-xl bg-error/10 p-4 text-center text-sm text-error">
+				{error}
+			</div>
+		{:else if subscriptions.length === 0}
+			<p class="py-4 text-center text-sm text-on-surface-variant">
+				{m.no_subscriptions()}
+			</p>
+		{:else}
+			<div class="space-y-3">
+				{#each subscriptions as sub}
+					<div
+						class="flex items-center justify-between rounded-2xl border border-outline-variant/5 bg-surface-container p-4"
+					>
+						<div class="space-y-1">
+							<span class="text-sm font-bold text-on-surface">
+								{m.tier_display({ tier: sub.tier })}
+							</span>
+							<p class="text-xs text-on-surface-variant">
+								{formatIsoDate(sub.start_date)}
+								{m.date_range_to()}
+								{formatIsoDate(sub.end_date)}
+							</p>
+						</div>
+					</div>
+				{/each}
+			</div>
+		{/if}
+	</div>
 </Modal>

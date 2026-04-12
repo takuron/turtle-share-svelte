@@ -150,7 +150,12 @@
 
 <!-- 用户管理页面标题 -->
 <svelte:head>
-	<title>{m.page_title_with_site({ title: m.nav_user_management(), siteName: siteStore.info.name })}</title>
+	<title
+		>{m.page_title_with_site({
+			title: m.nav_user_management(),
+			siteName: siteStore.info.name
+		})}</title
+	>
 </svelte:head>
 
 <!-- 用户管理页面 -->

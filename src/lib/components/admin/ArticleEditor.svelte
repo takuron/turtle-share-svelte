@@ -242,7 +242,10 @@
 
 			<!-- Access Requirement -->
 			<div>
-				<label for="full-view-level" class="text-outline mb-4 ml-1 block text-xs font-black tracking-widest uppercase">
+				<label
+					for="full-view-level"
+					class="text-outline mb-4 ml-1 block text-xs font-black tracking-widest uppercase"
+				>
 					{m.access_requirement()}
 				</label>
 				<div class="space-y-4">

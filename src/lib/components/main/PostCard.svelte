@@ -42,9 +42,7 @@
 	const formattedDate = $derived(formatShortDate(publishAt));
 
 	// 3. 封面图片 URL，直接使用传入的链接。
-	const coverUrl = $derived(
-		coverImage && coverImage.trim() !== '' ? coverImage : null
-	);
+	const coverUrl = $derived(coverImage && coverImage.trim() !== '' ? coverImage : null);
 </script>
 
 <!-- 帖子卡片 — DESIGN.md §5: border-radius xl, 无分割线, hover 提升 -->
@@ -56,7 +54,12 @@
 	<!-- 封面图区域 -->
 	{#if coverUrl}
 		<div class="relative aspect-[5/3] w-full bg-base-300" class:grayscale-[20%]={isLocked}>
-			<img src={coverUrl} alt={title} loading="lazy" class="absolute inset-0 h-full w-full object-cover" />
+			<img
+				src={coverUrl}
+				alt={title}
+				loading="lazy"
+				class="absolute inset-0 h-full w-full object-cover"
+			/>
 			<div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
 		</div>
 	{/if}

@@ -114,10 +114,7 @@
 		}
 
 		try {
-			const res = await updateAdminArticle(
-				articleId!,
-				requestBody
-			);
+			const res = await updateAdminArticle(articleId!, requestBody);
 
 			if (res.success) {
 				// 更新成功，跳转到文章列表。

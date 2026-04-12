@@ -165,5 +165,6 @@
 	"error_login": "去登录",
 	"page_title_page_n": "第 {page} 页",
 	"page_title_error": "{title} — {siteName}",
-	"page_title_with_site": "{title} — {siteName}"
+	"page_title_with_site": "{title} — {siteName}",
+	"subscribe": "赞助与订阅"
 }

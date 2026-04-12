@@ -36,7 +36,7 @@
 - [ ] Landing/home page design
 - [ ] Article list page
 - [ ] Article detail page (`/post/[post_hashid]`) with access control (skeleton done)
-- [ ] Subscription page
+- [x] Subscription page
 
 ## Phase 4: Polish / 完善
 

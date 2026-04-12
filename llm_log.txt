@@ -93,3 +93,9 @@
 [2026-04-09T18:16:58+08:00] Elegant build fixes: explicit prerender=false for 3 dynamic routes + adapter fallback:'index.html'; fix all a11y label for/id pairs in 4 components; section headers changed from label to span; onwarn reduced to state_referenced_locally only
 [2026-04-09T18:21:48+08:00] Update article content textarea placeholder to hint GitHub Flavored Markdown support (en + zh-cn)
 [2026-04-09T18:25:39+08:00] Add build:debug script (vite build --mode debug) with minify:false + sourcemap:inline; vite.config.ts now uses defineConfig(({mode}) => ...) factory pattern
+[2026-04-12T14:32:32+08:00] Implemented subscription tiers page prototype at /subscribe based on stitch/code.html design.
+[2026-04-12T14:34:57+08:00] Added subscribe page link to TopNavBar.
+[2026-04-12T14:39:46+08:00] Removed Star icon from subscribe link and aligned it with site name in TopNavBar.
+[2026-04-12T14:42:23+08:00] Adjusted TopNavBar flex items-center alignment for site name and subscribe link.
+[2026-04-12T14:44:10+08:00] Fixed TopNavBar alignment between english logo and chinese link by switching from items-center to items-baseline to match font metrics.
+[2026-04-12T14:45:33+08:00] Reverted TopNavBar alignment changes back to simple items-center without flex on links.

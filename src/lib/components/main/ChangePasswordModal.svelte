@@ -96,7 +96,9 @@
 
 			<!-- 当前密码 -->
 			<div class="flex flex-col gap-2">
-				<label for="change-pwd-current" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+				<label
+					for="change-pwd-current"
+					class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 					>{m.current_password()}</label
 				>
 				<div class="relative">
@@ -126,7 +128,9 @@
 
 			<!-- 新密码 -->
 			<div class="flex flex-col gap-2">
-				<label for="change-pwd-new" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+				<label
+					for="change-pwd-new"
+					class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 					>{m.new_password()}</label
 				>
 				<div class="relative">
@@ -156,7 +160,9 @@
 
 			<!-- 确认密码 -->
 			<div class="flex flex-col gap-2">
-				<label for="change-pwd-confirm" class="text-outline px-1 text-xs font-black tracking-widest uppercase"
+				<label
+					for="change-pwd-confirm"
+					class="text-outline px-1 text-xs font-black tracking-widest uppercase"
 					>{m.confirm_password()}</label
 				>
 				<div class="relative">
