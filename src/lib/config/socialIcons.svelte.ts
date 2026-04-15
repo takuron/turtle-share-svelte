@@ -35,7 +35,7 @@ import {
 import { Mail, Globe, Rss } from 'lucide-svelte';
 
 // 自定义图标
-import MihuashiIcon from '$lib/components/icons/MihuashiIcon.svelte';
+import MihuashiIcon from '$lib/icons/MihuashiIcon.svelte';
 
 /**
  * Social link item as returned by site-info API.

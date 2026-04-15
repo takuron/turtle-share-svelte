@@ -8,10 +8,10 @@
 	import { onMount } from 'svelte';
 	import { TriangleAlert } from 'lucide-svelte';
 	import { formatShortDate } from '$lib/utils/formatDate';
-	import FileUploadZone from '$lib/components/admin/FileUploadZone.svelte';
-	import FileListItem from '$lib/components/admin/FileListItem.svelte';
-	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
-	import ConfirmModal from '$lib/components/admin/ConfirmModal.svelte';
+	import FileUploadZone from '$lib/components/admin/file/FileUploadZone.svelte';
+	import FileListItem from '$lib/components/admin/file/FileListItem.svelte';
+	import AdminPagination from '$lib/components/admin/shared/AdminPagination.svelte';
+	import ConfirmModal from '$lib/components/admin/shared/ConfirmModal.svelte';
 	import {
 		fetchAdminFilesPage,
 		fetchAdminFilesPageInfo,

@@ -18,9 +18,8 @@
 	import { authStore, logout } from '$lib/stores/auth.svelte';
 	import { page } from '$app/stores';
 	import * as m from '$lib/paraglide/messages.js';
-	import UserSubscriptionModal from './UserSubscriptionModal.svelte';
-	import ChangePasswordModal from './ChangePasswordModal.svelte';
-
+	import UserSubscriptionModal from '../user/UserSubscriptionModal.svelte';
+	import ChangePasswordModal from '../user/ChangePasswordModal.svelte';
 	// 订阅弹窗状态
 	let subscriptionModalOpen = $state(false);
 	// 修改密码弹窗状态

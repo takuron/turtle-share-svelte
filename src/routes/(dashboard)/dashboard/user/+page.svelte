@@ -15,10 +15,10 @@
 	} from '$lib/api/admin/users';
 	import { ADMIN_USERS_PAGE_SIZE, type AdminUserItem, type PageInfo } from '$lib/api/types';
 	import { onMount } from 'svelte';
-	import UserListCard from '$lib/components/admin/UserListCard.svelte';
-	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
-	import UserEditModal from '$lib/components/admin/UserEditModal.svelte';
-	import ConfirmModal from '$lib/components/admin/ConfirmModal.svelte';
+	import UserListCard from '$lib/components/admin/user/UserListCard.svelte';
+	import AdminPagination from '$lib/components/admin/shared/AdminPagination.svelte';
+	import UserEditModal from '$lib/components/admin/user/UserEditModal.svelte';
+	import ConfirmModal from '$lib/components/admin/shared/ConfirmModal.svelte';
 	import { siteStore } from '$lib/stores/site.svelte';
 
 	// 1. 页面状态。

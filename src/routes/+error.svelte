@@ -8,8 +8,8 @@
 	// // 支持：400、401、403、404、408、429、500、502、503 及通用回退。
 	import { page } from '$app/state';
 	import { Home, LogIn } from 'lucide-svelte';
-	import TopNavBar from '$lib/components/main/TopNavBar.svelte';
-	import SiteFooter from '$lib/components/main/SiteFooter.svelte';
+	import TopNavBar from '$lib/components/main/layout/TopNavBar.svelte';
+	import SiteFooter from '$lib/components/main/layout/SiteFooter.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { siteStore } from '$lib/stores/site.svelte';
 

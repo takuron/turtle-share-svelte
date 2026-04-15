@@ -2,8 +2,8 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
-	import AuthorProfile from '$lib/components/main/AuthorProfile.svelte';
-	import ArticleFeed from '$lib/components/main/ArticleFeed.svelte';
+	import AuthorProfile from '$lib/components/main/user/AuthorProfile.svelte';
+	import ArticleFeed from '$lib/components/main/article/ArticleFeed.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { siteStore } from '$lib/stores/site.svelte';
 

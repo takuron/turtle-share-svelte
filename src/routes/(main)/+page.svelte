@@ -1,6 +1,6 @@
 <script lang="ts">
-	import AuthorProfile from '$lib/components/main/AuthorProfile.svelte';
-	import ArticleFeed from '$lib/components/main/ArticleFeed.svelte';
+	import AuthorProfile from '$lib/components/main/user/AuthorProfile.svelte';
+	import ArticleFeed from '$lib/components/main/article/ArticleFeed.svelte';
 	import { siteStore } from '$lib/stores/site.svelte';
 	import { onMount } from 'svelte';
 	import { fetchAnnouncementRequest } from '$lib/api/public/site';

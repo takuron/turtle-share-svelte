@@ -8,8 +8,8 @@
 	 */
 	// // 管理员编辑文章页面。
 	// // 从 API 获取文章详情，转换为表单数据，保存时调用 updateAdminArticle。
-	import ArticleEditor from '$lib/components/admin/ArticleEditor.svelte';
-	import type { ArticleFormData } from '$lib/components/admin/ArticleEditor.svelte';
+	import ArticleEditor from '$lib/components/admin/article/ArticleEditor.svelte';
+	import type { ArticleFormData } from '$lib/components/admin/article/ArticleEditor.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';

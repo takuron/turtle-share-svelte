@@ -21,7 +21,7 @@
 	} from '$lib/api/admin/users';
 	import { onMount } from 'svelte';
 	import SubscriptionEditModal from './SubscriptionEditModal.svelte';
-	import ConfirmModal from './ConfirmModal.svelte';
+	import ConfirmModal from '../shared/ConfirmModal.svelte';
 	import { formatShortDate } from '$lib/utils/formatDate';
 
 	let { user }: { user: AdminUserItem } = $props();

@@ -2,7 +2,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { authStore } from '$lib/stores/auth.svelte';
-	import AdminSidebar from '$lib/components/admin/AdminSidebar.svelte';
+	import AdminSidebar from '$lib/components/admin/layout/AdminSidebar.svelte';
 
 	let { children } = $props();
 

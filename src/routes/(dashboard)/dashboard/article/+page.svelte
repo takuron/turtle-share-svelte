@@ -9,9 +9,9 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import { formatShortDate } from '$lib/utils/formatDate';
-	import AdminPagination from '$lib/components/admin/AdminPagination.svelte';
-	import AdminArticleListItem from '$lib/components/admin/AdminArticleListItem.svelte';
-	import ConfirmModal from '$lib/components/admin/ConfirmModal.svelte';
+	import AdminPagination from '$lib/components/admin/shared/AdminPagination.svelte';
+	import AdminArticleListItem from '$lib/components/admin/article/AdminArticleListItem.svelte';
+	import ConfirmModal from '$lib/components/admin/shared/ConfirmModal.svelte';
 	import {
 		fetchAdminArticlesRawPage,
 		fetchAdminArticlesPageInfo,

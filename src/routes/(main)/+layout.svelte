@@ -1,7 +1,6 @@
 <script lang="ts">
-	import TopNavBar from '$lib/components/main/TopNavBar.svelte';
-	import SiteFooter from '$lib/components/main/SiteFooter.svelte';
-
+	import TopNavBar from '$lib/components/main/layout/TopNavBar.svelte';
+	import SiteFooter from '$lib/components/main/layout/SiteFooter.svelte';
 	let { children } = $props();
 </script>
 

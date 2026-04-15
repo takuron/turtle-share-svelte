@@ -114,24 +114,26 @@ To maintain consistency with the TurtleShare ecosystem, all development must str
 - **Icons**: Lucide Svelte — import individual components, tree-shakable.
 - **i18n Locales**: `en` (base), `zh-cn`. URL pattern: `/` (en), `/zh-cn/` (zh-cn). Browser language auto-detection on page load: Chinese variants (zh-TW, zh-HK, zh, etc.) fall back to `zh-cn`; all other unmatched languages fall back to `en`. Detection logic in `src/lib/i18n/resolveBrowserLocale.ts`, triggered in root `+layout.svelte` `onMount`.
 - **MDsvex Extensions**: `.svx`, `.md` files are treated as Svelte components.
-- **Layout Components** (`src/lib/components/`):
-  - `TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button. User dropdown triggers `UserSubscriptionModal` for subscription viewing and `ChangePasswordModal` for password change.
-  - `UserSubscriptionModal.svelte` — Popup dialog showing user's current subscription tier and recent subscription history (max 5 records). Props: `open`, `onclose`. Fetches data from `GET /api/users/subscriptions`.
-  - `ChangePasswordModal.svelte` — Popup dialog for users to change their password. Includes current password, new password, and confirm password fields with visibility toggles. Props: `open`, `onclose`. Calls `PUT /api/users/password`.
-  - `NetworkToast.svelte` — Global DaisyUI toast (bottom-right, `z-[9999]`) for network-level errors. Renders from `toastStore`. Mounted once in root `+layout.svelte`. Shows error alerts with close button; auto-dismisses after 5 s.
-  - `AuthorProfile.svelte` — Author profile header (magazine cover style).
-  - `PostCard.svelte` — Post card displaying article data. Props: `title`, `hashId`, `coverImage`, `requiredTier`, `accessible`, `createdAt`. Shows readable/locked state based on `accessible`.
-  - `ArticleFeed.svelte` — Shared article feed component. Accepts `page` prop, fetches articles + page info from API, renders PostCards + Pagination.
-  - `Pagination.svelte` — Link-based page navigation. Props: `currentPage`, `totalPages`, `getHref`. Uses `<a>` tags for SEO-friendly navigation.
-  - `SiteFooter.svelte` — Centered plain-text footer.
+- **Layout Components** (`src/lib/components/main/` and `src/lib/components/shared/`):
+  - `src/lib/components/main/layout/TopNavBar.svelte` — Fixed top nav with glass effect, site name + login button. User dropdown triggers `UserSubscriptionModal` for subscription viewing and `ChangePasswordModal` for password change.
+  - `src/lib/components/main/user/UserSubscriptionModal.svelte` — Popup dialog showing user's current subscription tier and recent subscription history (max 5 records). Props: `open`, `onclose`. Fetches data from `GET /api/users/subscriptions`.
+  - `src/lib/components/main/user/ChangePasswordModal.svelte` — Popup dialog for users to change their password. Includes current password, new password, and confirm password fields with visibility toggles. Props: `open`, `onclose`. Calls `PUT /api/users/password`.
+  - `src/lib/components/shared/NetworkToast.svelte` — Global DaisyUI toast (bottom-right, `z-[9999]`) for network-level errors. Renders from `toastStore`. Mounted once in root `+layout.svelte`. Shows error alerts with close button; auto-dismisses after 5 s.
+  - `src/lib/components/main/user/AuthorProfile.svelte` — Author profile header (magazine cover style).
+  - `src/lib/components/main/article/PostCard.svelte` — Post card displaying article data. Props: `title`, `hashId`, `coverImage`, `requiredTier`, `accessible`, `createdAt`. Shows readable/locked state based on `accessible`.
+  - `src/lib/components/main/article/ArticleFeed.svelte` — Shared article feed component. Accepts `page` prop, fetches articles + page info from API, renders PostCards + Pagination.
+  - `src/lib/components/main/shared/Pagination.svelte` — Link-based page navigation. Props: `currentPage`, `totalPages`, `getHref`. Uses `<a>` tags for SEO-friendly navigation.
+  - `src/lib/components/main/layout/SiteFooter.svelte` — Centered plain-text footer.
 - **Login Components** (`src/lib/components/login/`):
   - `LoginForm.svelte` — Reusable login form with `mode: 'user' | 'admin'` prop. Calls login API, shows error/loading states, redirects to `/` on success.
 - **Admin Components** (`src/lib/components/admin/`):
-  - `AdminSidebar.svelte` — Dashboard sidebar with nav links, home link, logout. Props: `open`, `onclose`. Responsive: off-screen on mobile, toggled via floating button.
-  - `UserListCard.svelte` — Single user row in admin user list. Props: `user`, `expanded`, `ontoggle`. Expandable to show UserSubscriptionPanel.
-  - `UserSubscriptionPanel.svelte` — Subscription management panel for a user. Props: `user`. Fetches all subscriptions via API, client-side pagination (5/page), mini-pagination (w-7 h-7). Includes Add/Edit capabilities calling `SubscriptionEditModal`.
-  - `SubscriptionEditModal.svelte` — Modal for adding/editing a subscription. Props: `open`, `subscription`, `onclose`, `onsubmit`. Includes quick duration logic.
-  - `AdminPagination.svelte` — Reusable pagination. Props: `currentPage`, `totalPages`, `onpagechange`, `showingText?`. Displays page numbers with prev/next buttons.
+  - `src/lib/components/admin/layout/AdminSidebar.svelte` — Dashboard sidebar with nav links, home link, logout. Props: `open`, `onclose`. Responsive: off-screen on mobile, toggled via floating button.
+  - `src/lib/components/admin/user/UserListCard.svelte` — Single user row in admin user list. Props: `user`, `expanded`, `ontoggle`. Expandable to show UserSubscriptionPanel.
+  - `src/lib/components/admin/user/UserSubscriptionPanel.svelte` — Subscription management panel for a user. Props: `user`. Fetches all subscriptions via API, client-side pagination (5/page), mini-pagination (w-7 h-7). Includes Add/Edit capabilities calling `SubscriptionEditModal`.
+  - `src/lib/components/admin/user/SubscriptionEditModal.svelte` — Modal for adding/editing a subscription. Props: `open`, `subscription`, `onclose`, `onsubmit`. Includes quick duration logic.
+  - `src/lib/components/admin/shared/AdminPagination.svelte` — Reusable pagination. Props: `currentPage`, `totalPages`, `onpagechange`, `showingText?`. Displays page numbers with prev/next buttons.
+  - `src/lib/components/admin/page/AnnouncementEditor.svelte` — Announcement management component.
+  - `src/lib/components/admin/page/TierItemEditor.svelte` — Individual subscription tier editor.
 - **API & Stores** (API modules organized by permission level under `src/lib/api/`):
   - `src/lib/api/client.ts` — Generic `apiRequest()` helper with auto-attached JWT Authorization header. Catches network errors (fetch failures) and HTTP 429 rate limits, pushing them to the global `toastStore` for display via `NetworkToast`.
   - `src/lib/api/types.ts` — Shared types: `ArticleListItem`, `AdminArticleRawItem`, `AdminUserItem`, `AdminSubscriptionItem`, `UserSubscriptionItem`, `PageInfo`, `DEFAULT_PAGE_SIZE`, `ADMIN_USERS_PAGE_SIZE`, `ADMIN_SUBSCRIPTIONS_PAGE_SIZE`.

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import ArticleDetail from '$lib/components/main/ArticleDetail.svelte';
+	import ArticleDetail from '$lib/components/main/article/ArticleDetail.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { siteStore } from '$lib/stores/site.svelte';
 

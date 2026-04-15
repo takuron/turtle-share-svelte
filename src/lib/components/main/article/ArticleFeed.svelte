@@ -7,8 +7,8 @@
 	// // 共享文章信息流组件。根据当前用户的认证角色选择对应 API，获取并展示一页文章。
 	// // @prop {number} page - 当前页码（从 1 开始）。
 	import { onMount } from 'svelte';
-	import PostCard from '$lib/components/main/PostCard.svelte';
-	import Pagination from '$lib/components/main/Pagination.svelte';
+	import PostCard from '$lib/components/main/article/PostCard.svelte';
+	import Pagination from '$lib/components/main/shared/Pagination.svelte';
 	import type { ArticleListItem, PageInfo } from '$lib/api/types';
 	import type { ApiResponse } from '$lib/api/client';
 	import { fetchPublicArticlesPage, fetchPublicArticlesPageInfo } from '$lib/api/public/articles';

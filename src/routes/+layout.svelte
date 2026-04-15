@@ -7,7 +7,7 @@
 	import { initAuth } from '$lib/stores/auth.svelte';
 	import { fetchTiers } from '$lib/stores/tiers.svelte';
 	import { onMount } from 'svelte';
-	import NetworkToast from '$lib/components/NetworkToast.svelte';
+	import NetworkToast from '$lib/components/shared/NetworkToast.svelte';
 	import { applyThemeColors } from '$lib/utils/applyThemeColors';
 	import { DEFAULT_THEME_COLORS } from '$lib/config';
 	import { resolveLocaleFromTags } from '$lib/i18n/resolveBrowserLocale';

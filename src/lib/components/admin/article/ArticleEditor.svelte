@@ -11,7 +11,7 @@
 	import * as m from '$lib/paraglide/messages.js';
 	import { Send, ImagePlus, Plus, FileText, Image, X, Loader2 } from 'lucide-svelte';
 
-	import FileSelectModal, { type FileData } from '$lib/components/admin/FileSelectModal.svelte';
+	import FileSelectModal, { type FileData } from '../file/FileSelectModal.svelte';
 	import type { FileLink } from '$lib/api/types';
 
 	/**

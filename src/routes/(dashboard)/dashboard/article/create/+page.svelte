@@ -8,8 +8,8 @@
 	 */
 	// // 管理员创建文章页面。
 	// // 将 ArticleEditor 的表单数据转换为 API 请求格式，并调用 createAdminArticle。
-	import ArticleEditor from '$lib/components/admin/ArticleEditor.svelte';
-	import type { ArticleFormData } from '$lib/components/admin/ArticleEditor.svelte';
+	import ArticleEditor from '$lib/components/admin/article/ArticleEditor.svelte';
+	import type { ArticleFormData } from '$lib/components/admin/article/ArticleEditor.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 	import { goto } from '$app/navigation';
 	import { createAdminArticle, type CreateArticleRequest } from '$lib/api/admin/articles';
