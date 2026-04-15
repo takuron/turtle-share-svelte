@@ -1,0 +1,16 @@
+[2026-04-12T14:32:32+08:00] Implemented subscription tiers page prototype at /subscribe based on stitch/code.html design.
+[2026-04-12T14:34:57+08:00] Added subscribe page link to TopNavBar.
+[2026-04-12T14:39:46+08:00] Removed Star icon from subscribe link and aligned it with site name in TopNavBar.
+[2026-04-12T14:42:23+08:00] Adjusted TopNavBar flex items-center alignment for site name and subscribe link.
+[2026-04-12T14:44:10+08:00] Fixed TopNavBar alignment between english logo and chinese link by switching from items-center to items-baseline to match font metrics.
+[2026-04-12T14:45:33+08:00] Reverted TopNavBar alignment changes back to simple items-center without flex on links.
+[2026-04-12T15:05:04+08:00] Implemented dynamic subscription tiers page by fetching /api/public/tier-descriptions from backend.
+[2026-04-12T15:10:03+08:00] Implemented the new Page Management admin page based on the prototype design, including announcement and subscription level management UI, and added the corresponding sidebar navigation link.
+[2026-04-12T15:35:45+08:00] Integrated backend API endpoints for page management including announcement reading/saving and tier descriptions configuration.
+[2026-04-12T15:49:24+08:00] Refactored page management subscription tier synchronization logic: now uses a diff-based approach to only send modified tiers to the API, and fixed the bug causing duplicate tier generation on new additions.
+[2026-04-12T16:07:35+08:00] Added an announcement card to the home page (+page.svelte) based on the stitch/code.html design, fetching data from the backend and rendering it with GitHub Flavored Markdown support via parseMarkdown().
+[2026-04-12T16:29:07+08:00] Add mobile dropdown menu for subscription links to TopNavBar
+[2026-04-12T16:34:27+08:00] Update subscription tier name display logic and reduce price font size
+[2026-04-12T16:38:19+08:00] Adjust z-index for AdminSidebar and add internal close button for mobile
+[2026-04-12T16:41:00+08:00] Restrict subscription tier level input range to 0-255 with validation
+[2026-04-12T16:44:44+08:00] Add success/error toast notifications for Page Management and update toastStore to support types
