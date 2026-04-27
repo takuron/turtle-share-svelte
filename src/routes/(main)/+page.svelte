@@ -2,6 +2,7 @@
 	import AuthorProfile from '$lib/components/main/AuthorProfile.svelte';
 	import ArticleFeed from '$lib/components/main/ArticleFeed.svelte';
 	import { siteStore } from '$lib/stores/site.svelte';
+	import { searchStore } from '$lib/stores/search.svelte';
 	import { onMount } from 'svelte';
 	import { fetchAnnouncementRequest } from '$lib/api/public/site';
 	import { parseMarkdown } from '$lib/utils/markdown';
@@ -31,8 +32,8 @@
 	<!-- 作者资料头部 -->
 	<AuthorProfile />
 
-	<!-- 公告卡片 -->
-	{#if announcementContent && announcementContent.trim()}
+	<!-- 公告卡片 - 仅在真正的首页（非搜索状态）展示 -->
+	{#if !searchStore.isSearching && announcementContent && announcementContent.trim()}
 		<div class="mb-12 rounded-xl border border-outline-variant/5 bg-surface-lowest p-6 shadow-md">
 			<div
 				class="prose prose-sm max-w-none text-left text-sm leading-relaxed text-on-surface-variant dark:prose-invert prose-p:my-1 prose-a:text-primary"
