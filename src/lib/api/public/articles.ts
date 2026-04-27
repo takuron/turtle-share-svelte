@@ -46,3 +46,66 @@ export function fetchPublicArticleDetail(hashId: string, customFetch?: typeof fe
 		fetch: customFetch
 	});
 }
+
+/**
+ * Search public articles by title or content.
+ * @param query - Search keyword (empty searches all public articles).
+ * @param pageSize - Maximum returned items (default: 10).
+ */
+// // 按标题或正文搜索公开文章。
+// // @param query - 搜索关键词（为空时搜索所有公开文章）。
+// // @param pageSize - 最大返回项目数（默认 10）。
+
+// 原始端点: GET /api/public/articles/search?q=keyword&page_size=N — 搜索公开文章（无需鉴权）
+export function fetchPublicArticlesSearch(
+	query: string,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<ArticleListItem[]>> {
+	const encodedQuery = encodeURIComponent(query);
+	return apiRequest<ArticleListItem[]>(
+		`/public/articles/search?q=${encodedQuery}&page_size=${pageSize}`
+	);
+}
+
+/**
+ * Fetch pagination info for public article search results.
+ * @param query - Search keyword (empty searches all public articles).
+ * @param pageSize - Items per page (default: 10).
+ */
+// // 获取公开文章搜索结果的分页信息。
+// // @param query - 搜索关键词（为空时搜索所有公开文章）。
+// // @param pageSize - 每页数量（默认 10）。
+
+// 原始端点: GET /api/public/articles/search/page?q=keyword&page_size=N — 获取公开文章搜索分页信息（无需鉴权）
+export function fetchPublicArticlesSearchPageInfo(
+	query: string,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<PageInfo>> {
+	const encodedQuery = encodeURIComponent(query);
+	return apiRequest<PageInfo>(
+		`/public/articles/search/page?q=${encodedQuery}&page_size=${pageSize}`
+	);
+}
+
+/**
+ * Fetch a page of public article search results.
+ * @param query - Search keyword (empty searches all public articles).
+ * @param page - Page number (1-based).
+ * @param pageSize - Items per page (default: 10).
+ */
+// // 获取一页公开文章搜索结果。
+// // @param query - 搜索关键词（为空时搜索所有公开文章）。
+// // @param page - 页码（从 1 开始）。
+// // @param pageSize - 每页数量（默认 10）。
+
+// 原始端点: GET /api/public/articles/search/page/:page?q=keyword&page_size=N — 分页列出公开文章搜索结果（无需鉴权）
+export function fetchPublicArticlesSearchPage(
+	query: string,
+	page: number,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<ArticleListItem[]>> {
+	const encodedQuery = encodeURIComponent(query);
+	return apiRequest<ArticleListItem[]>(
+		`/public/articles/search/page/${page}?q=${encodedQuery}&page_size=${pageSize}`
+	);
+}

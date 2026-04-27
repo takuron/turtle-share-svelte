@@ -12,11 +12,13 @@
 		LayoutDashboard,
 		LogOut,
 		Menu,
-		Search
+		Search,
+		X
 	} from 'lucide-svelte';
 	import { siteStore } from '$lib/stores/site.svelte';
 	import { tiersStore } from '$lib/stores/tiers.svelte';
 	import { authStore, logout } from '$lib/stores/auth.svelte';
+	import { searchStore, setSearchQuery, clearSearch } from '$lib/stores/search.svelte';
 	import { page } from '$app/stores';
 	import * as m from '$lib/paraglide/messages.js';
 	import UserSubscriptionModal from './UserSubscriptionModal.svelte';
@@ -26,13 +28,38 @@
 	let subscriptionModalOpen = $state(false);
 	// 修改密码弹窗状态
 	let changePasswordModalOpen = $state(false);
-	// 搜索框输入内容
+	// 搜索框输入内容（与searchStore同步）
 	let searchQuery = $state('');
+
+	// 同步本地searchQuery与searchStore.query
+	$effect(() => {
+		searchQuery = searchStore.query;
+	});
 
 	// 1. 处理退出登录并刷新页面，清除状态
 	function handleLogout() {
 		logout();
 		window.location.reload();
+	}
+
+	// 2. 处理搜索提交
+	function handleSearchSubmit() {
+		setSearchQuery(searchQuery);
+	}
+
+	// 3. 处理清除搜索
+	function handleClearSearch() {
+		searchQuery = '';
+		clearSearch();
+	}
+
+	// 4. 处理搜索框键盘事件（回车提交，Escape清除）
+	function handleSearchKeydown(event: KeyboardEvent) {
+		if (event.key === 'Enter') {
+			handleSearchSubmit();
+		} else if (event.key === 'Escape') {
+			handleClearSearch();
+		}
 	}
 </script>
 
@@ -95,13 +122,31 @@
 		<!-- 搜索框 - 桌面端显示 -->
 		<div class="hidden md:flex flex-1 mx-8">
 			<label class="input input-sm flex items-center gap-2 w-full bg-surface border-base-200 shadow-sm">
-				<Search size={16} class="text-base-content/60" />
+				<button
+					type="button"
+					class="btn btn-ghost btn-circle btn-xs"
+					onclick={handleSearchSubmit}
+					title="搜索"
+				>
+					<Search size={16} class="text-base-content/60" />
+				</button>
 				<input
 					type="text"
 					class="grow bg-transparent border-none outline-none text-sm text-base-content placeholder:text-base-content/40"
 					placeholder="搜索..."
 					bind:value={searchQuery}
+					onkeydown={handleSearchKeydown}
 				/>
+				{#if searchQuery || searchStore.isSearching}
+					<button
+						type="button"
+						class="btn btn-ghost btn-circle btn-xs"
+						onclick={handleClearSearch}
+						title="清除搜索"
+					>
+						<X size={14} class="text-base-content/60" />
+					</button>
+				{/if}
 			</label>
 		</div>
 

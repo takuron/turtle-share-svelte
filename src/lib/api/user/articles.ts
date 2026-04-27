@@ -49,3 +49,66 @@ export function fetchUserArticleDetail(hashId: string, customFetch?: typeof fetc
 		fetch: customFetch
 	});
 }
+
+/**
+ * Search visible articles by title or content for the authenticated user.
+ * @param query - Search keyword (empty searches all visible articles).
+ * @param pageSize - Maximum returned items (default: 10).
+ */
+// // 按标题或正文搜索当前用户可见的文章。
+// // @param query - 搜索关键词（为空时搜索所有可见文章）。
+// // @param pageSize - 最大返回项目数（默认 10）。
+
+// 原始端点: GET /api/users/articles/search?q=keyword&page_size=N — 搜索用户可见文章（需要用户 JWT）
+export function fetchUserArticlesSearch(
+	query: string,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<ArticleListItem[]>> {
+	const encodedQuery = encodeURIComponent(query);
+	return apiRequest<ArticleListItem[]>(
+		`/users/articles/search?q=${encodedQuery}&page_size=${pageSize}`
+	);
+}
+
+/**
+ * Fetch pagination info for user article search results.
+ * @param query - Search keyword (empty searches all visible articles).
+ * @param pageSize - Items per page (default: 10).
+ */
+// // 获取用户可见文章搜索结果的分页信息。
+// // @param query - 搜索关键词（为空时搜索所有可见文章）。
+// // @param pageSize - 每页数量（默认 10）。
+
+// 原始端点: GET /api/users/articles/search/page?q=keyword&page_size=N — 获取用户文章搜索分页信息（需要用户 JWT）
+export function fetchUserArticlesSearchPageInfo(
+	query: string,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<PageInfo>> {
+	const encodedQuery = encodeURIComponent(query);
+	return apiRequest<PageInfo>(
+		`/users/articles/search/page?q=${encodedQuery}&page_size=${pageSize}`
+	);
+}
+
+/**
+ * Fetch a page of user article search results.
+ * @param query - Search keyword (empty searches all visible articles).
+ * @param page - Page number (1-based).
+ * @param pageSize - Items per page (default: 10).
+ */
+// // 获取一页用户可见文章搜索结果。
+// // @param query - 搜索关键词（为空时搜索所有可见文章）。
+// // @param page - 页码（从 1 开始）。
+// // @param pageSize - 每页数量（默认 10）。
+
+// 原始端点: GET /api/users/articles/search/page/:page?q=keyword&page_size=N — 分页列出用户文章搜索结果（需要用户 JWT）
+export function fetchUserArticlesSearchPage(
+	query: string,
+	page: number,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<ArticleListItem[]>> {
+	const encodedQuery = encodeURIComponent(query);
+	return apiRequest<ArticleListItem[]>(
+		`/users/articles/search/page/${page}?q=${encodedQuery}&page_size=${pageSize}`
+	);
+}

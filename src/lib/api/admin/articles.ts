@@ -174,3 +174,114 @@ export function fetchAdminArticleDetail(hashId: string, customFetch?: typeof fet
 		fetch: customFetch
 	});
 }
+
+/**
+ * Search articles by title or content (admin view).
+ * Admin has full access to all articles. The raw response contains `is_public`
+ * instead of `accessible`; this function normalizes it to `accessible: true`.
+ *
+ * @param query - Search keyword (empty searches all articles).
+ * @param pageSize - Maximum returned items (default: 10).
+ */
+// // 按标题或正文搜索文章（管理员视角）。
+// // 管理员拥有所有文章的完整访问权限。原始响应包含 `is_public` 而非 `accessible`，
+// // 此函数将其标准化为 `accessible: true`。
+// //
+// // @param query - 搜索关键词（为空时搜索所有文章）。
+// // @param pageSize - 最大返回项目数（默认 10）。
+
+// 原始端点: GET /api/admin/articles/search?q=keyword&page_size=N — 搜索所有文章（需要管理员 JWT）
+export async function fetchAdminArticlesSearch(
+	query: string,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<ArticleListItem[]>> {
+	const encodedQuery = encodeURIComponent(query);
+	const res = await apiRequest<AdminArticleRawItem[]>(
+		`/admin/articles/search?q=${encodedQuery}&page_size=${pageSize}`
+	);
+
+	// 标准化：管理员默认拥有所有文章权限，将 is_public 映射为 accessible=true。
+	if (res.success) {
+		return {
+			success: true,
+			data: res.data.map((item) => ({
+				hash_id: item.hash_id,
+				title: item.title,
+				cover_image: item.cover_image,
+				required_tier: item.required_tier,
+				accessible: true,
+				publish_at: item.publish_at,
+				updated_at: item.updated_at
+			}))
+		};
+	}
+
+	return res;
+}
+
+/**
+ * Fetch pagination info for article search results (admin view).
+ * @param query - Search keyword (empty searches all articles).
+ * @param pageSize - Items per page (default: 10).
+ */
+// // 获取文章搜索结果的分页信息（管理员视角）。
+// // @param query - 搜索关键词（为空时搜索所有文章）。
+// // @param pageSize - 每页数量（默认 10）。
+
+// 原始端点: GET /api/admin/articles/search/page?q=keyword&page_size=N — 获取管理员文章搜索分页信息（需要管理员 JWT）
+export function fetchAdminArticlesSearchPageInfo(
+	query: string,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<PageInfo>> {
+	const encodedQuery = encodeURIComponent(query);
+	return apiRequest<PageInfo>(
+		`/admin/articles/search/page?q=${encodedQuery}&page_size=${pageSize}`
+	);
+}
+
+/**
+ * Fetch a page of article search results (admin view).
+ * Admin has full access to all articles. The raw response contains `is_public`
+ * instead of `accessible`; this function normalizes it to `accessible: true`.
+ *
+ * @param query - Search keyword (empty searches all articles).
+ * @param page - Page number (1-based).
+ * @param pageSize - Items per page (default: 10).
+ */
+// // 获取一页文章搜索结果（管理员视角）。
+// // 管理员拥有所有文章的完整访问权限。原始响应包含 `is_public` 而非 `accessible`，
+// // 此函数将其标准化为 `accessible: true`。
+// //
+// // @param query - 搜索关键词（为空时搜索所有文章）。
+// // @param page - 页码（从 1 开始）。
+// // @param pageSize - 每页数量（默认 10）。
+
+// 原始端点: GET /api/admin/articles/search/page/:page?q=keyword&page_size=N — 分页列出管理员文章搜索结果（需要管理员 JWT）
+export async function fetchAdminArticlesSearchPage(
+	query: string,
+	page: number,
+	pageSize: number = DEFAULT_PAGE_SIZE
+): Promise<ApiResponse<ArticleListItem[]>> {
+	const encodedQuery = encodeURIComponent(query);
+	const res = await apiRequest<AdminArticleRawItem[]>(
+		`/admin/articles/search/page/${page}?q=${encodedQuery}&page_size=${pageSize}`
+	);
+
+	// 标准化：管理员默认拥有所有文章权限，将 is_public 映射为 accessible=true。
+	if (res.success) {
+		return {
+			success: true,
+			data: res.data.map((item) => ({
+				hash_id: item.hash_id,
+				title: item.title,
+				cover_image: item.cover_image,
+				required_tier: item.required_tier,
+				accessible: true,
+				publish_at: item.publish_at,
+				updated_at: item.updated_at
+			}))
+		};
+	}
+
+	return res;
+}

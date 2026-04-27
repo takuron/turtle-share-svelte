@@ -2,19 +2,37 @@
 	/**
 	 * Shared article feed component. Fetches and displays a page of articles with pagination.
 	 * Selects the appropriate API based on the current user's auth role.
+	 * Supports search functionality when search query is provided.
 	 * @prop {number} page - Current page number (1-based).
 	 */
 	// // 共享文章信息流组件。根据当前用户的认证角色选择对应 API，获取并展示一页文章。
+	// // 支持搜索功能（当提供搜索查询时）。
 	// // @prop {number} page - 当前页码（从 1 开始）。
 	import { onMount } from 'svelte';
 	import PostCard from '$lib/components/main/PostCard.svelte';
 	import Pagination from '$lib/components/main/Pagination.svelte';
 	import type { ArticleListItem, PageInfo } from '$lib/api/types';
 	import type { ApiResponse } from '$lib/api/client';
-	import { fetchPublicArticlesPage, fetchPublicArticlesPageInfo } from '$lib/api/public/articles';
-	import { fetchUserArticlesPage, fetchUserArticlesPageInfo } from '$lib/api/user/articles';
-	import { fetchAdminArticlesPage, fetchAdminArticlesPageInfo } from '$lib/api/admin/articles';
+	import {
+		fetchPublicArticlesPage,
+		fetchPublicArticlesPageInfo,
+		fetchPublicArticlesSearchPage,
+		fetchPublicArticlesSearchPageInfo
+	} from '$lib/api/public/articles';
+	import {
+		fetchUserArticlesPage,
+		fetchUserArticlesPageInfo,
+		fetchUserArticlesSearchPage,
+		fetchUserArticlesSearchPageInfo
+	} from '$lib/api/user/articles';
+	import {
+		fetchAdminArticlesPage,
+		fetchAdminArticlesPageInfo,
+		fetchAdminArticlesSearchPage,
+		fetchAdminArticlesSearchPageInfo
+	} from '$lib/api/admin/articles';
 	import { authStore } from '$lib/stores/auth.svelte';
+	import { searchStore } from '$lib/stores/search.svelte';
 	import * as m from '$lib/paraglide/messages.js';
 
 	let { page = 1 }: { page?: number } = $props();
@@ -29,28 +47,47 @@
 		return p <= 1 ? '/' : `/page/${p}`;
 	}
 
-	// 2. 根据认证角色选择对应的 API 函数。
-	function getApiFunctions(): {
+	// 2. 根据认证角色和是否搜索选择对应的 API 函数。
+	function getApiFunctions(query: string): {
 		fetchPage: (page: number) => Promise<ApiResponse<ArticleListItem[]>>;
 		fetchPageInfo: () => Promise<ApiResponse<PageInfo>>;
 	} {
 		const role = authStore.session?.role ?? null;
+		const isSearching = query !== '';
 
 		if (role === 'admin') {
+			if (isSearching) {
+				return {
+					fetchPage: (p: number) => fetchAdminArticlesSearchPage(query, p),
+					fetchPageInfo: () => fetchAdminArticlesSearchPageInfo(query)
+				};
+			}
 			return { fetchPage: fetchAdminArticlesPage, fetchPageInfo: fetchAdminArticlesPageInfo };
 		}
 		if (role === 'user') {
+			if (isSearching) {
+				return {
+					fetchPage: (p: number) => fetchUserArticlesSearchPage(query, p),
+					fetchPageInfo: () => fetchUserArticlesSearchPageInfo(query)
+				};
+			}
 			return { fetchPage: fetchUserArticlesPage, fetchPageInfo: fetchUserArticlesPageInfo };
+		}
+		if (isSearching) {
+			return {
+				fetchPage: (p: number) => fetchPublicArticlesSearchPage(query, p),
+				fetchPageInfo: () => fetchPublicArticlesSearchPageInfo(query)
+			};
 		}
 		return { fetchPage: fetchPublicArticlesPage, fetchPageInfo: fetchPublicArticlesPageInfo };
 	}
 
 	// 3. 并行获取文章列表和分页信息。
-	async function loadArticles(p: number) {
+	async function loadArticles(p: number, query: string) {
 		loading = true;
 		error = false;
 
-		const { fetchPage, fetchPageInfo } = getApiFunctions();
+		const { fetchPage, fetchPageInfo } = getApiFunctions(query);
 
 		try {
 			const [articlesRes, pageInfoRes] = await Promise.all([fetchPage(p), fetchPageInfo()]);
@@ -71,14 +108,15 @@
 		}
 	}
 
-	// 4. 当 page 或认证角色变化时重新加载（仅跟踪 role 而非整个 session，避免无关属性变化触发重载）。
+	// 4. 当 page、搜索查询或认证角色变化时重新加载。
 	$effect(() => {
 		const _page = page;
+		const _query = searchStore.query;
 		const _role = authStore.session?.role;
 		const _initialized = authStore.initialized;
 
 		if (_initialized) {
-			loadArticles(_page);
+			loadArticles(_page, _query);
 		}
 	});
 </script>
@@ -98,9 +136,22 @@
 {:else if articles.length === 0}
 	<!-- 空状态 -->
 	<div class="py-24 text-center text-on-surface-variant">
-		<p>{m.no_articles()}</p>
+		{#if searchStore.isSearching}
+			<p>没有找到与 "{searchStore.query}" 相关的文章</p>
+		{:else}
+			<p>{m.no_articles()}</p>
+		{/if}
 	</div>
 {:else}
+	<!-- 搜索结果提示 -->
+	{#if searchStore.isSearching}
+		<div class="mb-6 flex items-center justify-between">
+			<p class="text-sm text-on-surface-variant">
+				搜索 "{searchStore.query}" 的结果
+			</p>
+		</div>
+	{/if}
+
 	<!-- 垂直帖子信息流 — DESIGN.md §5: 卡片间距 2rem -->
 	<div class="mb-12 space-y-12">
 		{#each articles as article (article.hash_id)}
