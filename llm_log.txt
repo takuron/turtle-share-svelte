@@ -17,3 +17,4 @@
 [2026-04-12T17:57:28+08:00] Modified Page Management to save subscription tiers individually and removed global save button.
 [2026-04-12T18:03:05+08:00] Refined Page Management: added stable titles, global sync on save, and local validation for non-empty items and unique tiers.
 [2026-04-12T18:07:55+08:00] Refactored Page Management to use .raw for one-time write logic and removed local reactive list updates.
+[2026-04-27T12:19:04+08:00] 在 TopNavBar 中添加搜索框界面：导入 Search 图标，添加 searchQuery 状态变量，在导航栏中间添加 DaisyUI input 样式的搜索框（桌面端显示）

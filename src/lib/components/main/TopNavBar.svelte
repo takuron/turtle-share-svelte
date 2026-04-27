@@ -11,7 +11,8 @@
 		Lock,
 		LayoutDashboard,
 		LogOut,
-		Menu
+		Menu,
+		Search
 	} from 'lucide-svelte';
 	import { siteStore } from '$lib/stores/site.svelte';
 	import { tiersStore } from '$lib/stores/tiers.svelte';
@@ -25,6 +26,8 @@
 	let subscriptionModalOpen = $state(false);
 	// 修改密码弹窗状态
 	let changePasswordModalOpen = $state(false);
+	// 搜索框输入内容
+	let searchQuery = $state('');
 
 	// 1. 处理退出登录并刷新页面，清除状态
 	function handleLogout() {
@@ -87,6 +90,19 @@
 					</a>
 				</div>
 			{/if}
+		</div>
+
+		<!-- 搜索框 - 桌面端显示 -->
+		<div class="hidden md:flex flex-1 max-w-md mx-8">
+			<label class="input input-sm flex items-center gap-2 bg-base-100/80 border-base-200/50">
+				<Search size={16} class="text-base-content/50" />
+				<input
+					type="text"
+					class="grow bg-transparent border-none outline-none text-sm text-base-content placeholder:text-base-content/40"
+					placeholder="搜索..."
+					bind:value={searchQuery}
+				/>
+			</label>
 		</div>
 
 		<div class="flex items-center gap-4">
