@@ -93,9 +93,9 @@
 		</div>
 
 		<!-- 搜索框 - 桌面端显示 -->
-		<div class="hidden md:flex flex-1 max-w-md mx-8">
-			<label class="input input-sm flex items-center gap-2 bg-base-100/80 border-base-200/50">
-				<Search size={16} class="text-base-content/50" />
+		<div class="hidden md:flex flex-1 mx-8">
+			<label class="input input-sm flex items-center gap-2 w-full bg-surface border-base-200 shadow-sm">
+				<Search size={16} class="text-base-content/60" />
 				<input
 					type="text"
 					class="grow bg-transparent border-none outline-none text-sm text-base-content placeholder:text-base-content/40"

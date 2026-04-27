@@ -18,3 +18,4 @@
 [2026-04-12T18:03:05+08:00] Refined Page Management: added stable titles, global sync on save, and local validation for non-empty items and unique tiers.
 [2026-04-12T18:07:55+08:00] Refactored Page Management to use .raw for one-time write logic and removed local reactive list updates.
 [2026-04-27T12:19:04+08:00] 在 TopNavBar 中添加搜索框界面：导入 Search 图标，添加 searchQuery 状态变量，在导航栏中间添加 DaisyUI input 样式的搜索框（桌面端显示）
+[2026-04-27T12:26:53+08:00] 优化 TopNavBar 搜索框样式：移除 max-w-md 宽度限制，改为 w-full + flex-1 占据剩余全部宽度；将背景色从 bg-base-100/80 改为 bg-surface 更明显的底色；添加 shadow-sm 轻微阴影增加层次感；边框从 border-base-200/50 改为 border-base-200 更明显
